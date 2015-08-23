@@ -1,2 +1,2 @@
-# demos...
+# demos
 Free code.
