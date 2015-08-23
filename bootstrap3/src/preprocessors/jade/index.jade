@@ -1,0 +1,41 @@
+extends _layout/layout.jade
+//- index
+
+block content
+	.container
+		.row 
+			img.cover-photo(src="http://lorempixel.com/1180/400/food/1", alt="", width="100%")
+
+		.row
+			.col-md-3 
+				.box.row
+					.col-sm-6.col-lg-12.col-md-12
+						img(src="http://lorempixel.com/300/300/people/9", width="100%")
+					.col-sm-6.col-lg-12.col-md-12
+						a.lnk-edit-profile(href="javascript:;") 
+							span.glyphicon.glyphicon-pencil
+							| Edit profile
+						h3 Name Surname
+						p @Username
+						p Location
+						p Website
+						p Works at
+
+			.col-md-6
+				.box.post-section.row
+					form
+						.form-group
+							input.form-control(type="text", placeholder="Say something... To tag people to this post, just type their @username")
+						
+						.post-links
+							a(href="javascript:;") 
+								span.glyphicon.glyphicon-camera
+								| Photo
+						
+							a(href="javascript:;")
+								span.glyphicon.glyphicon-facetime-video
+								| Video
+							button.btn.btn-primary.pull-right(type="submit") Post
+			.col-md-3
+				.box
+					img(src="http://placehold.it/300x200", alt="recommendations", width="100%")

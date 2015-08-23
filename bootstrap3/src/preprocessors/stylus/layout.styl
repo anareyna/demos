@@ -1,0 +1,95 @@
+/*!!
+* Layout
+* @module layout
+* @author Ana Reyna
+*/
+@require '_config/*'
+@require '_mixins/*'
+// @require '_normalize/*'
+@require '_helpers/*'
+@import '_layouts/*'
+@import jeet
+
+/* overwrite */
+
+body 
+	background #90D8DB
+	
+.btn
+	background #66C3C6
+	border none
+	
+.navbar-default
+	background white
+	.avatar
+		padding-bottom 0
+
+.glyphicon
+	margin-right 5px 
+
+img 
+	background lightgrey
+	
+[class*=col-]
+	padding-left 5px 
+	padding-right 5px 
+	.box
+		border-radius 5px
+		width 99%
+		background white
+		margin auto 
+		padding 10px
+		margin-bottom 10px 
+
+.row
+	.grid-1
+		col(1/12, gutter:1)
+	.grid-2
+		col(2/12, gutter:1)
+	.grid-3
+		col(3/12, gutter:1)
+	.grid-4
+		col(4/12, gutter:1)
+	.grid-5
+		col(5/12, gutter:1)
+	.grid-6
+		col(6/12, gutter:1)
+	.grid-7
+		col(7/12, gutter:1)
+	.grid-8
+		col(8/12, gutter:1)
+	.grid-9
+		col(9/12, gutter:1)
+	.grid-10
+		col(10/12, gutter:1)
+	.grid-11
+		col(11/12, gutter:1)
+	.grid-12
+		col(12/12, gutter:1)
+		
+/* custom */
+
+.cover-photo
+	margin-top 40px
+	margin-bottom 20px 
+	border-radius 5px
+	
+.txt-search
+	+above(1210px)
+		width 480px !important
+	
+.lnk-edit-profile
+	margin-top 10px
+	display block
+	
+
+.post-section
+	span
+		font-size 2em 
+		vertical-align bottom
+	a 
+		margin-right 20px 
+		color #666
+	button 
+		padding-left 20px 
+		padding-right 20px
