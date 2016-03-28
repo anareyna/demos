@@ -1,0 +1,142 @@
+header
+	.header_top
+		.container
+			a.ico_menu(href="javascript:;")
+			a.ico_close_menu(href="javascript:;")
+			a.logo(href="#{page.url}") company
+				//-img(src="#{page.static_url}logo.png")/
+			//- search bar controller vtex 
+			.search_bar_vtex
+				span.ico_search 
+				fieldset.busca
+					legend Buscar no site
+					label Buscar
+					select#ftDeptf46a057740b043c6a7e2b40f4d8b4a38
+						option(value='') Todo o site
+						option(value='8') Moda
+						option(value='9') Hogar
+						option(value='10') Ninos y Bebes
+						option(value='11') Travel
+						option(value='12') Deportes
+						option(value='13') Tecnología
+					input(type='hidden', value='')
+					input.fulltext-search-box.ui-autocomplete-input(type='text', size='20', accesskey='b', autocomplete='off', role='textbox', aria-autocomplete='list', aria-haspopup='true')
+					input.btn-buscar(type='button', value='Buscar')
+					
+			a.shopping_cart_vtex(href="javascript:;")
+				.ico_cart
+					span.ico
+				.cart_details
+					span.lbl_title Mi Carrito
+					.portal-totalizers-ref
+						.amount-items-in-cart
+							.cartInfoWrapper
+								span.title
+									span#MostraTextoXml1 Resumo do Carrinho
+								ul.cart-info
+									li.amount-products
+										strong
+											span#MostraTextoXml2 Total de Produtos:
+										em.amount-products-em 1
+									li.amount-items
+										strong
+											span#MostraTextoXml3 Itens:
+										em.amount-items-em 1
+									li.amount-kits
+										strong
+											span#MostraTextoXml4 Total de Kits:
+										em.amount-kits-em
+									li.total-cart
+										strong
+											span#MostraTextoXml5 Valor Total:
+										em.total-cart-em S/. 109,00
+				span.arrow_down
+				.portal-minicart-ref
+					.v2-vtexsc-cart.vtexsc-cart.mouseActivated.preLoaded(style='display: none;')
+						.vtexsc-bt
+						.vtexsc-center
+							.vtexsc-wrap
+								table.vtexsc-productList
+									thead
+										tr
+											th.cartSkuName(colspan='2') Producto
+											th.cartSkuPrice Precio
+											th.cartSkuQuantity Cantidad
+											th.cartSkuActions Quitar
+									tbody
+										- for (var a=0; a<2; a++)
+											tr
+												td.cartSkuImage
+													a.sku-imagem(href='/crepier-bolso-playa-arles-tote-rojo/p')
+														img(height='71', width='71', alt='Crepier Bolso Playa Arles Tote Rojo', src='http://estilomio.vteximg.com.br/arquivos/ids/157642-100-100/05-BOLSO-CREPIER-ARLES-TOTE-GR-ROJO-EDITABLE.jpg')
+												td.cartSkuName
+													h4
+														a(href='/crepier-bolso-playa-arles-tote-rojo/p') Crepier Bolso Playa Arles Tote Rojo
+													p.availability
+												td.cartSkuPrice
+													.cartSkuUnitPrice
+														span.bestPrice S/. 109,00
+												td.cartSkuQuantity
+													.cartSkuQtt
+														span.cartSkuQttTxt
+															span.vtexsc-skuQtt 1
+												td.cartSkuActions
+													span.cartSkuRemove(data-index='0')
+														a.text(href='javascript:void(0);', style='display: none;') excluir
+													.vtexsc-overlay(style='display: none;')
+							.cartFooter.clearfix
+								.cartTotal
+									| Total
+									span.vtexsc-totalCart
+										span.vtexsc-text S/. 109,00
+								a.cartCheckout(href='/checkout/#/orderform')
+						.vtexsc-bb
+
+				
+	.menu_container
+		.header_middle.container
+			nav.nav_people
+				ul 
+					li
+						a(href="javascript:;") Mujer
+					li 
+						a.active(href="javascript:;") Hombre 
+					li 
+						a(href="javascript:;") 
+							span.lbl_desktop Niños y Bebés
+							span.lbl_mobile Niños
+							
+			.links
+				a.lnk_how_to_buy(href="#como-comprar") ¿Cómo comprar?
+				a.lnk_orders(href="javascript:;") Mis pedidos
+		
+		nav.nav_categories
+			.container 
+				ul.menu_categories
+					- for (var i=0; i<6; i++)
+						li
+							input.chk_item(type="checkbox")
+							span.ico_plus
+							span.ico_minus
+							a(href="categoria.html") Moda
+							.menu_dropdown
+								- for (var j=0; j<3; j++)
+									ul.menu_column
+										li.menu_title
+											a(href="categoria.html") Moda mujer
+										li
+											a(href="categoria.html") Blusas
+											a(href="categoria.html") Tops
+											a(href="categoria.html") Vestidos
+											a(href="categoria.html") Jeans
+											a(href="categoria.html") Pantalones
+											a(href="categoria.html") Shorts 
+											a(href="categoria.html") Faldas
+											a(href="categoria.html") Leggins
+											a(href="categoria.html") Sacos y Casacas
+								a.menu_column_image.force_hide(href="javascript:;")
+									img(src="http://placem.at/things?w=180&h=185")
+									p.title Bolsos de temporada
+									p.subtitle Las mejores marcas 
+					li.highlight
+						a(href="categoria.html")	Ofertas

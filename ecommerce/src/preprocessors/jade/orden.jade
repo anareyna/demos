@@ -1,0 +1,273 @@
+extends _layout/layoutCheckout.jade
+
+block content
+	.main
+		.orderplaced
+			.container(style_='display: none;', data-bind='visible: !loading()')
+				.page-header
+					// WIDGET SELETOR DE LOCALE
+					#vtex-locale-selector.locale.span2.pull-right.hide
+					// END
+					h1.title(data-i18n='order.orderplaced') Pedido Confirmado
+				.containerPage
+					.row-fluid.orderplaced-alert.clearfix(data-bind='visible: showOrderGroupSuccess, with: orderGroup')
+						.orderplaced-alert-content.alert.alert-success.span12
+							.orderplaced-alert-text.span9
+								h4.orderplaced-successfully(data-i18n='order.orderPlacedSuccessfully') Su pedido ha sido confirmado con éxito!
+								p.orderplaced-sending-email
+									span.email-pre(data-i18n='order.sentDetailsEmailPre') Enviaremos para el email
+									strong  anareyerwmej@gmail.com 
+									span.email-pos(data-i18n='order.sentDetailsEmailPos') los detalles de la compra.
+								p.orderplaced-processing(data-i18n='order.orderPlacedNotice')
+									| Estamos procesando el pago, en pocos minutos recibirá un email de confirmación de compra.
+							.bank-invoice-print.span3
+								p.bank-invoice-print-text
+									span(data-i18n='order.paymentData.printBankInvoiceNotice') Para realizar el pago, imprimir el boleto en la cantidad de
+									strong S/. 159,00
+									| :
+								a#print-bank-invoice.bank-invoice-print-url.btn.btn-success.btn-large(href='http://pagoefectivo.pe/GenPago.aspx?Token=f2868f93-3381-40c0-8358-2f4dfd16dc04', target='_blank')
+									span(data-i18n='order.paymentData.printBankInvoice') Imprimir boleto
+					#orderplaced-top
+						style.
+							#orderplaced-top{text-align:center;background:url(../arquivos/loading.gif) 50% 50% no-repeat;}
+						iframe(width='900', height='655', src='https://pagoefectivo.pe/GenPagoIF.aspx?Token=f2868f93-3381-40c0-8358-2f4dfd16dc04-1', scrolling='no', style='width:900px;border:0;margin:auto;padding:30px 0 0 0;')
+					.myorders-list(data-bind='with: orderGroup')
+						#616040280810.ordergroup.row-fluid
+							.order-header.page-header
+								h2.order-title.lead
+									span.title-ordergroup-order.muted(data-i18n='order.orderHeldOn') Compra finalizada en
+									span.order-date 07/03/2016
+							.order-details
+								.row-fluid.top-row
+									.span9
+										h3.orderid.section-info-title
+											span(data-i18n='order.order') Pedido
+											| : 
+											span#order-id 616040280810-01
+								.items.row-fluid
+									table.table.cart-items.order-detail-items
+										thead
+											tr
+												th(colspan='2', data-i18n='global.product') Producto
+												th(data-i18n='global.delivery') Envío
+												th(data-i18n='global.price') Precio
+												th.hidden-phone.hidden-tablet(data-i18n='global.quantity') Cantidad
+												th.hidden-phone.hidden-tablet(data-i18n='global.total') Total
+										tbody
+											tr.product-item(rowspan='2')
+												td.product-image
+													a(href='/tbl-14387ls-01bg/p')
+														img#product-image-13634(src='//estilomio.vteximg.com.br/arquivos/ids/168478-100-100/17.jpg', height='45', width='45', alt='Timberland Reloj Laconia TBL.14387LS/01BG')
+												td.product-name
+													a#product-name-13634(href='/tbl-14387ls-01bg/p') Timberland Reloj Laconia TBL.14387LS/01BG
+													.brand.hidden-phone.hidden-tablet
+														span.brand-label
+															span(data-i18n='cart.seller.brand') Marca
+															| :
+														span.brand-name Timberland
+												td.shipping-date
+													p.shipping-estimate
+														| 10 
+														span(data-i18n='shippingData.workingDays') días hábiles
+													p.sla-info.hide
+														span.sla-name Entrega a Domicilio EstiloMio 7-10 días
+														|  (
+														span.sla-price S/. 5,00
+														| )
+												td.product-price
+													span.new-product-list-price.hide S/. 399,00
+													span.new-product-real-price.hide S/. 324,00
+													span.new-product-price.best-price S/. 324,00
+												td.quantity.hidden-phone.hidden-tablet
+													span 1
+												td.quantity-price.hidden-phone.hidden-tablet
+													span.total-price.hide S/. 324,00
+													span.total-selling-price S/. 324,00
+											tr.product-item(rowspan='2')
+												td.product-image
+													a(href='/hankip-mochila-mujer-chic-backpack-negro/p')
+														img#product-image-656899(src='//estilomio.vteximg.com.br/arquivos/ids/187825-100-100/chicbackpack-negro1.jpg', height='45', width='45', alt='Hankip Mochila Mujer Chic Backpack Negro')
+												td.product-name
+													a#product-name-656899(href='/hankip-mochila-mujer-chic-backpack-negro/p') Hankip Mochila Mujer Chic Backpack Negro
+													.brand.hidden-phone.hidden-tablet
+														span.brand-label
+															span(data-i18n='cart.seller.brand') Marca
+															| :
+														span.brand-name Hankip
+												td.shipping-date
+													p.shipping-estimate
+														| 10 
+														span(data-i18n='shippingData.workingDays') días hábiles
+													p.sla-info.hide
+														span.sla-name Entrega a Domicilio EstiloMio 7-10 días
+														|  (
+														span.sla-price S/. 5,00
+														| )
+												td.product-price
+													span.new-product-list-price.hide S/. 159,00
+													span.new-product-real-price.hide S/. 159,00
+													span.new-product-price.best-price S/. 159,00
+												td.quantity.hidden-phone.hidden-tablet
+													span 1
+												td.quantity-price.hidden-phone.hidden-tablet
+													span.total-price.hide S/. 159,00
+													span.total-selling-price S/. 159,00
+
+							hr
+							.order-info
+								.row-fluid.top-row
+									.span5.payment-info.general-info
+										h3.section-info-title(data-i18n='order.paymentInfo') Medio de Pago
+										.payments
+											h3.payment-title
+												span(data-i18n='order.paymentData.paymentMethod') Medio de pago
+											.giftcards-list
+											.payments-list
+												.payment
+													.payment-method-info
+														// TODO
+														span.payment-subtitle PagoEfectivo
+														|  - 
+														span.payment-value
+															span.payment-total.field-label.hide
+																span(data-i18n='global.value') Valor
+																| :
+															span.payment-value-monetary S/. 159,00
+															span.payment-installments
+																| (
+																span(data-i18n='order.paymentData.paidInCash') total
+																| )
+														a#order-print-bank-invoice-mini.bank-invoice-print-link.btn.btn-mini(href='http://pagoefectivo.pe/GenPago.aspx?Token=f2868f93-3381-40c0-8358-2f4dfd16dc04', target='_blank', data-i18n='order.paymentData.printBankInvoice') Imprimir boleto
+													a.payment-transaction-details-btn.muted(href='javascript:void(0);')
+														small(data-i18n='order.paymentData.showTransactionDetails') Ver detalles de la transacción
+													.payment-transaction-details.hide
+														.payment-connector.muted
+															span.payment-connector-keypair
+																small Tid
+																| : 
+																small 4059986
+														.payment-connector.muted
+															span.payment-connector-keypair
+																small ReturnCode
+																| : 
+																small 1
+														.payment-connector.muted
+															span.payment-connector-keypair
+																small Message
+																| : 
+																small Se ha Generado el CIP: 00000004059986 .
+														.payment-connector.muted
+															span.payment-connector-keypair
+																small CIP
+																| : 
+																small 4059986
+										hr.visible-phone.order-info-hr
+									.span2.shipping-info.general-info.hide
+										h3.section-info-title(data-i18n='order.shippingInfo') Dirección de Envío
+										.shipping
+											.shipping-address
+												address
+													ul
+														li
+															span dfg ****
+														li
+															span *******i 
+															| , 
+															span ***
+															| - 
+															span Lim*
+														li
+															span Lim*
+															| /
+															span LIMA
+															|  - 
+															span(data-i18n='global.PER')
+														li
+															span *5*1*1
+										hr.visible-phone.order-info-hr
+									.span2.client-profile-info.general-info.hide
+										h3.section-info-title(data-i18n='order.clientProfileData') Datos Personales
+										.shipping
+											.client-profile-data
+												.full-name.personal-info
+													span.personal-info-label.hide
+														span(data-i18n='order.fullName') Nombre y Apellidos
+														| :
+													span.personal-info-value
+														span *** dfg*
+												.email.personal-info
+													span.personal-info-label.hide
+														span(data-i18n='email') E-mail
+														| :
+													span.personal-info-value
+														span anareyerwmej@gmail.com
+												.phone.personal-info
+													span.personal-info-label.hide
+														span(data-i18n='phone') Telefone
+														| :
+													span.personal-info-value
+														span *******4773
+												.document.personal-info
+													span.personal-info-label.hide
+														span(data-i18n='document') Documento
+														| :
+													span.personal-info-value
+														span *3*3*3*3
+												.corporate-info-group(data-bind='if: isCorporate')
+													.name.corporate-info
+														span.corporate-info-label
+															span(data-i18n='companyName') Empresa
+															| :
+														span.corporate-info-value
+															span
+													.trade-name.corporate-info
+														span.corporate-info-label
+															span(data-i18n='tradingName') Nome Fantasia
+															| :
+														span.corporate-info-value
+															span
+													.phone.corporate-info
+														span.corporate-info-label
+															span(data-i18n='phone') Telefone
+															| :
+														span.corporate-info-value
+															span
+													.document.corporate-info
+														span.corporate-info-label
+															span(data-i18n='document') Documento
+															| :
+														span.corporate-info-value
+															span
+													.state-inscription.corporate-info
+														span.corporate-info-label
+															span(data-i18n='coRegisterNumber') Inscrição Estadual
+															| :
+														span.corporate-info-value
+															span
+										hr.visible-phone.order-info-hr
+									.span3.total-info.general-info.pull-right
+										h3.section-info-title(data-i18n='order.orderTotalPrice') Total
+										.totals
+											table.table
+												tbody
+													tr.Items
+														td.info(data-i18n='totalizers.Items') Subtotal
+														td.monetary S/. 149,00
+													tr.Discounts.hidden
+														td.info(data-i18n='totalizers.Discounts') Descuentos
+														td.monetary
+															span(data-i18n='global.free') Gratis
+													tr.Shipping
+														td.info(data-i18n='totalizers.Shipping') Costo del envío
+														td.monetary S/. 10,00
+													tr.Tax.hidden
+														td.info(data-i18n='totalizers.Tax') Impuestos
+														td.monetary
+															span(data-i18n='global.free') Gratis
+												tfoot
+													tr
+														td.info(data-i18n='global.total') Total
+														td.monetary S/. 159,00
+					#orderplaced-bottom
+					hr.orderplaced-hr-continue
+					a#order-continue-shopping.btn-continue-shop.btn.pull-right(href='/', data-i18n='order.continueShopping') Hacer nuevas compras

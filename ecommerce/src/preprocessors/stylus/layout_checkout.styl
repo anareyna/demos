@@ -1,0 +1,1665 @@
+@require '_config/*'
+@require '_normalize/*'
+
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700)
+
+// resets vtex styles 
+.step, .cart, .totalizers
+	border-radius 0
+.accordion-heading .accordion-toggle, .accordion-inner
+	padding 0
+.cart-fixed.affix, .cart-fixed.affix-bottom
+	position static 
+	+mobile()
+		top 0 
+.input-small + span.error
+	+mobile()
+		width auto 
+input.success
+	background-position right center !important 
+.orderform-template-holder .client-profile-data input[type="text"]
+	+mobile()
+		width 100% !important 
+
+.input-append .add-on, .input-prepend .add-on
+	height 36px 
+	line-height 26px 
+.link-box-edit
+	border-radius 5px !important 
+	outline none 
+.label-vertical-group, .address-item
+	background $lighterGray !important
+	border 1px solid $lightGray !important
+	border-radius 0 !important 
+	box-shadow none !important
+	color lighten($primaryColor, 50%) !important 
+
+.address-item:hover, .shipping-data .create a:hover, .shipping-data .address-edit a:hover, .link-change-shipping:hover
+	color initial 
+	border-color initial
+.order-info .general-info td
+	padding 8px 
+.lead 
+	margin-bottom 10px 
+.icon-ok-circle
+	display none 
+.order-info .totals .hidden 
+	display none 	
+.orderform-template-holder .client-profile-data .client-document input, .orderform-template-holder .client-profile-data .client-phone input, 
+.orderform-template-holder .client-profile-data p.client-first-name, .orderform-template-holder .client-profile-data .box-client-info-pf
+.orderform-template-holder .client-profile-data .pull-left
+.orderform-template-holder .client-profile-data .client-document, .orderform-template-holder .client-profile-data .client-phone
+	+below(490px)
+		width 100% !important
+
+//util
+.hideall
+	display none !important	
+.moveup
+	margin-top -35px !important
+	background $lightBackground
+//delete button 
+/*.cart-links[style='display: none;']
+	display none !important*/
+// general
+
+
+*, *:before, *:after
+	box-sizing border-box
+	//outline 1px solid rgba(255,0,0,0.1)
+		
+body
+	font-family $family1 !important 
+	font-size 14px 
+	+mobile()
+		padding 0 !important
+
+a
+	text-decoration none
+	color $secondaryColor
+	transition 0.3s all ease
+	&:hover 
+		color $primaryColor
+		text-decoration none
+		transition 0.3s all ease
+
+.container
+	max-width $wrapperWidth !important 
+	width 100% !important
+	+mobile()
+		width 100% !important 
+		padding 0 2% !important 
+.row-fluid 
+	.span8, .span4, [class*="span"] 
+		+mobile()
+			width 100%
+			margin-left 0
+.custom_button
+	border none !important 
+	color white !important 
+	text-transform uppercase 
+	background $secondaryColor !important
+	outline none !important
+	padding 10px 30px !important 
+	transition 0.3s all ease 
+	font-weight bold !important 
+	border-radius 0 !important
+	text-shadow none !important
+	appearance none !important 
+	+mobile()
+		border-radius 5px !important 
+	&:hover 
+		transition 0.3s all ease 
+		opacity 0.9
+
+//button:not(.vtexIdUI-send-email):not(.vtexIdUI-providers-btn):not(.vtexIdUI-others-send-email):not(.vtexIdUI-close)
+	//@extends button
+#btn-client-pre-email
+	@extends .custom_button
+		
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], select, textarea 
+	border 1px solid $lightGray
+	background-color white
+	height 36px 
+	padding 0 10px 
+	line-height 36px 
+	color lighten($primaryColor, 50%)
+	outline none
+	appearance none
+	border-radius 0
+	box-shadow none
+	font-size 14px !important
+	&:focus 
+		border-color $lightGray
+		box-shadow none 
+		outline none 
+	&:-moz-focusring
+		color transparent
+		text-shadow 0 0 0 gray 
+			
+	&.error
+		border-color $errorColor 
+	
+select 
+	background white url(http://i.imgur.com/B4Qo0JN.png) no-repeat right center
+	padding-right 25px 
+	&::-ms-expand
+		display none 
+	&:focus 
+		outline none 
+	
+ul 
+	list-style none 
+
+//pre email
+.client-pre-email
+	.emailInfo
+		+mobile()
+			width 98% !important
+	.link-cart
+		font-weight bold
+		font-size 15px
+		+mobile()
+			float none
+	fieldset.pre-email
+		h3 
+			padding 0
+			label, span, small
+				color black !important
+				font-size 22px
+				font-weight 100
+				+mobile()
+					font-size 18px
+				+tablet()
+					margin 0
+		.client-email
+			#client-pre-email
+				height 50px
+				font-size 18px !important
+				color black
+				border-radius 5px !important
+				+mobile()
+					border-radius 5px !important
+					width 99% !important
+			#btn-client-pre-email
+				padding 10px 20px
+				height inherit
+				position absolute
+				top 5px
+				right 5px
+				vertical-align bottom
+				margin 0
+				border-radius 5px !important
+				+mobile()
+					position: initial;
+					margin-top: 30px;
+//end pre email		
+//footer
+
+.sup 
+	margin-bottom 40px
+	font-size 14px
+	+between(1050px, 1170px )
+		padding 10px
+	+tablet()
+		text-align center
+		padding 0 10px
+	+mobile()
+		display none
+	a 
+		color $secondaryColor
+.footer
+	width 100%
+	display inline-block
+	text-align center
+	padding 25px 10px
+	background $lightBackground
+	+between(1050px, 1170px )
+		padding-left 10px
+	+between(701px,759px)
+		text-align center
+	+tablet()
+		padding 0 10px;
+	+mobile()
+		background $lightBackground
+	    padding 40px 0 30px 0
+	    margin-top 40px
+	.bg 
+		margin 0 
+		padding 0 
+		+mobile()
+			display none
+		.container 
+			.right 
+				float right
+				width initial
+				margin 10px 0 0 0
+				+between(701px,759px)
+					display inline-block
+					text-align center
+					float none
+				p 
+					display inline-block 
+					position relative 
+					top 3px 
+					margin 0
+				.ico_Send
+					width 22px
+					height 16px
+					background url("/arquivos/sprite.png") no-repeat
+					background-position -1px -1px
+					display inline-block
+					float left
+					margin 5px 8px 0 0
+				.logo 
+					width 71px
+					height 71px
+					background url("/arquivos/sprite.png") no-repeat
+					background-position -129px -1px
+					display block
+					float right
+					margin -45px 0 0 5px
+					position relative
+					top 23px
+
+			.left 
+				float left
+				position relative
+				+between(701px,759px)
+					//float none 
+					margin 0 auto
+					display inline-block
+				p 
+					margin 0 0 35px 0
+					font-size 13px
+					text-align left
+				img 
+					//background url("http://estilomio.vteximg.com.br/arquivos/pagos.png") no-repeat
+					height auto
+					max-width 100%
+					display inline-block
+					vertical-align middle
+					border 0
+					float left
+				#DigiCert
+					display inline-block
+					margin-left 15px
+	.Foo 
+		margin 0
+		display none
+		+mobile()
+			display inline-block
+		p 
+			display inline-block
+			font-size 13px
+		
+//endfooter
+
+//header	
+.header 
+	width 100%
+	display inline-block
+	border-bottom 1px solid $lightGray
+	text-align center
+	background $backgroundHeaderGray
+	margin 0 0 40px 0
+	.container
+		width 100% 
+		display inline-block
+		&:before,&:after 
+			display table
+			line-height 0
+			content ""
+	.logo 
+		width 185px
+		height 50px
+		background url("/arquivos/logo_checkout.png") no-repeat
+		display inline-block
+		background-size 100% 100%
+		float left 
+		margin 27px 0 27px 8px
+		+mobile()
+			width 150px
+			height 39px
+	.seguro
+		width 95px
+		height 43px
+		background url("/arquivos/sitioseguro.png") no-repeat
+		display inline-block
+		margin 35px 0 30px 0
+		float right
+		+mobile()
+			position absolute
+			right 5px
+			top -7px
+//endheader
+
+//container-cart-1 
+//#test
+.orderform-template
+	display none
+//#test
+.coupon-column
+	float none !important
+	margin-bottom 12px
+	width 100% !important
+	+tablet()
+		//background skyblue
+		lost-column 6.5/12 !important
+	.coupon
+		background transparent
+		text-align center
+		float none
+		width 100%
+		//border 1px solid $lightGray
+		margin-top 0px
+		min-width 240px
+		+tablet()
+			margin 0
+		+mobile()
+			width 100% !important
+			margin-bottom 20px
+		.coupon-form 
+			//width 100%
+			margin 0px
+			.coupon-data
+				//display none !important
+			.coupon-fieldset
+				margin 0
+				.coupon-data 
+					float none
+					font-weight bold
+					color black !important
+					text-transform uppercase !important
+					background $MediumLightBackground
+					margin 0
+					cursor pointer
+					a 
+						color black
+						width: 100%;
+						padding: 11px 0;
+						display: inline-block;
+					span 
+						&:first-child
+							display none
+				div 
+					//display block !important
+					.coupon-label
+						text-transform uppercase 
+						padding 9px 0 8px 0
+						background lighten($lighterGray, 30%) !important
+						label 
+							font-weight bold 
+							font-size 15.24px
+					.coupon-fields
+						//margin 0px 0px 10px 0px
+						margin: 0;
+						margin: 10px 0;
+						position: relative;
+						+mobile()
+							margin-left 0
+						span 
+							.loading-inline 
+								display none !important
+						.info 
+							font-size 16px
+						.delete
+							color $darkGray
+							a 
+								position absolute
+								right 10px
+								top 0px
+								font-size 15px
+							
+						input 
+							float none
+							width 45%
+							margin 0 
+							margin-right 5px
+							+mobile()
+								float none
+								//width initial
+								margin 0
+								margin-right 10px
+						button
+							height 36px
+							width 45%
+							padding 0
+							color transparent
+							&:before 
+								content: "ADICIONAR";
+								POSITION: relative;
+								width: 100%;
+								left: 0;
+								background $darkGray !important
+								color white
+								font-weight 500
+								right: 0;
+								margin: auto;
+								visibility: visible;
+								display: block;
+								top: 0;
+								bottom: 0;
+								height: 100%;
+								padding-top: 6px;
+							+mobile()
+								//background $secondaryColor !important
+								border-radius 0px  !important
+.summary-totalizers 
+	float none !important
+	margin 0 !important
+	width 100% !important
+	padding 0
+	display inline-block !important
+	border-radius 0
+	border 1px solid $lightGray
+	margin-top 18px
+	padding 0 18px !important
+	margin-bottom 12px !important
+	+tablet()
+		lost-column 5.5/12 !important
+		padding 0 18px !important
+		display inline-block !important
+		//width 100% !important 
+	+mobile()
+		display inline-block !important
+		padding 0 18px !important
+	.info 
+		+mobile()
+			text-align left !important
+			padding-left 60px
+	.accordion-group
+		+mobile()
+			lost-column 12/12
+			float none
+			width 100%
+			display inline-block
+		.accordion-body
+			.accordion-inner
+				table.table 
+					+mobile()
+						margin 10px 0 
+					.empty, .space 
+						+mobile()
+							display none 
+					tfoot 
+						font-weight bold
+						.info 
+							font-size 15.24px
+							text-align left
+						td 
+							+mobile()
+								text-align right !important 
+						.monetary
+							font-size 15.24px !important
+							font-weight bold !important
+							position absolute 
+							right 0
+							text-align right
+							+mobile()
+								text-align right !important
+								padding 8px 0
+								font-size 15.24px
+								font-weight 500
+								position initial
+					.shipping-reset
+						tr 
+							border-bottom 1px solid $lightGray
+							.info
+								font-size 15.24px
+								text-align left	
+								font-weight bold
+								+between(770px,950px)
+									width 50px
+							.monetary
+								font-size 15.24px
+								position absolute 
+								right 0
+								text-align right
+								+mobile()
+									text-align right !important
+									padding 8px 0
+									font-size 15.24px
+					.totalizers-list
+						tr 
+							border-bottom 1px solid $lightGray
+							.info
+								font-size 15.24px
+								text-align left
+								font-weight bold
+								+mobile()
+									text-align right !important 
+									
+								.shipping-selected-sla-estimate
+									display none !important
+								.postal-code-for-sla
+									font-size 15.24px
+									text-align left
+									font-weight 700
+									&:before 
+										content 'Costo de env\00EDo'
+										font-weight bold 
+										display block 
+										+mobile()
+											text-align right 
+									span 
+										display none !important
+
+							td 
+								+mobile()
+									width 50%
+									
+							.monetary
+								font-size 15.24px
+								position absolute 
+								right 0
+								text-align right
+								+mobile()
+									text-align right !important
+									padding 8px 0
+									font-size 15.24px
+									position initial 
+									
+
+//Hide chackout-cart-1
+
+//End Hide
+.container-cart
+	h1#cart-title
+		margin 0 0 20px 0
+		+mobile()
+			margin 0 
+		&:before
+			content "MI "
+	.checkout-container
+		margin 0
+		margin-bottom 100px !important
+		+mobile()
+			margin-bottom 35px !important
+			padding 0 10px
+		+tablet()
+			padding  5px 10px
+		.summary-template-holder
+			lost-column 3/12
+			display inline-block
+			margin 0
+			float none !important
+			+tablet()
+				//background peru
+				margin 0
+				lost-column 8/12
+			+mobile()
+				lost-column 12/12
+				float none
+				width 100%
+				display inline-block
+				.summary 
+					.summary-coupon-wrap
+						+tablet()
+							margin 0
+							width 53% !important
+		.cart-links
+			lost-column 3/12
+			margin 0 
+			padding 0
+			height 80px
+			display inline-block !important
+			float none !important
+			position relative
+			text-align center
+			//left -46px
+			+tablet()
+				//background peru
+				left 0
+				margin-right 0 !important
+				float right !important
+				lost-column 4/12
+			+mobile()
+				lost-column 12/12
+				float none
+				width 100%
+				display inline-block
+				margin-bottom 30px
+				position initial !important
+			.link-choose-more-products-wrapper
+				color black
+				list-style none
+				text-align center
+				margin 20px 0 0 
+				width 100%
+				display inline-block 
+				position absolute 
+				top  40px
+				background-color $MediumLightBackground
+				padding 10px 0
+				//left -0.2%
+				+tablet()
+					background white
+				+mobile()
+					position relative
+					top 96px
+					margin 0 auto
+					background white 
+				a 
+					margin 0
+					font-size 16px
+					color black
+					text-decoration none
+					&:before
+						content "\f104"
+						font-weight bold
+						font-family FontAwesome
+						position absolute
+						left 25px
+						+between(700px,750px)
+							left 10px
+						+mobile()
+							position relative
+							left -16px
+			.btn-place-order-wrapper
+				//position relative
+				//left -2px
+				a 
+					width 100%
+					border-radius 0
+					border 0
+					margin 0
+					font-weight bold
+					background $secondaryColor
+					padding 10px 0
+					text-transform uppercase
+					+mobile()
+						width 75%
+						margin 0 auto
+						border-radius 5px
+		.cart-template-holder
+			lost-column 8.5/12
+			margin 0
+			margin-bottom 40px !important
+			+tablet()
+				lost-column 12/12
+			+mobile()
+				lost-column 12/12
+				float none
+				width 100%
+				margin 0
+				padding 0
+				margin-bottom 22px !important
+				width 100%
+				display inline-block
+			.empty-cart-content
+				position absolute 
+				background white 
+				left 0 
+				right 0 
+				z-index 1 
+				padding-bottom 40px 
+				.empty-cart-links
+					a 
+						border-radius 0
+						text-transform uppercase
+						border none
+						background $secondaryColor
+			.cart 
+				border none
+				padding-top 0
+				+tablet()
+					//margin 0 
+					padding 0
+				+mobile()
+					margin 0
+					padding 0
+					width 100%
+				table.cart-items
+					tbody 
+						padding 5px
+						&:before
+							line-height 1.5em
+							content "."
+							color white /* bacground color */
+							display block
+						+mobile()
+							padding 0
+						tr 
+							//border-bottom 1px solid $lightGray
+							padding 0
+							height 142px
+							border 1px solid $lightGray
+							+mobile()
+								position relative
+								margin 0px !important
+								width 100%
+								height initial
+								display inline-block
+								padding-bottom 10px
+								border-bottom  1px solid transparent
+								&:last-child
+									border-bottom  1px solid $lightGray
+								//position relative
+								//right 10px 
+								//top 1px
+							.item-remove
+								+mobile()
+									position absolute
+									top 4px
+									right 7px
+									width 14px
+									padding 0
+								.loading-text
+									margin-right 0px !important
+								.icon-remove
+									&:before 
+										color $lightGray 
+										font-size 13px
+										+mobile()
+											font-size 16px 
+							.quantity
+								+between(320px,490px)
+									width initial
+									top 0px !important
+									left 21px !important
+								+tablet()
+									display flex
+									justify-content center
+									align-items center
+									padding 20px 0
+								+mobile()
+									position relative
+									margin 30px 0 0
+									padding 0
+									display inline-block
+									vertical-align top
+									top 5px
+									left 20px
+								input 
+									padding 0
+									font-weight bold 
+									color $primaryColor
+									+between(1051px, 1140px)
+										margin 0
+									+tablet()
+										margin 0 10px
+										width 40px
+									+mobile()
+										height 25px !important
+										line-height 10px
+										width 25px !important
+								.item-quantity-change-increment
+									+tablet()
+										position initial
+									+mobile()
+										padding 0
+										margin-left 10px
+								.item-quantity-change-decrement
+									+tablet()
+										position initial
+									+mobile()
+										padding 0
+										margin-right 10px
+										
+								.icon-minus-sign
+									&:before
+										content "\f068" !important
+										font-size 13px
+										color $lightGray
+								.icon-plus-sign
+									&:before
+										content "\f067" !important
+										font-size 13px 
+										color $lightGray
+							.shipping-date
+								display none
+							.quantity-price 
+								font-weight bold !important
+								.total-selling-price
+									+mobile()
+										display none
+							.product-price
+								width 130px
+								+mobile()
+									right 12px !important
+									position: absolute !important;
+									bottom: 0;
+									margin: 5px !important
+									line-height: 18px !important
+									text-align: left !important
+									width: initial !important
+									float right !important
+								br 
+									display none !important
+								.list-price
+									display none !important
+									height 0 
+									padding 0
+								.best-price
+									font-weight bold !important
+									position relative !important
+									//top -10px !important
+									.discount
+										display none !important
+									.new-product-price
+										display block !important 
+										//margin-top -20px !important
+										+mobile()
+											margin-top 0px !important
+									.new-product-price-label
+										display none !important
+							.product-name 
+								+between(535px,699px)
+									width 75% !important
+								+mobile()
+									width 63%
+									left 10px
+									top 30px
+									position relative
+									display inline-block
+									margin 0
+									padding 0 !important
+								.brand 
+									display block !important 
+								.seller 
+									color $primaryColor 
+								a 
+									font-weight bold !important
+									color $primaryColor
+									text-transform uppercase !important
+									+mobile()
+										padding-right 12px !important
+							.product-image
+								+mobile()
+									position relative
+									width 100px
+									top 25px
+									vertical-align top
+									left -3px
+									background none
+									display inline-block
+									&:after
+										content "a calcular"
+										position relative
+										left 28px
+								img 
+									border 1px solid $lightGray
+									width 100px
+									max-width 100px
+									height 100px
+									+mobile()
+										height 80px
+										max-width 85px
+										width 85px
+										margin-left 13px
+					thead
+						+mobile()
+							display none
+						tr 
+							th 
+								padding 9.8px 8px 9px 8px
+								text-transform uppercase
+								background lighten($lighterGray, 30%)
+								font-size 15px
+								&:nth-child(2)
+									display none
+//endcontainer-cart-1 
+
+.container-main
+	h1 
+		font-size 18px 
+		text-transform uppercase 
+		font-weight bold
+		color $primaryColor
+		margin-top 0
+		margin-bottom 30px
+		+between(1050px, 1170px )
+			padding 10px
+		+tablet()
+			padding 8px 
+		+mobile()
+			text-align center
+			margin-bottom 10px 
+	fieldset
+		border none 
+		padding 0
+	.help.error 
+		color $errorColor 
+		font-size 12px
+		width 100%
+	
+.container-order-form // finalizar compra
+	.step 
+		border 1px solid $lightGray
+		padding 20px 
+		+mobile() 
+			border none 
+			padding 10px 
+		button 
+			@extends .custom_button 
+		
+	p.input
+		margin-bottom 10px 
+		+mobile()
+			margin-top 20px 
+		
+	.input-xlarge 
+		width 100%
+		max-width 100%
+		
+	.client-email label:after
+	.client-first-name label:after
+	.client-last-name label:after
+	.client-document label:after
+	.client-phone label:after
+	.payment-card-number label:after
+	.payment-card-due label:after
+	.payment-card-name label:after
+	.payment-card-cvv label:after
+		content '*'
+		
+	.client-first-name, .client-document
+		width 47%
+		margin-right 6% 
+		input 
+			width 100%
+			
+	.client-last-name, .client-phone
+		width 47%
+		input 
+			width 100%
+		
+	.box-client-info-pj // datos de empresa 
+		display none 
+	
+	label
+		display block 
+		margin-bottom 5px 
+		color $darkGray
+		font-weight bold 
+		font-size 12px 
+	
+	.newsletter, .phone-box
+		display none 
+		
+	.accordion-heading
+		text-transform uppercase 
+		margin-bottom 10px 
+		+mobile() 
+			border-bottom 1px solid $primaryColor 
+			padding-bottom 10px
+			margin-bottom 20px 
+			
+		i[class^="icon-"]
+			margin-right 10px 
+			font-size 20px 
+		i.icon-edit
+			margin-right 0
+			outline none 
+			color $primaryColor
+		span 
+			font-weight bold 
+			font-size 16px 
+			+mobile()
+				font-size 18px 
+			
+	.btn-submit-wrapper
+		margin-top 20px 
+		lost-utility clearfix 
+		+mobile()
+			margin-top 0
+			text-align center 
+		#go-to-shipping
+			float right 
+			+mobile()
+				float none 
+			
+	.cart-fixed
+		width auto 
+		margin-bottom 50px 
+		height auto !important 
+		+mobile()
+			margin-bottom 0
+	.box-client-info-pf
+		float none
+		margin-right 0
+	.mini-cart
+		border 1px solid $lightGray
+		position relative 
+		.info 
+			+mobile() 
+				float none !important
+		.cart 
+			max-height initial !important 
+		.summary-cart-template-holder
+			height auto !important 
+		h2 
+			margin-top 0
+			text-transform uppercase
+			font-size 16px 
+			background lighten($lighterGray, 30%)
+			padding 20px  
+			font-weight bold 
+			text-align left 
+			color #333333
+			+mobile()
+				text-align center 
+		.summary-template-holder
+			lost-utility clearfix 
+			padding 10px 0
+			margin 20px 
+			width auto 
+			background none !important 
+			height auto !important
+			border-top none // reset style.css 
+			+mobile()	
+				lost-utility clearfix 
+			.accordion-toggle, .summary-coupon-wrap
+				display none 
+			.summary-totalizers
+				float none 
+				margin 0
+				border 1px solid $lightGray
+				width 100% !important 
+				
+				.accordion-heading
+					display none 
+				table 
+					width 100%
+					font-size 16px 
+					tr 
+						border-bottom 1px solid $lightGray
+						
+						td 
+							padding 10px 0
+							text-align right 
+							color inherit
+							font-size 16px 
+							color $primaryColor
+							
+							&.info
+								font-weight bold 
+								text-align left 
+								width 100%
+								+mobile()
+									width 50%
+					tfoot 
+						tr 
+							border 0 
+		ul.cart-items
+			padding 0 20px 
+			li.item
+				position relative 
+				display flex 
+				font-size 14px 
+				color $primaryColor
+				border none 
+				margin-bottom 20px 
+				border-top 1px dotted $lightGray
+				padding-top 20px 
+				&:first-child 
+					border-top none 
+				.url
+					margin-right 20px 
+					border 1px solid $lightGray
+					+mobile()
+						float none 
+					img 
+						width 78px
+						height 78px 
+						max-width 78px
+				.product-name
+					margin-top 5px 
+					width auto 
+					line-height 1.2
+					float none 
+					text-overflow initial 
+					white-space initial
+					font-size 13px
+					text-transform uppercase 
+					+mobile()
+						position absolute 
+						left 100px 
+					+above(rupture.mobile-cutoff)	
+						max-height 58px 
+					
+				.quantity
+					position absolute
+					background $primaryColor
+					border-radius 50%
+					color white 
+					padding 8px 10px 
+					left 64px 
+					top 8px
+					font-weight normal 
+					font-size 14px 
+				.description
+					position absolute
+					bottom 0
+					right 0
+					.price
+						font-size 14px 
+						&:before
+							+mobile()
+								content "Precio: "
+					.shipping-date, .item-price
+						display none 
+		
+		.link-cart
+			float none !important 
+			margin 10px 0
+			+mobile() 
+				display block 
+				width 100% 
+				lost-utility clearfix 
+			a 
+				display block 
+				color $secondaryColor
+				text-decoration none 
+				font-size 14px 
+				font-weight bold 
+				text-align center 
+			
+		.payment-confirmation-wrap
+			padding 0 20px
+			background none !important 
+			position static !important
+			margin-top -30px !important
+			+mobile()
+				margin-bottom 30px 
+			button 
+				@extends .custom_button
+				margin-top 10px !important 
+				width 100% !important 
+				i 
+					display none
+.cvv-help
+	margin-left 260px 
+	width 140px 
+	
+.ship-international
+	display none 
+	
+.box-delivery
+	label 
+		display block !important 
+	input
+		+mobile()
+			width 100% !important 
+		
+	.ship-state, .ship-city
+		width 100%
+	.ship-number
+		width 48%
+		margin-right 4%
+		input 
+			width 100%
+	.ship-more-info
+		width 48%
+		float left 
+		input 
+			width 100%
+			
+.address-shipping-options
+	+mobile()
+		margin-bottom 10px 		
+		
+.payment-data
+	+mobile()
+		text-align center 
+	.box-delivery 
+		.ship-number, .ship-more-info
+			float none 
+			width 100%
+		.ship-state, .ship-city, .ship-neighborhood
+			label 
+				display block 
+			input 
+				width 100%
+				+mobile()
+					max-width 100% 
+	.active.step
+		padding-right 0 
+		padding-bottom 0 
+	label 
+		display inline-block 
+		font-size inherit
+	.payment-group-item
+		border-radius 5px 
+		text-decoration initial 
+		opacity 1 
+		margin-left 0 
+		border-right 2px solid #f4f4f4
+		margin-bottom 10px 
+		&.active 
+			+mobile()
+				background white
+		
+		+mobile() 
+			width 50% !important
+			float left 
+			border-radius 0 !important
+			border none !important 
+			margin-bottom 0
+			background $lighterGray
+	#payment-group-creditCardPaymentGroup .payment-group-item-text
+		background-image url('/arquivos/icoCard.png')
+				
+	.payment-group-list-btn
+		width 280px 
+		+mobile() 
+			width auto 
+		span
+			font-size 16px 
+			font-weight bold 
+			color $primaryColor
+			padding 10px
+			&:first-child 
+				background-image url('/arquivos/icoPagoEfectivo.png')
+			+mobile()
+				background-image none !important 
+				font-size 14px 
+	.payment-group
+		font-size 14px 
+	.steps-view
+		width 470px 
+		border-radius 0
+		+mobile()
+			width 100%
+			background white 
+	.input-medium
+		width 70%
+		display block 
+		+mobile()
+			width 100%
+	.card-data .label-text,.payment-card-cvv label, .saved-cc-ccv label
+		width auto 
+		margin-right 10px 
+	.card-flags .radio .card-flag-radio[type="radio"]
+		outline none 
+	input[type="checkbox"]
+		outline none 
+		+mobile() 
+			float none 
+			vertical-align top 
+	.accordion-heading
+		border-bottom 1px solid $lightGray 
+		padding-bottom 10px 
+		margin-bottom 0 
+		+mobile()
+			margin-bottom 0 
+			text-align left 
+			border-color $primaryColor
+	.accordion-group.filled
+		.accordion-heading
+			margin-bottom 10px 
+			+mobile()
+				margin-bottom 10px 
+	.payment-card-due
+		.help.error
+			width 70px !important 
+			display block !important 
+		label
+			+mobile() 
+				float none 
+				display block 
+		p 
+			+mobile()
+				float none 
+				display inline-block 
+				
+	.payment-card-cvv span.error, .saved-cc-ccv span.error
+		margin-left 145px !important 
+		display block !important
+		+mobile()
+			margin-left 0 !important 
+	.payment-card-cvv
+		label 
+			margin-top 6px 
+			+mobile()
+				float none 
+				display block 
+		input 
+			+mobile() 
+				width 100%
+	.payment-security 
+		+mobile()
+			display none 
+	.payment-card-value 
+		input 
+			width 100px 
+		label 
+			+mobile()
+				float none 
+				display inline-block !important 
+	.payment-description
+		display none 
+
+
+// Orden generada
+
+.orderplaced
+	+mobile() 
+		padding 0 2%
+	.orderplaced-alert
+		position relative 
+		&:before
+			display block 
+			position absolute 
+			top 0 
+			bottom 0 
+			left 0 
+			right 0
+			background url("/arquivos/loading.gif") no-repeat center center 
+			z-index -1
+		.orderplaced-alert-content 
+			visibility hidden
+	.alert-success
+		padding 15px 
+	.title
+		color $primaryColor 
+		font-size 18px 
+		text-transform uppercase 
+		font-weight bold 
+	.page-header 
+		border none 
+		padding 0
+		margin-top 10px  
+	.order-header 
+		margin-bottom 0
+	.myorders-list
+		.order-title 
+			font-size 16px 
+			font-weight bold 
+			color gray 
+		.title-ordergroup-order
+			margin-right 5px 
+	h3.section-info-title
+		margin-top 0 
+		color gray 
+		font-size 14px 
+	table.order-detail-items
+		thead
+			+mobile()
+				display none 
+			th 
+				text-align center 
+				background lighten($lighterGray, 30%) 
+		.shipping-date
+			+mobile()
+				display none 
+		.quantity
+			+mobile()
+				position absolute
+				left 80px 
+				span 
+					background $primaryColor 
+					color white 
+					border-radius 20px 
+					padding 5px  10px 
+		.quantity-price
+			+mobile()
+				display none 
+		.product-price
+			+mobile()
+				font-weight bold 
+				text-align right 
+				flex-basis 100% 
+				right 0 
+				bottom 0 
+				position absolute 
+				&:before
+					content "Precio: "
+			
+		tr 
+			border-top 1px solid $lighterGray
+			position relative 
+			&:first-child 
+				border-top none 
+			+mobile()
+				display flex 
+				flex-flow row wrap 
+		.product-name
+			+mobile()
+				vertical-align top !important 
+				flex 1 
+				padding-left 10px !important 
+				width 100%
+			a 
+				font-weight bold 
+				text-transform uppercase 
+				color $primaryColor 
+			.brand-name 
+				+mobile()
+					display none 
+		.product-image
+			+mobile()
+				width auto 
+			a 
+				display block 
+				border 1px solid $lightGray
+				img 
+					width 100px 
+					height 100px  
+					max-width 100px 
+	.payment-title
+		display none 
+		
+	.payment-info 
+		.section-info-title
+			color $primaryColor
+			font-size 16px 
+			text-transform uppercase 
+		.payment-transaction-details-btn
+			color $secondaryColor !important 
+			font-size 16px 
+			margin-top 10px 
+			display none !important 
+		.payment-value
+			background none 
+			width auto 
+		.payment-transaction-details
+			font-size 14px 
+			.muted 
+				color $primaryColor
+				font-size inherit 
+		.order-info-hr
+			display none 
+				
+	.total-info
+		.section-info-title // total 
+			display none 
+		table 
+			+mobile() 
+				border 1px solid $lightGray 
+				width 80%
+				margin auto 
+	
+			td 
+				text-align right 
+				+mobile()
+					padding 10px 
+			tr
+				border-bottom 1px solid $lightGray
+				&.Shipping
+					&:before
+						content 'Costo de env\00EDo'
+						font-weight bold 
+						display block 
+						padding 8px 8px 0 
+						+mobile()
+							text-align right 
+					.info 
+						display none 
+							
+					
+			tfoot 
+				text-transform uppercase
+				font-weight bold 
+				tr 
+					border-bottom none 
+
+			.info 
+				font-weight bold 
+				text-align left 
+				+mobile()
+					text-align right 
+					width 50%
+	.btn-continue-shop 
+		@extends .custom_button 
+		border-radius 5px !important 
+		text-transform inherit 
+		margin-bottom 20px 
+		+mobile()
+			margin 0 auto 20px 
+			display block 
+			width 210px 
+			float none 
+	.mobile_payment_summary
+		display none 
+		font-family Arial, sans-serif
+		border 1px solid #333
+		color #333
+		text-align center 
+		margin-top 20px 
+		+mobile() 
+			display block 
+		.info_code
+			.title 
+				font-size 24px 
+				line-height 1.2
+				text-transform initial 
+				color inherit 
+				margin-top 20px 
+				span 
+					display block 
+					font-size 32px 
+			.lbl_total
+				display block 
+				font-size 24px 
+				margin-top 10px 
+			.igv 
+				display block 
+			.payment_date
+				display block  
+				margin-bottom 10px 
+		.restrictions 
+			border-top 1px solid #333
+			border-bottom 1px solid #333
+			font-size 11px 
+			line-height 1 
+			padding 10px 
+		.warning_info
+			background #FECB00
+			margin 5px 
+			padding 10px 
+			font-size 16px 
+			p 
+				width 70%
+				display inline-block 
+				vertical-align top 
+				margin 0 10px
+			.logo_info
+				background-image url('https://dbx0dsbedibx1.cloudfront.net/App_Themes/SPE/img/third_sprite.png?v=201411101846')
+				width 30px
+				height 30px 
+				background-position -44px 0 
+				display inline-block 
+				margin-top 5px 
+	.payment
+		+mobile() 
+			margin-bottom 20px 
+		.text 
+			margin-right 5px 
+		.payment-method-info
+			visibility hidden 	
+			position relative 
+			display inline-block 
+			
+			.payment-value
+				position absolute 
+				left 0
+				visibility visible
+				padding 0 
+			.bank-invoice-print-link
+				visibility visible 
+				margin-left 20px 
+.pagoefectivo_custom
+	label 
+		margin-bottom 10px 
+	input 
+		outline none 
+		vertical-align top 
+		&:focus 
+			outline none 
+	img 
+		border 1px solid $lightGray
+		margin 0 10px 
+		vertical-align top 
+	b 
+		display block 
+		color $primaryColor
+		margin-bottom 3px 
+	p 
+		display inline-block
+		width 70%
+		line-height 1.2
+		font-size 12px 
+		color gray
+		+mobile()
+			text-align left 
+
+.pagoefectivo /* added by js */
+	
+	#orderplaced-top
+		iframe 
+			+mobile()
+				display none
+			
+	.orderplaced-alert 
+		.btn-success
+			@extends .custom_button 
+			border-radius 5px !important 
+			text-transform initial 
+		.orderplaced-alert-content
+			background #FCEDCE
+			border 1px solid darken(#FCEDCE, 10%)
+			
+		.bank-invoice-print-text
+			color gray 
+			&:before 
+				content 'Para realizar el pago, imprimir el boleto: Monto de '
+			span 
+				display none 
+		.orderplaced-alert-text
+			position relative 
+			color gray 
+			&:after
+				content 'En pocos minutos recibirá un email de confirmación de compra.'
+			h4 
+				position absolute
+				top 10px
+				color transparent 
+				text-shadow none 
+				&:before 
+					content 'Debe realizar el pago de su pedido para completar la compra'
+					color gray
+					visibility visible
+			.orderplaced-sending-email
+				margin-top 30px 
+				+mobile()
+					margin-top 60px 
+			.orderplaced-processing
+				display none 
+				
+
+.email_step 
+	#shipping-data,.client-document,.client-phone,.btn-submit-wrapper, #payment-data, .checkout-container .cart-template.mini-cart 
+		+mobile() 
+			display none 
+
+.modal
+	+mobile()
+		width 100%
+		margin 0 auto
+		padding 0
+		position absolute
+		left 50%
+		top 18%
+		transform translate(-50%)

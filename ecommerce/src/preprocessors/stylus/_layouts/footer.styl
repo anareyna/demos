@@ -1,0 +1,122 @@
+/*!!
+* Layout
+* @module layout
+* @class footer
+* @author Ana Reyna
+*/
+
+footer
+	background #f6f6f6
+	lost-utility clearfix
+	margin-top 50px
+	color #6c6c6c
+	padding 30px 0
+	overflow hidden
+	+mobile()
+		background none
+		margin-top 0
+		padding-top 20px
+	a
+		transition 0.3s all ease
+		&:hover
+			transition 0.3s all ease
+			opacity .7
+	.column_3
+		lost-column 3/12
+	.column_2
+		lost-column 2/12
+	.column_4
+		lost-column 4/12
+	.info, .categories
+		+mobile()
+			display none
+	.contact, .payment
+		.margin_mobile
+			+mobile()
+				margin-left 10px
+		+mobile()
+			lost-column 1/1
+			border-top 1px solid #6c6c6c
+			padding-top 20px
+			text-align center
+	.payment
+		ul
+			+mobile()
+				display none 
+	ul
+		list-style none
+		padding 0
+		li
+			font-size 14px
+			margin-bottom 10px
+
+
+	h3
+		margin-top 0
+		+mobile()
+			text-transform uppercase
+			font-weight bold
+	.social_links
+		lost-utility clearfix
+		margin-top 20px
+		+mobile()
+			margin-bottom 20px
+		a
+			display inline-block
+			margin-right 10px
+			&:last-child
+				margin-right 0
+		.ico_fb
+			sprite($ico_fb)
+			margin-right 8px
+		.ico_twitter
+			sprite($ico_twitter)
+		.ico_instagram
+			sprite($ico_instagram)
+	.complaints
+		border 1px solid #6c6c6c
+		border-radius 25px
+		text-align center
+		margin-top 40px
+		+mobile()
+			margin-top 30px
+		.ico_complaints
+			sprite($libro_reclamaciones)
+			display block
+			margin auto
+	.payment_methods
+		span
+			display inline-block
+			margin-right 5px
+		.ico_pe
+			sprite ($payment_pe)
+		.ico_mc
+			sprite ($payment_mc)
+		.ico_mcsc
+			sprite ($payment_mcsc)
+		.ico_visa
+			sprite ($payment_visa)
+		.ico_dc
+			sprite ($payment_dc)
+.footer_bottom
+	+mobile()
+		display none
+	.left
+		lost-column 1/2
+		img
+			margin-top 20px
+		p
+			margin-top 5px
+			font-size 11px
+			color #6c6c6c
+	.right
+		lost-column 1/2
+		text-align right
+		a
+			display inline-block
+			margin-top 20px
+		.seal_dc
+			sprite($seal_dc)
+			margin-right 10px
+		.seal_vtex
+			sprite($seal_vtex)
