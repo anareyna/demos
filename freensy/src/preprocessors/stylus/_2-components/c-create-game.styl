@@ -1,0 +1,85 @@
+.c-create-game
+	lost-column 1/2
+	border 3px dashed rgba(black, 0.2)
+	padding 30px 50px
+	background-color rgba($primaryColor ,0.9)
+	position relative 
+	min-height 500px
+	z-index 1
+
+	
+	&__title 
+		color $fontColor
+		font-family $family2 
+		letter-spacing 1px
+		margin-top 0
+		margin-left -10px 
+		line-height 1.2
+		text-align center
+	&__subtitle 
+		color white
+		font-family $family1
+		letter-spacing 1px
+
+	&__label 
+		font-size 1rem
+		margin-bottom 10px
+		display block 
+		font-family $family1
+	&__input-group
+		display flex
+		.u-blur
+			color white 
+			position absolute 
+			left 20px 
+			top 14px 
+			filter blur(4px)
+			overflow hidden 
+			height 25px 
+			word-break break-all
+		.c-create-game__input 
+			border-top-right-radius 0
+			border-bottom-right-radius 0
+		.c-create-game__button
+			border-top-left-radius 0
+			border-bottom-left-radius 0
+			flex-shrink 0
+	&__form-group 
+		position relative
+	&__columns
+		display flex 
+		.c-create-game__form-group
+			&:first-child
+				margin-right 10px
+			&:nth-child(2)
+				margin-left 10px
+	&__step1
+		padding 20px 0
+	&__step2
+		padding 0
+	&--large 
+		float none 
+		clear both 
+		width 100%
+		
++tablet()
+	.c-create-game
+		lost-column 1/1
+		float none !important
+		width 70%
+		margin auto !important
++mobile()
+	.c-create-game
+		lost-column 1/1
+		padding-left 30px
+		padding-right 30px
+		width 100%
+		&__title 
+			font-size 2.3rem
+		&__columns
+			display block
+			.c-create-game__form-group
+				&:first-child
+					margin-right 0
+				&:nth-child(2)
+					margin-left 0

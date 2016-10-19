@@ -1,0 +1,412 @@
+
+// remodal 
+html
+	&.remodal-is-locked
+		overflow hidden
+		-ms-touch-action none
+		touch-action none
+
+.remodal,
+[data-remodal-id]
+	display none
+
+.remodal-overlay
+	position fixed
+	z-index 9999
+	top -5000px
+	right -5000px
+	bottom -5000px
+	left -5000px
+	display none
+
+.remodal-wrapper
+	position fixed
+	z-index 10000
+	top 0
+	right 0
+	bottom 0
+	left 0
+	display none
+	overflow auto
+	text-align center
+	-webkit-overflow-scrolling touch
+	&:after
+		display inline-block
+		height 100%
+		margin-left -0.05em
+		content ""
+
+.remodal-overlay,
+.remodal-wrapper
+	-webkit-backface-visibility hidden
+	backface-visibility hidden
+
+.remodal
+	position relative
+	outline none
+	text-align left
+	-webkit-text-size-adjust 100%
+	-ms-text-size-adjust 100%
+	text-size-adjust 100%
+
+.remodal-is-initialized
+	display inline-block
+
+// remodal default theme
+
+.remodal-bg.remodal-is-opening,
+.remodal-bg.remodal-is-opened
+	-webkit-filter blur(3px)
+	filter blur(3px)
+
+.remodal-overlay
+	background rgba(43, 46, 56, 0.9)
+	&.remodal-is-opening
+		-webkit-animation-name remodal-overlay-opening-keyframes
+		animation-name remodal-overlay-opening-keyframes
+	&.remodal-is-closing
+		-webkit-animation-name remodal-overlay-closing-keyframes
+		animation-name remodal-overlay-closing-keyframes
+
+.remodal-overlay.remodal-is-opening,
+.remodal-overlay.remodal-is-closing
+	-webkit-animation-duration 0.3s
+	animation-duration 0.3s
+	-webkit-animation-fill-mode forwards
+	animation-fill-mode forwards
+
+.remodal-wrapper
+	padding 10px 10px 0
+
+.remodal
+	box-sizing border-box
+	max-width 70%
+	width auto
+	margin-bottom 10px
+	padding 35px
+	-webkit-transform translate3d(0, 0, 0)
+	transform translate3d(0, 0, 0)
+	color $fontColor
+	background $primaryColor
+	&.remodal-is-opening
+		-webkit-animation-name remodal-opening-keyframes
+		animation-name remodal-opening-keyframes
+	&.remodal-is-closing
+		-webkit-animation-name remodal-closing-keyframes
+		animation-name remodal-closing-keyframes
+	+mobile()
+		max-width 95%
+	
+
+.remodal.remodal-is-opening,
+.remodal.remodal-is-closing
+	-webkit-animation-duration 0.3s
+	animation-duration 0.3s
+	-webkit-animation-fill-mode forwards
+	animation-fill-mode forwards
+
+.remodal,
+.remodal-wrapper:after
+	vertical-align middle
+
+.remodal-close
+	position absolute
+	top 0
+	right 0
+	display block
+	overflow visible
+	width 45px
+	height 45px
+	margin 0
+	padding 0
+	cursor pointer
+	-webkit-transition color 0.2s
+	transition color 0.2s
+	text-decoration none
+	color rgba(black,0.2)
+	border 0
+	outline 0
+	background transparent
+	&:before
+		font-family Arial, "Helvetica CY", "Nimbus Sans L", sans-serif !important
+		font-size 45px
+		line-height 45px
+		position absolute
+		top 0
+		left 0
+		display block
+		width 45px
+		content "\00d7"
+		text-align center
+
+.remodal-close:hover,
+.remodal-close:focus
+	color #2b2e38
+
+.remodal-confirm,
+.remodal-cancel
+	font inherit
+	display inline-block
+	overflow visible
+	min-width 110px
+	margin 0
+	padding 12px 0
+	cursor pointer
+	-webkit-transition background 0.2s
+	transition background 0.2s
+	text-align center
+	vertical-align middle
+	text-decoration none
+	border 0
+	outline 0
+
+.remodal-confirm
+	color #fff
+	background #81c784
+
+.remodal-confirm:hover,
+.remodal-confirm:focus
+	background #66bb6a
+
+.remodal-cancel
+	color #fff
+	background #e57373
+
+.remodal-cancel:hover,
+.remodal-cancel:focus
+	background #ef5350
+
+.remodal-confirm::-moz-focus-inner,
+.remodal-cancel::-moz-focus-inner,
+.remodal-close::-moz-focus-inner
+	padding 0
+	border 0
+
+	@media only screen and (min-width: 641px)
+		.remodal
+			max-width 700px
+
+.lt-ie9
+	.remodal-overlay
+		background #2b2e38
+	.remodal
+		width 700px
+		
+@css {
+	/* Keyframes
+	 ========================================================================== */
+
+	@-webkit-keyframes remodal-opening-keyframes {
+		from {
+			-webkit-transform: scale(1.05);
+			transform: scale(1.05);
+
+			opacity: 0;
+		}
+		to {
+			-webkit-transform: none;
+			transform: none;
+
+			opacity: 1;
+		}
+	}
+
+	@keyframes remodal-opening-keyframes {
+		from {
+			-webkit-transform: scale(1.05);
+			transform: scale(1.05);
+
+			opacity: 0;
+		}
+		to {
+			-webkit-transform: none;
+			transform: none;
+
+			opacity: 1;
+		}
+	}
+
+	@-webkit-keyframes remodal-closing-keyframes {
+		from {
+			-webkit-transform: scale(1);
+			transform: scale(1);
+
+			opacity: 1;
+		}
+		to {
+			-webkit-transform: scale(0.95);
+			transform: scale(0.95);
+
+			opacity: 0;
+		}
+	}
+
+	@keyframes remodal-closing-keyframes {
+		from {
+			-webkit-transform: scale(1);
+			transform: scale(1);
+
+			opacity: 1;
+		}
+		to {
+			-webkit-transform: scale(0.95);
+			transform: scale(0.95);
+
+			opacity: 0;
+		}
+	}
+
+	@-webkit-keyframes remodal-overlay-opening-keyframes {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes remodal-overlay-opening-keyframes {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@-webkit-keyframes remodal-overlay-closing-keyframes {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
+
+	@keyframes remodal-overlay-closing-keyframes {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
+}
+
+@css {
+	@keyframes shake {
+
+		0% {
+			transform: translate(3px, 0);
+		}
+
+		50% {
+			transform: translate(-3px, 0);
+		}
+
+		100% {
+			transform: translate(0, 0);
+		}
+	}
+
+	@-moz-keyframes shake {
+
+		0% {
+			-moz-transform: translate(3px, 0);
+		}
+
+		50% {
+			-moz-transform: translate(-3px, 0);
+		}
+
+		100% {
+			-moz-transform: translate(0, 0);
+		}
+	}
+
+	@-webkit-keyframes shake {
+		0% {
+			-webkit-transform: translate(3px, 0);
+		}
+
+		50% {
+			-webkit-transform: translate(-3px, 0);
+		}
+
+		100% {
+			-webkit-transform: translate(0, 0);
+		}
+	}
+
+	.shake {
+		animation-name: shake;
+		animation-duration: 150ms;
+		animation-iteration-count: 2;
+		animation-timing-function: linear;
+		-moz-animation-name: shake;
+		-moz-animation-duration: 150ms;
+		-moz-animation-iteration-count: 2;
+		-moz-animation-timing-function: linear;
+		-webkit-animation-name: shake;
+		-webkit-animation-duration: 150ms;
+		-webkit-animation-iteration-count: 2;
+		-webkit-animation-timing-function: linear;
+	}
+
+}
+
+
+
+
+
+// Parsley
+
+// input.parsley-success
+// select.parsley-success
+// textarea.parsley-success
+// 	//color $success_color !important
+// 	border 1px solid $success_color !important
+// 	background-color white !important
+
+input.parsley-error
+select.parsley-error
+textarea.parsley-error
+.has_error
+.has_error.parsley-success
+	//color rgba(229, 115, 115, 0.3) !important
+	border 2px solid rgba(229, 115, 115, 0.3) !important
+	background-color rgba(229, 115, 115, 0.3) !important
+
+.parsley-error, .parsley-type, .parsley-required, .parsley-custom-error-message
+	animation-name shake
+	animation-duration 150ms
+	animation-iteration-count 2
+	animation-timing-function linear
+
+.parsley-errors-list
+	margin 2px 0 3px 0
+	padding 0
+	list-style-type none
+	font-size 0.9em
+	line-height 0.9em
+	opacity 0
+	-moz-opacity 0
+	-webkit-opacity 0
+	transition all .3s ease-in !important
+	&.filled
+		opacity 1
+		position relative
+		&:before 
+			@extend .icon
+			@extend .icon-warning:before
+			top -53px
+			font-size 1.2rem
+			color #f35252
+			right 10px
+			position absolute
+	&:empty
+		margin 0
+	li
+		font-size 11px
+		color rgba(229, 115, 115, 0.3)
+		display none ////

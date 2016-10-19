@@ -1,0 +1,28 @@
+header.l-header
+	.l-container
+		a.l-header__logo(href="/")
+			img.l-header__logo-img(src="img/freensy.svg")
+		a#lnkOpenMenu.l-header__menu-icon.icon.icon-menu(href="javascript:;")
+		ul#headerNav.l-header__nav
+			li.l-header__nav-item
+				a.l-header__nav-link(href="/") Crear juego
+
+			li.l-header__nav-item
+				a.l-header__nav-link(data-remodal-target="login", href="javascript:;") Iniciar sesión
+
+			//-li.l-header__nav-item
+				a.l-header__nav-link(href="javascript:;")
+					img.l-header__avatar(src="http://www.radfaces.com/images/avatars/baby-sinclair.jpg")
+					| Hola Ani
+					span.icon.icon-triangle
+				ul.l-header__dropdown
+					li.l-header__dropdown-item
+						a.l-header__dropdown-link(href="javascript:;") Mi cuenta
+					li.l-header__dropdown-item 
+						a.l-header__dropdown-link(href="javascript:;") Mis juegos
+					li.l-header__dropdown-separator
+					li.l-header__dropdown-item 
+						a.l-header__dropdown-link(href="javascript:;") Cerrar sesión
+
+
+				

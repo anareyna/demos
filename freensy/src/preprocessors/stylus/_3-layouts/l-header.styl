@@ -1,0 +1,147 @@
+.l-header
+	//padding-top 10px
+	//background-color rgba($primaryColor, 0.9)
+	z-index 2 
+	position fixed
+	width 100%
+	background-color $lightGray
+	height 70px
+
+	.l-container
+		display flex
+		align-items center
+	&__menu-icon
+		display none
+	&__nav 
+		list-style none 
+		padding 0
+		margin-top 15px // 0
+	&__nav-item
+		display inline-block
+		margin-left 15px
+		position relative
+		&:hover 
+			.l-header__dropdown
+				display block 
+	&__nav-link
+		display block 
+		padding 10px 20px
+		transition $transition
+		&:hover 
+			background-color darken($lightGray, 5%) //background-color darken($primaryColor, 10%)
+			border-radius $borderRadius
+			transition $transition
+
+	&__avatar
+		border-radius $borderRadius
+		width 20px
+		height 20px
+		vertical-align sub
+		margin-right 5px
+	&__logo 
+		flex-grow 1
+	&__logo-img 
+		max-width 150px //200px
+	.icon-triangle
+		font-size 10px 
+		transform rotate(180deg)
+		margin-left 5px
+	&__dropdown
+		display none 
+		background-color $lightGray //background-color darken($primaryColor, 10%)
+		border-radius $borderRadius
+		transition $transition
+		width 180px
+		list-style none 
+		padding 5px
+		position absolute
+		text-align right
+		top 40px
+		right -3px
+		&:hover
+			~.l-header__nav-link
+				color white
+	&__dropdown-link
+		display block
+		padding 10px 15px 
+		transition $transition
+		&:hover 
+			//opacity 0.8
+			background-color darken($lightGray, 3%)
+			transition $transition
+	&__dropdown-separator
+		border-top 2px solid darken($lightGray, 5%)
+	
+		
++tablet()
+	.l-header
+		&__nav 
+			//display none 
+		&__nav-item
+			margin-left 5px
+		&__logo-img 
+			max-width 180px
+			
++above(rupture.mobile-cutoff)
+	.l-header
+		&__nav 
+			display block !important
+			
++mobile()
+	body // specifity hack 
+		.l-header
+			height auto
+			padding-top 10px
+			&__menu-icon
+				&--active
+					&:before 
+						@extend .icon-close:before
+			
+	.l-header
+		&__nav 
+			display none
+			position absolute 
+			left 0 
+			top 45px
+			width 100%
+			background-color darken($lightGray, 3%) //darken($primaryColor, 10%)
+			
+		&__nav-item
+			display block 
+			margin 0
+		&__nav-link
+			padding 20px 25px
+			border-radius 0
+			&:hover 
+				background-color darken($lightGray, 4%)
+				border-radius 0
+
+		&__logo-img 
+			max-width 150px
+		&__menu-icon
+			display block 
+			font-size 1.8rem
+			padding 25px 20px
+			position absolute
+			right 0
+			&--active
+				background-color darken($lightGray, 3%) // darken($primaryColor, 10%)
+				&:before 
+					@extend .icon-close:before
+					font-size 2.5rem
+		&__dropdown
+			display block
+			width 100%
+			text-align left 
+			top 0 
+			right 0 
+			padding 0
+		&__dropdown-link
+			padding 20px 25px
+			background darken($lightGray, 3%)
+			&:hover 
+				background darken($lightGray, 4%)
+		&__dropdown-separator
+			border-color darken($lightGray, 6%)
+			
+			
