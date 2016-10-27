@@ -2,32 +2,32 @@ extends _templates/master
 //- index
 
 block content
-	.p-landing
+	.p-bg
 		.l-container
 			include _components/c-box-main-img
 
-			.c-create-game
-				form.c-create-game__step1
-					h1.c-create-game__title Juega al amigo secreto
-					h3.c-create-game__subtitle Crea tu juego para invitar a todos tus amigos
-					.c-create-game__form-group
-						label.c-create-game__label Elige un nombre para tu juego:
-						input#txtGameName.c-create-game__input.e-input(type="text")
-					button#btnNext.c-create-game__button.e-button(type="button") Siguiente →
-				form#frmSignUp.c-create-game__step2.frm-parsley.u-hidden
-					h3.c-create-game__subtitle.u-mt0 Ahora regístrate para administrar este juego
-					.c-create-game__columns
-						.c-create-game__form-group
-							label.c-create-game__label Nombre: 
-							input.c-create-game__input.e-input.datedropper(type="text", required)
-						.c-create-game__form-group
-							label.c-create-game__label Apellido: 
-							input.c-create-game__input.e-input(type="text", required)
-					.c-create-game__form-group
-						label.c-create-game__label Correo electrónico:
-						input.c-create-game__input.e-input(type="email", required)
-					.c-create-game__form-group
-						label.c-create-game__label Contraseña:
-						input.c-create-game__input.e-input(type="password", required)
-					input#btnCreateGame.c-create-game__button.e-button.e-button--block(type="submit", value="CREAR JUEGO")
+			.c-content.l-one-half.u-pullRight
+				form.c-content__step1
+					h1.c-content__title Juega al amigo secreto
+					h3.c-content__subtitle Crea tu juego para invitar a todos tus amigos
+					.c-content__form-group
+						label.c-content__label Elige un nombre para tu juego:
+							input#txtGameName.c-content__input.e-input(type="text")
+					button#btnNext.c-content__button.e-button(type="button") Siguiente →
+				form#frmSignUp.c-content__step2.frm-parsley.u-hidden
+					h3.c-content__subtitle.u-mt0 Ahora regístrate para administrar este juego
+					.c-content__columns
+						.c-content__form-group
+							label.c-content__label Nombre: 
+								input.c-content__input.e-input(type="text", required)
+						.c-content__form-group
+							label.c-content__label Apellido: 
+								input.c-content__input.e-input(type="text", required)
+					.c-content__form-group
+						label.c-content__label Correo electrónico:
+							input.c-content__input.e-input(type="email", required)
+					.c-content__form-group
+						label.c-content__label Contraseña:
+							input.c-content__input.e-input(type="password", required)
+					input#btnCreateGame.c-content__button.e-button.e-button--block(type="submit", value="CREAR JUEGO")
 		include _components/c-login

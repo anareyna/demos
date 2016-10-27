@@ -2,21 +2,21 @@ extends _templates/master
 //- index
 
 block content	
-	.p-landing
+	.p-bg
 		.l-container
 			include _components/c-box-main-img
 
-			.c-create-game.c-create-game--large.u-textCenter.u-flex
+			.c-content.u-textCenter.u-flex
 				.l-two-thirds
 
-					h2.c-create-game__title.u-mt30 ¡Casi listo! Te hemos enviado un correo de confirmación
+					h2.c-content__title.u-mt30 ¡Casi listo! Te hemos enviado un correo de confirmación
 					//-Invita a tus amigos a unirse al juego
-					h3.c-create-game__subtitle Antes de invitar a tus amigos a unirse al juego, confirma tu correo electrónico.
+					h3.c-content__subtitle Antes de invitar a tus amigos a unirse al juego, confirma tu correo electrónico.
 					
-					.c-create-game__form-group.u-hidden
-						.c-create-game__input-group
-							input.c-create-game__input.e-input(readonly, value="?????????????????????????????????", type="password")
-							a.e-button.c-create-game__button(href="javascript:;", disabled) Copiar
+					.c-content__form-group.u-hidden
+						.c-content__input-group
+							input.c-content__input.e-input(readonly, value="?????????????????????????????????", type="password")
+							a.e-button.c-content__button(href="javascript:;", disabled) Copiar
 
 
 			include _components/c-login

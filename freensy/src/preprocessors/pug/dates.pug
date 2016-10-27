@@ -1,0 +1,29 @@
+extends _templates/master
+//- index
+
+block content	
+	//-.c-message.c-message--success
+		.l-container
+			p Tu cuenta ha sido confirmada!
+	.p-bg
+		.l-container
+			.c-content.l-one-half.u-noFloat
+				//-h2.c-content__title Ahora establece las reglas del juego:
+				h3.c-content__subtitle Ahora ingresa los detalles del juego:
+
+				.c-content__form-group
+					label.c-content__label Fecha del sorteo: 
+						span.icon.icon-calendar
+						input.c-content__input.e-input.datedropper(type="text", required)
+				.c-content__form-group
+					label.c-content__label Fecha del intercambio de regalos: 
+						span.icon.icon-calendar
+						input.c-content__input.e-input.datedropper(type="text", required)
+				.c-content__form-group
+					label.c-content__label Precio sugerido del regalo:
+						span.icon.icon-pen
+						input.c-content__input.e-input(type="number", required)
+				
+				input#btnCreateGame.c-content__button.e-button.e-button--block.u-mb20(type="submit", value="GUARDAR")
+
+			include _components/c-login

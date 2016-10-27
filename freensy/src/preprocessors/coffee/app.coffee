@@ -17,8 +17,8 @@ App = (->
 
 	events =
 		showStep2: ->
-			$(".c-create-game__step1").hide()
-			$(".c-create-game__step2").fadeIn()
+			$(".c-content__step1").hide()
+			$(".c-content__step2").fadeIn()
 			return
 		toggleMenu: ->
 			$(this).toggleClass("l-header__menu-icon--active")

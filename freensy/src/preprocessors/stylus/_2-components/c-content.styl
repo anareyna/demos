@@ -1,13 +1,10 @@
-.c-create-game
-	lost-column 1/2
+.c-content
 	border 3px dashed rgba(black, 0.2)
 	padding 30px 50px
 	background-color rgba($primaryColor ,0.9)
 	position relative 
 	min-height 500px
 	z-index 1
-
-	
 	&__title 
 		color $fontColor
 		font-family $family2 
@@ -20,12 +17,20 @@
 		color white
 		font-family $family1
 		letter-spacing 1px
-
 	&__label 
 		font-size 1rem
 		margin-bottom 10px
 		display block 
 		font-family $family1
+		position relative 
+		.icon
+			position absolute
+			left 14px 
+			bottom 14px 
+			& ~ .c-content__input
+				padding-left 45px
+	&__input 
+		margin-top 6px
 	&__input-group
 		display flex
 		.u-blur
@@ -37,10 +42,10 @@
 			overflow hidden 
 			height 25px 
 			word-break break-all
-		.c-create-game__input 
+		.c-content__input 
 			border-top-right-radius 0
 			border-bottom-right-radius 0
-		.c-create-game__button
+		.c-content__button
 			border-top-left-radius 0
 			border-bottom-left-radius 0
 			flex-shrink 0
@@ -48,7 +53,7 @@
 		position relative
 	&__columns
 		display flex 
-		.c-create-game__form-group
+		.c-content__form-group
 			&:first-child
 				margin-right 10px
 			&:nth-child(2)
@@ -57,28 +62,25 @@
 		padding 20px 0
 	&__step2
 		padding 0
-	&--large 
-		float none 
-		clear both 
-		width 100%
 		
 +tablet()
-	.c-create-game
-		lost-column 1/1
+	.c-content
 		float none !important
 		width 70%
 		margin auto !important
 +mobile()
-	.c-create-game
-		lost-column 1/1
+	.c-content
 		padding-left 30px
 		padding-right 30px
 		width 100%
 		&__title 
 			font-size 2.3rem
+			letter-spacing 0
+		&__subtitle
+			letter-spacing 0
 		&__columns
 			display block
-			.c-create-game__form-group
+			.c-content__form-group
 				&:first-child
 					margin-right 0
 				&:nth-child(2)
