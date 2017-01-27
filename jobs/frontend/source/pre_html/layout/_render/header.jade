@@ -1,0 +1,54 @@
+.modal.login-box
+	.modal-content
+		h2 Login
+		form
+			.frm-group
+				label Email
+				input.floatlabel(type="email", placeholder="Ingrese su email", data-label="Email", required)
+			.frm-group
+				label Contraseña
+				input.floatlabel(type="password", placeholder="Ingrese su contraseña", data-label="Contraseña" required)
+
+			button.btn-login(type="submit") Ingresar
+			a.lnk-forgot-password Olvidé mi contraseña
+
+			a.close-modal(href="javascript:;") &times;
+
+header
+	.container.header-top
+		.nav
+			a.logo(href=page.url) 
+				u jobs
+				span de FrontendLabs.io
+			a.lnk-login(href="javascript:;") Login
+			a.btn(href="javascript:;") Publicar empleo
+	.filter-search
+		.container
+			a.logo(href="/") 
+				u jobs
+			.search-bar
+				span.icon.icon-search
+				input(type="text", placeholder="Buscar")
+			span.icon.icon-filter
+			//-span.separator 
+			.location.hide-filter
+				.select
+					i.icon.icon-location
+					select
+						option Todos los lugares
+						option Perú
+						option España
+			//-span.separator
+			.job-type.hide-filter
+				label 
+					input(id="chkFreelance", type="checkbox", name="chkJobType", checked="checked") 
+					| Freelance
+					span.control-indicator.icon.icon-check.freelance
+				label 
+					input(id="chkFulltime", type="checkbox", name="chkJobType", checked="checked") 
+					| Full-time 
+					span.control-indicator.icon.icon-check.fulltime
+				label 
+					input(id="chkParttime", type="checkbox", name="chkJobType") 
+					| Part-time 
+					span.control-indicator.icon.icon-check.parttime
