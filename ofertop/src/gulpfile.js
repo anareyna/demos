@@ -31,7 +31,6 @@ var config = {
 }
 
 var path = {
-	repo: '../../../',
 	frontend: '../src/',
 	src_html: 'pug/',
 	src_css: 'stylus/',
@@ -207,9 +206,7 @@ gulp.task('js:hint', function() {
 gulp.task('browserSync', function(){
 	return browserSync({
 		notify: true,
-		server: {
-			baseDir : [path.repo]//[path.dist_html]
-		}
+		proxy: "localhost/demos/ofertop/dist"
 	});
 });
 
