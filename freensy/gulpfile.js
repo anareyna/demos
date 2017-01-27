@@ -172,9 +172,7 @@ gulp.task('js', function(cb) {
 gulp.task('browserSync', function(){
 	return browserSync({
 		notify: true,
-		server: {
-			baseDir : [path.dist_html]
-		}
+		proxy: "localhost/demos/freensy/dist"
 	});
 });
 

@@ -1,10 +1,2 @@
 # Dependency directory
 node_modules
-
-# dist folder
-dist/
-
-# zip files
-*.zip
-*.tmp
-.DS_Store
