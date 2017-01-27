@@ -31,6 +31,7 @@ var config = {
 }
 
 var path = {
+	repo: '../../../',
 	frontend: '../src/',
 	src_html: 'pug/',
 	src_css: 'stylus/',
@@ -207,7 +208,7 @@ gulp.task('browserSync', function(){
 	return browserSync({
 		notify: true,
 		server: {
-			baseDir : [path.dist_html]
+			baseDir : [path.repo]//[path.dist_html]
 		}
 	});
 });
