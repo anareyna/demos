@@ -1,0 +1,29 @@
+extends /_templates/master
+
+block content
+	.l-container.u-textCenter
+		img.u-mt60(src!=`${page.url.image}no_result.png`)
+		h2 BÚSQUEDA SIN RESULTADOS
+		<?php if(!$this->busquedaVacia) {?>
+		h3.u-normalWeight.u-mb30 No pudimos encontrar resultados para tu búsqueda:
+		p.u-brandColor.u-mt0 <?php echo $this->q; ?>
+		<?php }?>
+		div
+			a.e-button.u-mb30(href!=`${page.url.base}`) Regresa al inicio
+
+
+	.l-container
+		p Te presentamos una selección de ofertas:
+		div.u-cf
+			- var campana = {}
+			+foreach("array_splice($this->errorCampaigns[2], 0, 4) as $key => $campana")
+				- campana.class = "<?php echo (($campana['campana_especial'])?'c-campaign--special':'');?>"
+				- campana.link = "<?php echo $campana['campana_url_full'];?>"
+				- campana.image = "<?php echo $campana['imagen_url_full'];?>"
+				- campana.image_low = campana.image
+				- campana.alt = "<?php echo $campana['titulo'];?>"
+				- campana.description = "<?php echo $campana['titulo'];?>"
+				- campana.first_line = "<?php echo ($campana['campana_especial'])?'A sólo': 'S/.' . $campana['precio_regular'];?>"
+				- campana.price = "S/. <?php echo $campana['precio_cupon'];?>"
+				- campana.button = "<?php echo ($campana['campana_especial'])?'¡Especial!':$campana['porcentaje_descuento'];?>"
+				+c-campaign(campana)

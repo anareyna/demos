@@ -1,0 +1,41 @@
+.c-checkbox
+	&__label
+		cursor pointer
+		position relative
+		display flex
+		padding 3px 0
+	&__input
+		position absolute
+		visibility hidden
+		margin-right 10px
+		&:checked
+			& ~ .c-checkbox__checkbox
+				border 1px solid $gray
+				&:before
+					background $brand_color
+	&__checkbox
+		margin-right 12px
+		display inline-block
+		position relative
+		border 1px solid $gray
+		height 20px
+		width 20px
+		z-index 1
+		border-radius $border_radius
+		background white
+		transition border .25s linear
+		vertical-align middle
+		&:before
+			display block
+			position absolute
+			content ''
+			height 10px
+			width 10px
+			top 4px
+			background white
+			left 4px
+			border-radius 2px
+			margin auto
+			transition background 0.25s linear
+
+

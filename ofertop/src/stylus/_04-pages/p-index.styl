@@ -1,0 +1,17 @@
+.p-index
+	.l-header
+		border-bottom 1px dashed  $gray
+		&--active
+			border-bottom none
+	.u-header-expand
+		padding-top 0
+		display none
++mobile()
+	.p-index
+		.l-header
+			border-bottom none
++above(rupture.mobile-cutoff)
+	.p-index
+		.l-header
+			&__nav
+				display none

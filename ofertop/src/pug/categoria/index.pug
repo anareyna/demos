@@ -1,0 +1,75 @@
+extends /_templates/master
+
+block content
+	section.l-category.l-container.c-special-collection
+		.l-category__header
+			h2.l-category__title Categoría
+
+		.l-category__list.multiple-items
+			+repeat(4)
+				a.c-special-collection__item(href="javascript:;")
+					img.c-special-collection__item-image(src="https://s3.amazonaws.com/cdn.mailing.clasificados.pe/ofertop/Rediseno/colecciones/365X195-magefesa.jpg")
+					.c-special-collection__item-message
+						h3.c-special-collection__item-title MAGEFESA
+
+	.l-container
+		ul.c-breadcrumb
+			li.c-breadcrumb__item
+				a.c-breadcrumb__link(href="/") Ofertop
+		
+			li.c-breadcrumb__item.c-breadcrumb__item--active
+				a.c-breadcrumb__link(href!="javascript:;") Belleza
+			li.c-breadcrumb__item.c-breadcrumb__item--active
+				a.c-breadcrumb__link(href="javascript:;") Accesorios
+
+
+	.l-container.l-results
+		include /_layouts/l-filters
+		.l-search-result
+			.l-search-result__details
+				p.l-search-result__message Mostrando 10 resultado(s)
+				.l-search-result__order
+					span.l-search-result__order-text Ordenar por
+					select.l-search-result__order-select.e-select
+						include /modules/partials/order_select
+			.l-search-result__content#scrollingContent
+				.l-search-result__page
+					div
+						+repeat(2)
+							- var campana = {}
+							- campana.class = "c-campaign--medium"
+							- campana.link = "javascript:;"
+							- campana.image = "coupon.jpg"
+							- campana.image_low = "coupon.jpg"
+							- campana.alt = ""
+							- campana.description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae voluptate, laboriosam ab et in aperiam, architecto. Qui cupiditate quas officia sed ducimus asperiores adipisci? Optio pariatur dolor, nihil saepe dolorum."
+							- campana.first_line = "Antes S/. 300.00"
+							- campana.price = "S/. 120.00"
+							- campana.button = "-30%"
+							+c-campaign(campana)
+					div
+						+repeat(12)
+						
+							- var campana = {}
+							- campana.class = "c-campaign--special"
+							- campana.link = "javascript:;"
+							- campana.image = "coupon.jpg"
+							- campana.image_low = "coupon.jpg"
+							- campana.alt = ""
+							- campana.description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat reiciendis quae, ea! Eveniet provident aut ad voluptatibus, molestias minus voluptas labore sequi unde omnis beatae? Corrupti, minima ex id minus."
+							- campana.first_line = "Solo por hoy!"
+							- campana.price = "S/. 300.00"
+							- campana.button = "Especial"
+							+c-campaign(campana)
+
+			ul.c-pagination.c-pagination--fixed
+				li.c-pagination__item
+					a.c-pagination__link.c-pagination__link--previous.c-pagination__link--disabled(href="javascript:;") ‹
+				li.c-pagination__item
+					a.c-pagination__link.c-pagination__link--active(href="javascript:;") 1
+				li.c-pagination__item
+					a.c-pagination__link(href="javascript:;") 2
+				li.c-pagination__item
+					a.c-pagination__link(href="javascript:;") 3
+				li.c-pagination__item
+					a.c-pagination__link.c-pagination__link--next(href="javascript:;") ›

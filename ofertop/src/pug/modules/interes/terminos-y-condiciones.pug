@@ -1,0 +1,19 @@
+extends /_templates/master
+
+block content
+
+	.l-container
+		// -h3 <?php $contenido = $this->ContenidoFooter()->obtenerTerminosYCondiciones() ?>
+
+		h3.u-mt30 TÉRMINOS Y CONDICIONES
+
+		// inicio contenido
+		<?php echo $contenido[App_Model_Contenido_TerminosCondiciones::TERMINOS_CONTENIDO] ?>
+		// fin de contenido
+
+		h3 <?php echo $contenido[App_Model_Contenido_TerminosCondiciones::PROMOCIONALES] ?>
+
+
+		// inicio contenido
+		<?php echo $contenido[App_Model_Contenido_TerminosCondiciones::PROMOCIONALES_CONTENIDO] ?>
+		// fin de contenido

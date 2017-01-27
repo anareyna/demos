@@ -1,0 +1,26 @@
+{
+  "name": "flux",
+  "version": "1.0.0",
+  "authors": [
+    "Ana Reyna <anareymej@gmail.com>"
+  ],
+  "description": "Flux!",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "parsleyjs": "2.4.4",
+    "seiyria-bootstrap-slider": "^9.2.0"
+  },
+  "dependencies": {
+    "jquery": "3.1.0",
+    "slick-carousel": "1.6.0",
+    "fancybox": "2.1.5"
+  }
+}

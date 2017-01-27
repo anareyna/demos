@@ -1,0 +1,43 @@
+header.l-header
+	.l-container
+		a.l-header__logo(href!=`${page.url.base}`)
+			img.l-header__logo-img(src!=`${page.url.image}ofertop.svg`)
+		form#frmSearch.l-header__search-form.c-search-form(action!="/buscar/", method="get")
+			input#autocomplete.c-search-form__input.e-input-text(type="text", name="q", placeholder="Ingresa lo que estás buscando")
+			button.c-search-form__button(type="submit")
+				span.icon.icon-search
+			//- ul.c-search-form__autocomplete
+			//- 	+repeat(5)
+			//- 		li.c-search-form__autocomplete-item
+			//- 			a.c-search-form__autocomplete-link(href="javascript:;")
+			//- 				img.c-search-form__autocomplete-image(src="https://placehold.it/50x20")
+			//- 				span.c-search-form__autocomplete-product Laceado brasileño en Belleza y Salud...
+			//- 				span.c-search-form__autocomplete-price S/. 20.00
+
+		ul.l-header__auth#headerAuthContainer
+			//- <?php if($this->isLogged()): ?>
+			//- 	li.l-header__auth-item.l-header__logged
+			//- 		a#headerAuthLoggedLink.l-header__auth-link(href="javascript:;", data-id!=`${page.userId}`) Hola <?php echo $this->UsuarioLogeado()->getNombre(); ?>
+			//- 		include /_components/c-menu-account
+
+			//- <?php else: ?>
+			li.l-header__auth-item
+				a#headerAuthLoginLink.l-header__auth-link(href="javascript:;") Ingresar
+				include /_components/c-login-form
+
+			li.l-header__auth-item
+				a#headerAuthRegisterLink.l-header__auth-link(href!=`${page.url.base}registro`) Regístrate
+			//- <?php endif ?>
+
+		//- .l-header__cart.c-cart
+		//- 	span.c-cart-icon.icon.icon-cart
+		//- 	span.c-cart-total-amount S/. 2000.00
+
+	.l-header__nav
+		span.icon.icon-menu
+		span.icon.icon-arrow-right
+		span.icon.icon-x-mark
+		include /_components/c-nav
+
+
+.u-header-expand

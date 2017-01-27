@@ -1,0 +1,19 @@
+.c-breadcrumb
+	margin-top 20px
+	font-size 14px
+	&__item
+		display inline-block
+		&--active
+			.c-breadcrumb__link
+				color darken($gray, 20%)
+				pointer-events none
+		& + &:before
+			content "/\00a0"
+			padding 0 4px
+	&__link
+		display inline-block
++mobile()
+	.c-breadcrumb
+		display none
+
+

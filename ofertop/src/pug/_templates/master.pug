@@ -1,0 +1,15 @@
+include /_config/page
+doctype
+html(lang="es")
+	include /_partials/head
+	include /_mixins/php
+	include /_mixins/mixins
+	body(class!=`p-default p-default--index`)
+		include /_layouts/l-header
+		include /_partials/messages
+		block content
+		include /_components/c-anchors
+		include /_components/c-modal-howtobuy
+		include /_components/c-modal-newsletter
+		include /_layouts/l-footer
+		include /_partials/footer_scripts

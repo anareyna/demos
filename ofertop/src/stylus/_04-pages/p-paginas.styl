@@ -1,0 +1,46 @@
+.p-paginas
+	.l-retailer
+		&__title
+			margin-bottom 40px
+		&__group-container
+			display flex
+			flex-flow column wrap
+			max-height 290px
+		&__column
+			lost-column 1/2
+		&__button
+			margin-bottom 20px
+			padding-left 40px
+			padding-right 40px
+		&__special-block
+			margin-left 5px
+			clear both
+
+
++above(rupture.mobile-cutoff)
+	.p-paginas
+		.l-retailer
+			&__special-block
+				text-align center
+				.c-form-group__label
+					display none
+
+
++mobile()
+	.p-paginas
+		.l-retailer
+			&__column
+				lost-column 1/1
+			&__special-block
+				text-align center
+
++tablet()
+	.p-paginas
+		.l-retailer
+			&__column
+				lost-column 1/1
+			&__special-block
+				text-align initial
+				.c-form-group__label
+					display initial
+

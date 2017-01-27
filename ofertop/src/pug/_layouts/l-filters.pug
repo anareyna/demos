@@ -1,0 +1,52 @@
+.c-mobile-options
+		a#btnToggleFilters.c-mobile-options__toggle-filters.e-button(href="javascript:;") Mostrar filtros
+		select.c-mobile-options__select.l-search-result__order-select.e-select
+			include /modules/partials/order_select
+
+.l-filters#sidebarFilters
+	ul.c-filter-tags
+		
+		li.c-filter-tags__item Belleza
+			a.c-filter-tags__delete(href!="javascript:;")
+		
+		li.c-filter-tags__item Accesorios
+			a.c-filter-tags__delete(href!="javascript:;")
+	
+	.c-filter-list
+		h3.c-filter-list__title Categoría
+		ul.c-filter-list__group
+			+repeat(4)
+				li.c-filter-list__item
+					a.c-filter-list__link(href!="javascript:;") Belleza y salud (12)
+						
+
+	.c-filter-list
+		h3.c-filter-list__title Subcategoría
+		ul.c-filter-list__group
+			+repeat(6)
+				li.c-filter-list__item
+					a.c-filter-list__link(href!="javascript;:") Accesorios (4)
+					
+	
+	.c-filter-list
+		h3.c-filter-list__title Género
+		ul.c-filter-list__group
+			li.c-filter-list__item
+				a.c-filter-list__link(href!="javascript:;") Mujer
+			li.c-filter-list__item
+				a.c-filter-list__link(href!="javascript:;") Hombre
+	
+	.c-filter-list
+			h3.c-filter-list__title Precio
+			.c-filter-list__group
+				.c-input-range
+					input#rangePriceSlider.c-input-range__slider(type="text", data-slider-min="0", data-slider-max="10500", data-slider-value!="100", data-slider-step="10")
+					form.c-input-range__inputs#frmPriceRange(data-parsley-validate)
+						.c-input-range__input-container
+							span.c-input-range__currency S/.
+							input#rangePriceMin.c-input-range__quantity.e-input-text(type="text", value!="100", data-parsley-le="#rangePriceMax", data-parsley-trigger="keyup focusout", required, data-parsley-type="digits", data-parsley-errors-container="#errPriceMin")
+						.c-input-range__input-container
+							span.c-input-range__currency S/.
+							input#rangePriceMax.c-input-range__quantity.e-input-text(type="text", value!="1000", data-parsley-ge="#rangePriceMin", data-parsley-trigger="keyup focusout", required, data-parsley-type="digits", data-parsley-errors-container="#errPriceMax")
+					p#errPriceMin
+					p#errPriceMax

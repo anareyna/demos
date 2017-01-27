@@ -1,0 +1,12 @@
+extends /_templates/master
+
+block content
+	.l-container.u-textCenter.u-mt30
+		h1 ¡Bienvenid@, <?php echo $this->usuario->nombre; ?>!
+		h3 Gracias por registrarte
+		p Desde hoy podrás disfrutar de ofertas increíbles con descuentos de hasta 90% en Viajes,
+			br
+			| Productos, Restaurantes, Salud & Belleza, Entretenimiento y mucho más...
+		a.e-button(title="Descubre nuestras Ofertas", href!="<?php echo $this->baseUrl(); ?>") Descubre nuestras Ofertas
+		br
+		a.e-link.u-mb60.u-block.u-mt20(title="Ingresar a Mi cuenta", href!="<?php echo $this->baseUrl('/mi-cuenta/mis-datos'); ?>") Ingresar a Mi cuenta

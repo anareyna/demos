@@ -1,0 +1,181 @@
+extends /_templates/master
+
+block content
+
+	.l-container
+		section.l-guide-deals
+			include /_components/c-nav
+			figure.l-guide-deals__slider.c-slider
+				- var slider1 = {}
+				- slider1.link = "categoria/"
+				- slider1.title = "Slider"
+				- slider1.image = "slider/628x355px_slider_ponte_regi@.jpg"
+				- slider1.alt = "Slider"
+				+c-slider__item(slider1)
+
+				- var slider2 = {}
+				- slider2.link = "categoria/"
+				- slider2.title = "Slider"
+				- slider2.image = "slider/628x355px_slider_primavera.jpg"
+				- slider2.alt = "Slider"
+				+c-slider__item(slider2)
+
+			.l-guide-deals__banners.c-banners
+				- var smallBanner1 = {}
+				- smallBanner1.link = "categoria/"
+				- smallBanner1.title = "Slider"
+				- smallBanner1.image = "banner_fijo/hotelestop-banner_300x170px.jpg"
+				- smallBanner1.alt = "banner"
+				+c-banners__item(smallBanner1)
+
+				- var smallBanner2 = {}
+				- smallBanner2.link = "categoria/"
+				- smallBanner2.title = "Slider"
+				- smallBanner2.image = "banner_fijo/labnutrition-banner_300x170px.jpg"
+				- smallBanner2.alt = "banner"
+				+c-banners__item(smallBanner2)
+
+	
+	section.l-section-menu.l-container.c-suggested-deals
+		.l-section-menu__header
+			h2.l-section-menu__title Ofertas Sugeridas
+			a.l-section-menu__link(href!=`${page.url.base}categoria/`) Ver más ofertas
+		.l-section-menu__list
+			+repeat(8)
+				- var campana = {}
+				- campana.class = ""//"c-campaign--special"
+				- campana.link = "categoria/"
+				- campana.image = "coupon.jpg"
+				- campana.image_low = "coupon.jpg"
+				- campana.alt = "image"
+				- campana.description = "¡Rostro Perfilado! Adelgazamiento de Rostro Completo"
+				- campana.first_line = "S/. 410.90"
+				- campana.price = "S/. 390.90"
+				- campana.button = "-30%"
+				+c-campaign(campana)
+
+	section.l-section-menu.l-container.c-special-collection
+		.l-section-menu__header
+			h2.l-section-menu__title Colecciones especiales
+			p.l-section-menu__subtitle La mejor selección de ofertas según un tema en común.
+		.l-section-menu__list
+			a.c-special-collection__item(href="categoria/")
+				img.c-special-collection__item-image(src!=`${page.url.image}colecciones/365X195-magefesa.jpg`)
+				.c-special-collection__item-message
+					h3.c-special-collection__item-title MAGEFESA
+					p.c-special-collection__item-discount Desde 55 soles.
+			a.c-special-collection__item(href="categoria/")
+				img.c-special-collection__item-image(src!=`${page.url.image}colecciones/365X195-reductores.jpg`)
+				.c-special-collection__item-message
+					h3.c-special-collection__item-title REDUCTORES
+					p.c-special-collection__item-discount Hasta 90% de Dscto.
+			a.c-special-collection__item(href="categoria/")
+				img.c-special-collection__item-image(src!=`${page.url.image}colecciones/365X195-feriado-apec.jpg`)
+				.c-special-collection__item-message
+					h3.c-special-collection__item-title  FERIADOS APEC
+					p.c-special-collection__item-discount Hasta 67% de Dscto.
+			a.c-special-collection__item(href="categoria/")
+				img.c-special-collection__item-image(src!=`${page.url.image}colecciones/365X195-laceado.jpg`)
+				.c-special-collection__item-message
+					h3.c-special-collection__item-title LACEADOS
+					p.c-special-collection__item-discount Hasta 89% de Dscto.
+			a.c-special-collection__item(href="categoria/")
+				img.c-special-collection__item-image(src!=`${page.url.image}colecciones/365X195-odontologia.jpg`)
+				.c-special-collection__item-message
+					h3.c-special-collection__item-title ODONTOLOGÍA
+					p.c-special-collection__item-discount Hasta 97% de Dscto.
+			a.c-special-collection__item(href="categoria/")
+				img.c-special-collection__item-image(src!=`${page.url.image}colecciones/365X195-autos.jpg`)
+				.c-special-collection__item-message
+					h3.c-special-collection__item-title AUTOS
+					p.c-special-collection__item-discount Hasta 83% de Dscto.
+
+
+	section.l-section-menu.l-container.c-highlighted-campaigns
+		.l-section-menu__header
+			h2.l-section-menu__title Ofertas Destacadas
+			p.l-section-menu__subtitle Ofertas que no debes dejar pasar
+			select.l-section-menu__select.e-select#selHighlightedFilter
+				option(value="#paneNuevo") Nuevo
+				option(value="#paneMasComprado") Más Comprado
+				option(value="#paneMejorDescuento") Mejor Descuento
+			ul.l-section-menu__filters
+				li.l-section-menu__filter-item
+					a.l-section-menu__filter-link.l-section-menu__filter-link--active(data-href="#paneNuevo", role="tab") Nuevo
+				li.l-section-menu__filter-item
+					a.l-section-menu__filter-link(data-href="#paneMasComprado", role="tab") Más Comprado
+				li.l-section-menu__filter-item
+					a.l-section-menu__filter-link(data-href="#paneMejorDescuento", role="tab") Mejor Descuento
+				li.l-section-menu__filter-item
+					a.l-section-menu__filter-link(href='javascript:;') Ver Todo
+		.l-section-menu__list.l-section-menu__list--active#paneNuevo(role="tabpanel")
+			+repeat(8)
+				- var campana = {}
+				- campana.class = ""//"c-campaign--special"
+				- campana.link = "categoria/"
+				- campana.image = "coupon.jpg"
+				- campana.image_low = "coupon.jpg"
+				- campana.alt = "image"
+				- campana.description = "Almohada de Cuello Masajeadora con Conector MP3"
+				- campana.first_line = "S/. 410.90"
+				- campana.price = "S/. 390.90"
+				- campana.button = "-30%"
+				+c-campaign(campana)
+
+		.l-section-menu__list#paneMasComprado(role="tabpanel")
+			+repeat(8)
+				- var campana = {}
+				- campana.class = ""//"c-campaign--special"
+				- campana.link = "categoria/"
+				- campana.image = "coupon.jpg"
+				- campana.image_low = "coupon.jpg"
+				- campana.alt = "image"
+				- campana.description = "Almohada de Cuello Masajeadora con Conector MP3"
+				- campana.first_line = "S/. 410.90"
+				- campana.price = "S/. 390.90"
+				- campana.button = "-30%"
+				+c-campaign(campana)
+
+		.l-section-menu__list#paneMejorDescuento(role="tabpanel")
+			+repeat(8)
+				- var campana = {}
+				- campana.class = ""//"c-campaign--special"
+				- campana.link = "categoria/"
+				- campana.image = "coupon.jpg"
+				- campana.image_low = "coupon.jpg"
+				- campana.alt = "image"
+				- campana.description = "¡Vamos a Ica! Alojamiento + City Tour y Más"
+				- campana.first_line = "S/. 410.90"
+				- campana.price = "S/. 390.90"
+				- campana.button = "-30%"
+				+c-campaign(campana)
+
+		a.l-section-menu__see-all.e-button(href!='javascript:;') Ver todas las ofertas
+
+	section.l-section-menu.l-container.c-note-blog
+		header.l-section-menu__header
+			h2.l-section-menu__title Blog Ofertop
+			p.l-section-menu__subtitle Tendencias y reseñas.
+			//- select.l-section-menu__select.e-select
+			//- 	option Nuevo
+			//- 	option Mejor Descuento
+			ul.l-section-menu__filters
+				//- li.l-section-menu__filter-item
+				//- 	a.l-section-menu__filter-link.l-section-menu__filter-link--active(href="categoria/") Marzo
+				//- li.l-section-menu__filter-item
+				//- 	a.l-section-menu__filter-link(href="categoria/") Abril
+				li.l-section-menu__filter-item
+					a.l-section-menu__filter-link(href="categoria/") Ver Todo
+		.l-section-menu__list
+			+repeat(3)
+				- var blog = {}
+				- blog.link = "categoria/"
+				- blog.image = "http://lorempixel.com/350/200/people"
+				- blog.alt = ""
+				- blog.title = "Las personas que compran más..."
+				- blog.description = "Lorem ipsum dolor sit amet, consectetur adipisicingadipi sicingadipisi cing elit. Vero omnis officia incidunt? Ea, suscipit odit beatae."
+				+c-note-blog__item(blog)
+		a.l-section-menu__see-all.e-button(href="categoria/") Ver todo
+
+	include /_layouts/l-newsletter
+

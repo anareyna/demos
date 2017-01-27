@@ -1,0 +1,63 @@
+extends /_templates/master
+block styles
+	//-link(rel="stylesheet", href!=`${page.url.static_old}css/modules/default/error/error.css${page.version}`)
+block content
+	.l-container.u-textCenter
+		+if("APPLICATION_ENV == 'development' || APPLICATION_ENV == 'local'")
+			h2 <?php echo $this->message;?>
+			+if("isset($this->exception)")
+				h1 Exception information:
+				div(style='background-color: #FAFABB; text-align: justify;')
+					p
+					strong Nota :
+					| Este mensaje sólo debe aparecer en los ambientes de&nbsp;
+					strong development&nbsp;
+					| y&nbsp;
+					strong local. Si se muestra en pre o produccion por favor
+					| realice un despliege correcto del entorno en el archivo de configuración.
+					p
+						b Ambiente de la aplicación :
+					p
+						b HTTP code :
+						span(style='color: #D61118') <?php echo $this->codigo ?>
+					p
+						b Message:
+						| <?php echo $this->exception->getMessage() ?>
+					h3 Stack trace:
+					textarea(style='width: 1007px; height: 156px;')
+						| <?php echo $this->exception->getTraceAsString() ?>
+					br
+					h3 Request Parameters:
+					ul
+						li
+							b Module :
+							| <?php echo $this->module ?>
+						li
+							b Controller :
+							| <?php echo $this->controller ?>
+						li
+							b Acction :
+							| <?php echo $this->action ?>
+						li
+							b Request :
+							| <?php echo $this->uri ?>
+			+else
+				img.u-mt60(src!=`${page.url.image}404.jpg`)
+				h2 ¡Acabas de encontrar un fantasma en el sistema!
+				h3.u-normalWeight.u-mb30 Por encontrarlo te recompensamos con esta selección de ofertas.
+				.l-container.u-textLeft
+					- var campana = {}
+					+foreach("array_splice($this->errorCampaigns[2], 0, 4) as $key => $campana")
+						- campana.class = "<?php echo (($campana['campana_especial'])?'c-campaign--special':'');?>"
+						- campana.link = "<?php echo $campana['campana_url_full'];?>"
+						- campana.image = "<?php echo $campana['imagen_url_full'];?>"
+						- campana.image_low = campana.image
+						- campana.alt = "<?php echo $campana['titulo'];?>"
+						- campana.description = "<?php echo $campana['titulo'];?>"
+						- campana.first_line = "<?php echo ($campana['campana_especial'])?'A sólo': 'S/.' . $campana['precio_regular'];?>"
+						- campana.price = "S/. <?php echo $campana['precio_cupon'];?>"
+						- campana.button = "<?php echo ($campana['campana_especial'])?'¡Especial!':$campana['porcentaje_descuento'];?>"
+						+c-campaign(campana)
+				.l-container
+					a.e-button.u-floatRight.u-mb30(href!=`${page.url.base}`) Ver más ofertas
+

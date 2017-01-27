@@ -1,0 +1,35 @@
+form.c-modal-newsletter#frmModalNewsletter(data-parsley-validate)
+	h3.c-modal-newsletter__title NEWSLETTER
+	h4.c-modal-newsletter__subtitle En solo 4 pasos asegúrate y recibe los descuentos en tu correo:
+	.c-modal-newsletter__form-group
+		label.c-modal-newsletter__form-label Nombre*
+		.c-modal-newsletter__form-input-container
+			input.c-modal-newsletter__form-input.e-input-text#txtModalNewsletterName(required)
+	.c-modal-newsletter__form-group
+		label.c-modal-newsletter__form-label Email*
+		.c-modal-newsletter__form-input-container
+			input.c-modal-newsletter__form-input.e-input-text#txtModalNewsletterEmail(required, type="email")
+	.c-modal-newsletter__form-group#rdModalNewsletterGender
+		label.c-modal-newsletter__form-label Género*
+
+		+c-radio("Mujer")(name="rdGenderModal", required, data-parsley-errors-container="#errorModalGender", value="2")
+		+c-radio("Hombre")(name="rdGenderModal", required, data-parsley-errors-container="#errorModalGender", value="1")
+
+		#errorModalGender.c-modal-newsletter__error-msg
+
+	p.c-modal-newsletter__text Selecciona las categorías de las que esperas recibir ofertas
+	.c-modal-newsletter__check-group
+		+repeat(9)
+			- var labelCategory = "Categoria"
+			- var idCategory = "1"
+			+c-checkbox(labelCategory, "c-modal-newsletter__check-label")(name="chkCategory", data-id!=idCategory)
+
+	p.c-modal-newsletter__terms Presionando el botón "Suscribirme" estoy aceptando los&nbsp;
+		a.c-modal-newsletter__terms-link.e-link(href="/interes/terminos-y-condiciones") Términos y Condiciones&nbsp;
+		| y&nbsp;
+		a.c-modal-newsletter__terms-link.e-link(href="/interes/politicas-de-privacidad") Políticas de Privacidad&nbsp;
+		| del sitio.
+	input(type="submit", value="Suscribirme").c-modal-newsletter__button.e-button#btnModalSubscribe
+
+
+

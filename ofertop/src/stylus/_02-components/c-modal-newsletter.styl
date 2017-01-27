@@ -1,0 +1,64 @@
+.c-modal-newsletter
+	padding 0 30px
+	display none
+	max-width 550px
+	&__title
+		color $brand_color
+		text-align center
+		font-size 20px
+		margin-bottom 0
+	&__subtitle
+		text-align center
+		font-size 14px
+		font-weight normal
+		margin-top 10px
+		color $dark_gray
+	&__form-group
+		display flex
+		align-items baseline // for centering when error appears
+		margin-bottom 15px
+		flex-wrap wrap
+	&__form-label
+		width 100px
+		flex-shrink 0
+	&__form-input-container
+		display flex
+		flex-wrap wrap
+		flex-grow 1
+
+	&__form-radio-label
+		margin-right 30px
+		cursor pointer
+	&__text
+		text-align center
+		font-weight bold
+		margin-top 30px
+	&__check-group
+		max-height 140px
+		display flex
+		flex-flow column wrap
+	&__check-label
+		padding 8px 0
+	&__terms
+		color $dark_gray
+		font-size 14px
+		text-align center
+		margin-bottom 10px
+	&__button
+		margin auto
+		width 150px
+		display block
+		margin-bottom 20px
+	&__error-msg
+		margin-top 4px
+		margin-left 100px
+		flex-basis 100%
+
+
++mobile()
+	.c-modal-newsletter
+		max-width 96%
+		&__check-group
+			max-height 100% // ie11
+			display flex
+			flex none

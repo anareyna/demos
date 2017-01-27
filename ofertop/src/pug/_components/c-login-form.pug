@@ -1,0 +1,15 @@
+form.c-login-form(data-parsley-validate, action="/auth/login", method="POST")
+	a.c-login-form__fb-button.fb-connect-js(href="javascript:;")
+		span.c-login-form__fb-icon
+		| Conectar con Facebook
+	span.msg_info
+	.c-login-form__group
+		input.c-login-form__input.e-input-text(type="email", placeholder="Email", required, name="email")
+	.c-login-form__group
+		input.c-login-form__input.e-input-text(type="password", placeholder="Contraseña", required, name="password")
+
+	button.c-login-form__button.e-button(type="submit", id="btnLogin") Ingresar
+	a.c-login-form__link-recovery(href!=`${page.url.base}recuperar`) ¿Olvidaste tu contraseña?
+	hr
+	p.c-login-form__message ¿No tienes una cuenta?
+	a.c-login-form__link(href!=`${page.url.base}registro`) Regístrate

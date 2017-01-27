@@ -1,0 +1,10 @@
+.c-highlighted-campaigns
+	.l-section-menu__list
+		display none
+		&--active
+			display block
++tablet()
+	.c-highlighted-campaigns
+		.c-campaign
+			&:nth-child(n+7) // muestra solo primeros 6 campañas
+				display none

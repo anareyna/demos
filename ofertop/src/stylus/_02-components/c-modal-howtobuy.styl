@@ -1,0 +1,143 @@
+.c-modal-howtobuy
+	background white
+	text-align center
+	border-radius $border_radius
+	display none
+	max-width 600px
+	margin 0 auto
+	padding-bottom 20px
+	&__header
+		background $brand_color
+		font-size 22px
+		color white
+		border-radius 5px 5px 0px 0px
+		text-align center
+		padding 25px 0
+		font-weight bold
+	&__span
+		font-size 30px
+	&__container
+		width 600px
+		display inline-block
+		text-align center
+		padding 20px 30px 10px
+	&__video-link
+		font-weight bold
+		margin-bottom 10px
+	&__pagoefectivo-link
+		vertical-align top
+		color $blue
+		font-size 13px
+	&__footer
+		text-align center
+		margin-top 5px
+	&__steps-detail
+		padding 0 25px
+		text-align center
+		line-height 1.2
+		font-size 13px
+		margin 0
+	&__steps-image
+		display block
+		margin 50px auto 0
+		margin-bottom 15px
+	&__steps-number
+		border 2px solid #444
+		font-size 16px
+		border-radius 50%
+		position absolute
+		background white
+		left 10px
+		top 10px
+		text-align center
+		font-weight bold
+		width 30px
+		height 30px
+		line-height 25px
+	&__payments
+		display inline-block
+	&__payments-list
+		margin 0
+		margin-right 10px
+	&__payments-item
+		display inline-block
+	&__steps
+		float left
+		display inline
+		clear none
+		text-align inherit
+		padding-left 0
+		padding-right 0
+		width 49%
+		margin-left 0%
+		margin-right  2%
+		position  relative
+		border 1px solid #b2b2b2
+		height 170px
+		margin 5px 0
+		&:nth-child(2n)
+			margin-right 0%
+			float right
+	.ico_visa
+		sprite($payment_visa)
+		display inline-block
+	.ico_amex
+		sprite($payment_amex)
+		display inline-block
+	.ico_mc
+		sprite($payment_mc)
+		display inline-block
+	.ico_pe
+		sprite($payment_pe)
+		display inline-block
+	.ico_dc
+		sprite($payment_dc)
+		display inline-block
+	.ico-how_to_trade
+		margin-top 25px !important
+		height initial
+		margin-bottom 10px !important
+	.ico-how_to_email
+		margin-top 25px !important
+		height initial
+		margin-bottom 10px !important
+
++mobile()
+	.c-modal-howtobuy
+		&__header
+			font-size 16px
+			padding-left 10px
+			padding-right 10px
+		&__container
+			width 100%
+			padding 15px
+		&__steps-image
+			display none
+		&__steps
+			display block
+			clear both
+			float none
+			width 100%
+			margin-left auto
+			margin-right auto
+			border  none
+			border-bottom: 1px solid #666
+			height  initial
+			float none
+			margin  0
+		&__steps-detail
+			text-align left
+			margin 0
+			padding 20px 0 20px 40px
+		&__steps-number
+			left 0
+			top 0
+			bottom 0
+			margin auto
+		&__pagoefectivo-link
+			display block
+			width 100%
+			text-align: center
+			margin-left 0
+			margin-bottom 10px
+

@@ -1,0 +1,107 @@
+.l-newsletter
+	background $light_gray
+	&--active
+		position fixed
+		bottom 0
+		z-index 200
+		width 100%
+	.l-container
+		display flex
+		justify-content space-between
+		align-items center
+		padding 10px 0
+
+	.icon-newsletter
+		font-size 75px
+		color $brand_color
+
+	&__highlight
+		color $brand_color
+		display flex
+		margin-right 20px
+		pointer-events none
+
+	&__message
+		display flex
+		align-items center
+
+	&__message-title
+		margin 0
+		font-size 19px
+		text-transform uppercase
+	&__message-subtitle
+		margin 0
+		font-size 14px
+		font-weight bold
+	&__form
+		display flex
+		justify-content space-between
+		align-items center
+		flex-grow 1
+	&__form-inputs
+		flex-grow 1
+	&__form-genre
+		display inline-block
+		margin-right  20px
+	&__form-name
+		display flex
+		align-items center
+		.icon-x-mark-circle
+			font-size 35px
+			color $dark_gray
+			transition 0.3s all ease
+			&:hover
+				opacity 0.8
+				transition 0.3s all ease
+		.parsley-errors-list
+			display none
+	&__form-input
+		flex-grow 1
+		&:first-child
+			margin-right 10px
+	&__form-button
+		margin-left 10px
+		flex-shrink 0 // fixes safari bug
+	&__form-policies
+		display inline-block
+		margin 0
+		font-size 11px
+	&__form-policies-link
+			color $blue
+
++tablet()
+	.l-newsletter
+		.l-container
+			flex-direction column
+		.icon
+			font-size 50px
+		&__highlight
+			margin-right 0
+			padding-bottom 10px
+
+		&__message
+			flex-direction row
+			align-items center
+		&__message-title
+			margin-right 10px
+			font-size 16px
+		&__message-subtitle
+			font-size 16px
+		&__form
+			width 100%
+			align-items baseline
+
++mobile()
+	.l-newsletter
+		margin-bottom 15px
+		cursor pointer
+		display none
+		z-index 1
+		.icon
+			font-size 60px
+		&__form
+			display none
+		&__highlight
+			pointer-events all
+		&--active
+			position relative

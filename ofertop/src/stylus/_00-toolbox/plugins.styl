@@ -1,0 +1,514 @@
+// autocomplete no results
+.ui-helper-hidden-accessible
+	display none !important
+
+// Fancybox
+
+.fancybox-wrap,
+.fancybox-skin,
+.fancybox-outer,
+.fancybox-inner,
+.fancybox-image,
+.fancybox-wrap iframe,
+.fancybox-wrap object,
+.fancybox-nav,
+.fancybox-nav span,
+.fancybox-tmp
+	padding 0
+	margin 0
+	border 0
+	outline none
+	vertical-align top
+
+.fancybox-wrap
+	position absolute
+	top 0
+	left 0
+	z-index 8020
+
+.fancybox-skin
+	position relative
+	background #fff
+	color #444
+	text-shadow none
+	border-radius $border_radius
+
+.fancybox-opened
+	z-index 8030
+	.fancybox-title
+		visibility visible
+
+.fancybox-outer, .fancybox-inner
+	position relative
+
+
+.fancybox-inner
+	overflow hidden
+
+.fancybox-overlay
+	position absolute
+	top 0
+	left 0
+	overflow hidden
+	display none
+	z-index 8010
+	background-color rgba(0,0,0,0.7)
+	&-fixed
+		position fixed
+		bottom 0
+		right 0
+
+.fancybox-close
+	position absolute
+	top 0px
+	right 5px
+	color black
+	font-size 32px
+	opacity 0.2
+	transition 0.3s all ease
+	&:before
+		@extends .icon, .icon-x-mark:before
+	&:hover
+		transition 0.3s all ease
+		opacity 0.4
+
+// #fancybox-loading
+// 	position fixed
+// 	top 0
+// 	z-index 8060
+// 	width 100%
+// 	height 100%
+// 	div
+// 		width 100%
+// 		height 100%
+// 		background rgba(255,255,255,0.6) url($imgPath+'loader.gif?version') center center no-repeat
+// 		background-size 24px 24px
+
+#fancybox-loading
+	position fixed
+	top 50%
+	left 50%
+	margin-top -22px
+	margin-left -22px
+	opacity 1
+	cursor pointer
+	z-index 8060
+	background-color white
+	border-radius 50%
+	div
+		width 44px
+		height 44px
+		background white url($imgPath+'loader.gif?version') center center no-repeat
+		background-size 24px 24px
+		border-radius 50%
+		box-shadow 0 2px 6px rgba(0, 0, 0, 0.2)
+
+// Slick
+
+.slick-slider
+	position relative
+	display block
+	box-sizing border-box
+	-webkit-user-select none
+	-moz-user-select none
+	-ms-user-select none
+	user-select none
+	-webkit-touch-callout none
+	-khtml-user-select none
+	-ms-touch-action pan-y
+	touch-action pan-y
+	-webkit-tap-highlight-color transparent
+
+.slick-list
+	position relative
+	display block
+	overflow hidden
+	margin 0
+	padding 0
+	&:focus
+		outline none
+	&.dragging
+		cursor pointer
+		cursor hand
+
+.slick-slider .slick-track,
+.slick-slider .slick-list
+	-webkit-transform translate3d(0, 0, 0)
+	-moz-transform translate3d(0, 0, 0)
+	-ms-transform translate3d(0, 0, 0)
+	-o-transform translate3d(0, 0, 0)
+	transform translate3d(0, 0, 0)
+
+.slick-track
+	position relative
+	top 0
+	left 0
+	display block
+	&:after
+		clear both
+
+.slick-track:before,
+.slick-track:after
+	display table
+	content ''
+
+.slick-loading
+	.slick-track
+		visibility hidden
+	.slick-slide
+		visibility hidden
+
+.slick-slide
+	display none
+	float left
+	height 100%
+	min-height 1px
+	img
+		display block
+	&.slick-loading
+		img
+			display none
+	&.dragging
+		img
+			pointer-events none
+
+[dir='rtl']
+	.slick-slide
+		float right
+
+.slick-initialized
+	.slick-slide
+		display block
+
+.slick-vertical
+	.slick-slide
+		display block
+		height auto
+		border 1px solid transparent
+
+.slick-arrow
+	&.slick-hidden
+		display none
+
+.slick-dots
+	position absolute
+	bottom 10px
+	width 100%
+	text-align center
+	li
+		display inline-block
+		width 20px
+		height 20px
+		margin 5px
+		button
+			color transparent
+			border none
+			background: transparent
+			border-radius 50%
+			border 3px solid white
+			outline none
+			font-size 0
+			line-height 0
+			display block
+			width 15px
+			height 15px
+			padding 5px
+.slick-prev, .slick-next
+	position absolute
+	font-weight bold
+	top 50%
+	z-index 200
+	font-size 0
+	line-height 0
+	background transparent
+	color transparent
+	border none
+	width 45px
+	height 45px
+	outline none
+	padding 0
+	font-family "iconFonts"
+	transform translate(0,-50%)
+	text-shadow 0 2px 3px rgba(0,0,0,0.2)
+	&:before
+		content "\E002"
+		color white
+		outline none
+		padding 0
+		font-size 45px
+		line-height 1
+		color white
+		-webkit-font-smoothing antialiased
+		margin 0
+		display inline-block
+.slick-prev
+	left 0px
+	&:before
+		transform rotate(180deg)
+.slick-next
+	right 0px
+
+.slick-active
+	button
+		background white !important
+
+
+
+// Parsley
+
+input.parsley-success
+select.parsley-success
+textarea.parsley-success
+	//color $success_color !important
+	border 1px solid $success_color !important
+	background-color white !important
+
+input.parsley-error
+select.parsley-error
+textarea.parsley-error
+.has_error
+.has_error.parsley-success
+	color $error_color !important
+	border 1px solid $error_color !important
+	background-color white !important
+
+.parsley-error, .parsley-type, .parsley-required, .parsley-custom-error-message
+	animation-name shake
+	animation-duration 150ms
+	animation-iteration-count 2
+	animation-timing-function linear
+
+.parsley-errors-list
+	margin 2px 0 3px 0
+	padding 0
+	list-style-type none
+	font-size 0.9em
+	line-height 0.9em
+	opacity 0
+	-moz-opacity 0
+	-webkit-opacity 0
+	transition all .3s ease-in !important
+	&.filled
+		opacity 1
+	&:empty
+		margin 0
+	li
+		font-size 11px
+		color $error_color
+
+// bootstrap-slider
+
+.slider
+	display inline-block
+	vertical-align middle
+	position relative
+	&.slider-horizontal
+		width 90%
+		height 25px
+		.slider-track
+			height 10px
+			width 100%
+			margin-top -5px
+			top 50%
+			left 0
+		.slider-tick-container
+			white-space nowrap
+			position absolute
+			top 0
+			left 0
+			width 100%
+		.slider-tick-label-container
+			white-space nowrap
+			margin-top 20px
+			.slider-tick-label
+				padding-top 4px
+				display inline-block
+				text-align center
+	&.slider-vertical
+		height 210px
+		width 20px
+		.slider-track
+			width 10px
+			height 100%
+			left 25%
+			top 0
+		.slider-selection
+			width 100%
+			left 0
+			top 0
+			bottom 0
+		.slider-tick-label-container
+			white-space nowrap
+			.slider-tick-label
+				padding-left 4px
+	&.slider-disabled
+		.slider-handle
+			background-image -webkit-linear-gradient(top, #dfdfdf 0%, #bebebe 100%)
+			background-image -o-linear-gradient(top, #dfdfdf 0%, #bebebe 100%)
+			background-image linear-gradient(to bottom, #dfdfdf 0%, #bebebe 100%)
+			background-repeat repeat-x
+			//filter progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdfdfdf', endColorstr='#ffbebebe', GradientType=0)
+		.slider-track
+			background-image -webkit-linear-gradient(top, #e5e5e5 0%, #e9e9e9 100%)
+			background-image -o-linear-gradient(top, #e5e5e5 0%, #e9e9e9 100%)
+			background-image linear-gradient(to bottom, #e5e5e5 0%, #e9e9e9 100%)
+			background-repeat repeat-x
+			//filter progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe5e5e5', endColorstr='#ffe9e9e9', GradientType=0)
+			cursor not-allowed
+	input
+		display none
+	.tooltip
+		&.top
+			margin-top -36px
+			display none
+	.tooltip-inner
+		white-space nowrap
+		max-width none
+	.hide
+		display none
+
+.slider.slider-horizontal .slider-selection,
+.slider.slider-horizontal .slider-track-low,
+.slider.slider-horizontal .slider-track-high
+	height 100%
+	top 0
+	bottom 0
+
+.slider.slider-horizontal .slider-tick,
+.slider.slider-horizontal .slider-handle
+	margin-left -13px
+
+.slider.slider-horizontal .slider-tick.triangle,
+.slider.slider-horizontal .slider-handle.triangle
+	position relative
+	top 50%
+	transform translateY(-50%)
+	border-width 0 10px 10px 10px
+	width 0
+	height 0
+	border-bottom-color #0480be
+	margin-top 0
+
+.slider.slider-vertical .slider-track-low,
+.slider.slider-vertical .slider-track-high
+	width 100%
+	left 0
+	right 0
+
+.slider.slider-vertical .slider-tick,
+.slider.slider-vertical .slider-handle
+	margin-top -13px
+
+.slider.slider-vertical .slider-tick.triangle,
+.slider.slider-vertical .slider-handle.triangle
+	border-width 10px 0 10px 10px
+	width 1px
+	height 1px
+	border-left-color #0480be
+	margin-left 0
+
+.slider-track
+	position absolute
+	cursor pointer
+	background-image -webkit-linear-gradient(top, #f5f5f5 0%, #f9f9f9 100%)
+	background-image -o-linear-gradient(top, #f5f5f5 0%, #f9f9f9 100%)
+	background-image linear-gradient(to bottom, #f5f5f5 0%, #f9f9f9 100%)
+	background-repeat repeat-x
+	//filter progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff9f9f9', GradientType=0)
+	-webkit-box-shadow inset 0 1px 2px rgba(0, 0, 0, 0.1)
+	box-shadow inset 0 1px 2px rgba(0, 0, 0, 0.1)
+	border-radius 4px
+
+.slider-selection
+	position absolute
+	background-image -webkit-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%)
+	background-image -o-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%)
+	background-image linear-gradient(to bottom, #f9f9f9 0%, #f5f5f5 100%)
+	background-repeat repeat-x
+	//filter progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#fff5f5f5', GradientType=0)
+	-webkit-box-shadow inset 0 -1px 0 rgba(0, 0, 0, 0.15)
+	box-shadow inset 0 -1px 0 rgba(0, 0, 0, 0.15)
+	-webkit-box-sizing border-box
+	-moz-box-sizing border-box
+	box-sizing border-box
+	border-radius 4px
+	background $brand_color !important
+	&.tick-slider-selection
+		background-image -webkit-linear-gradient(top, #89cdef 0%, #81bfde 100%)
+		background-image -o-linear-gradient(top, #89cdef 0%, #81bfde 100%)
+		background-image linear-gradient(to bottom, #89cdef 0%, #81bfde 100%)
+		background-repeat repeat-x
+		//filter progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff89cdef', endColorstr='#ff81bfde', GradientType=0)
+
+.slider-track-low,
+.slider-track-high
+	position absolute
+	background transparent
+	-webkit-box-sizing border-box
+	-moz-box-sizing border-box
+	box-sizing border-box
+	border-radius 4px
+
+.slider-handle
+	position absolute
+	top 0
+	width 26px
+	height 26px
+	background-color #f3f3f3
+	background-image -webkit-linear-gradient(top, #f3f3f3 0%, #e9e9e9 100%)
+	background-image -o-linear-gradient(top, #f3f3f3 0%, #e9e9e9 100%)
+	background-image linear-gradient(to bottom, #f3f3f3 0%, #e9e9e9 100%)
+	background-repeat repeat-x
+	//filter progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff3f3f3', endColorstr='#ffe9e9e9', GradientType=0)
+	filter none
+	-webkit-box-shadow inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)
+	box-shadow 0 1px 4px rgba(0,0,0,0.2)
+	border 1px solid #d1d1d1
+	&.round
+		border-radius 50%
+	&.triangle
+		background transparent none
+	&.custom
+		background transparent none
+		&::before
+			line-height 20px
+			font-size 20px
+			content '\2605'
+			color #726204
+
+.slider-tick
+	position absolute
+	width 20px
+	height 20px
+	background-image -webkit-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%)
+	background-image -o-linear-gradient(top, #f9f9f9 0%, #f5f5f5 100%)
+	background-image linear-gradient(to bottom, #f9f9f9 0%, #f5f5f5 100%)
+	background-repeat repeat-x
+	//filter progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#fff5f5f5', GradientType=0)
+	-webkit-box-shadow inset 0 -1px 0 rgba(0, 0, 0, 0.15)
+	box-shadow inset 0 -1px 0 rgba(0, 0, 0, 0.15)
+	-webkit-box-sizing border-box
+	-moz-box-sizing border-box
+	box-sizing border-box
+	filter none
+	opacity 0.8
+	border 0px solid transparent
+	&.round
+		border-radius 50%
+	&.triangle
+		background transparent none
+	&.custom
+		background transparent none
+		&::before
+			line-height 20px
+			font-size 20px
+			content '\2605'
+			color #726204
+	&.in-selection
+		background-image -webkit-linear-gradient(top, #89cdef 0%, #81bfde 100%)
+		background-image -o-linear-gradient(top, #89cdef 0%, #81bfde 100%)
+		background-image linear-gradient(to bottom, #89cdef 0%, #81bfde 100%)
+		background-repeat repeat-x
+		//filter progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff89cdef', endColorstr='#ff81bfde', GradientType=0)
+		opacity 1
+

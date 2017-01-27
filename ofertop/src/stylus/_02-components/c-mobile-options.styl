@@ -1,0 +1,23 @@
+.c-mobile-options
+	display flex
+	align-items center
+	margin-bottom 20px
+	&__toggle-filters
+		flex-grow 1
+		margin-right 10px
+		text-align center
+		height 40px
+		line-height 40px
+		padding 0
+		width 50%
+
+
+	&__select
+		width 50%
+		flex-grow 1
+		height 40px !important
+
+
++above(rupture.mobile-cutoff)
+	.c-mobile-options
+		display none

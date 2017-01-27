@@ -1,0 +1,182 @@
+aside.c-nav
+	h1.c-nav__title Las mejores ofertas
+	ul.c-nav__list
+		li.c-nav__item
+			a.c-nav__item-link(href="javascript:;")
+				span.icon.icon-beauty
+				| Belleza y Salud
+			.c-nav__dropdown
+				.l-container
+					ul.c-nav__dropdown-list
+						li.c-nav__dropdown-list-title Belleza y Salud
+						li.c-nav__dropdown-list-item
+							+repeat(15)
+								- var dropdownLink = {}
+								- dropdownLink.link = "javascript:;"
+								- dropdownLink.description = "Links de belleza"
+								+c-nav__dropdown-list-item-link(dropdownLink)
+					figure.c-nav__dropdown-big-banner
+						a.c-nav__dropdown-big-banner-link(href="javascript:;")
+							img.c-nav__dropdown-big-banner-image(src!=`${page.url.image}nav/laceados-240x355.jpg`, alt="banner")
+					figure.c-nav__dropdown-banner
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/cejas-300x170.jpg`, alt="banner")
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/reductores-300x170.jpg`, alt="banner")
+
+		li.c-nav__item
+			a.c-nav__item-link(href="javascript:;")
+				span.icon.icon-travel
+				| Viajes y turismo
+			.c-nav__dropdown
+				.l-container
+					ul.c-nav__dropdown-list
+						li.c-nav__dropdown-list-title Viajes y turismo
+						li.c-nav__dropdown-list-item
+							+repeat(10)
+								- var dropdownLink = {}
+								- dropdownLink.link = "javascript:;"
+								- dropdownLink.description = "Viajes y turismo"
+								+c-nav__dropdown-list-item-link(dropdownLink)
+					figure.c-nav__dropdown-big-banner
+						a.c-nav__dropdown-big-banner-link(href="javascript:;")
+							img.c-nav__dropdown-big-banner-image(src!=`${page.url.image}nav/cusco-434x355.jpg`, alt="banner")
+					figure.c-nav__dropdown-banner
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/arequipa-300x170.jpg`, alt="banner")
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/playas-300x170.jpg`, alt="banner")
+		li.c-nav__item
+			a.c-nav__item-link(href="javascript:;")
+				span.icon.icon-restaurants
+				| Restaurantes
+			.c-nav__dropdown
+				.l-container
+					ul.c-nav__dropdown-list
+						li.c-nav__dropdown-list-title Restaurantes
+						li.c-nav__dropdown-list-item
+							+repeat(10)
+								- var dropdownLink = {}
+								- dropdownLink.link = "javascript:;"
+								- dropdownLink.description = "Mas restaurantes"
+								+c-nav__dropdown-list-item-link(dropdownLink)
+					figure.c-nav__dropdown-big-banner
+						a.c-nav__dropdown-big-banner-link(href="javascript:;")
+							img.c-nav__dropdown-big-banner-image(src!=`${page.url.image}nav/buffet-434x355.jpg`, alt="banner")
+					figure.c-nav__dropdown-banner
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/pescados-300x170.jpg`, alt="banner")
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/sushis-300x170.jpg`, alt="banner")
+		li.c-nav__item
+			a.c-nav__item-link(href="javascript:;")
+				span.icon.icon-product
+				| Productos
+			.c-nav__dropdown
+				.l-container
+					ul.c-nav__dropdown-list
+						li.c-nav__dropdown-list-title Productos
+						li.c-nav__dropdown-list-item
+							+repeat(17)
+								- var dropdownLink = {}
+								- dropdownLink.link = "javascript:;"
+								- dropdownLink.description = "Lista de productos"
+								+c-nav__dropdown-list-item-link(dropdownLink)
+					figure.c-nav__dropdown-big-banner
+						a.c-nav__dropdown-big-banner-link(href="javascript:;")
+							img.c-nav__dropdown-big-banner-image(src!=`${page.url.image}nav/autos-240x355.jpg`, alt="banner")
+					figure.c-nav__dropdown-banner
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/cajachina-300x170.jpg`, alt="banner")
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/fotografias-300x170.jpg`, alt="banner")
+		li.c-nav__item
+			a.c-nav__item-link(href="javascript:;")
+				span.icon.icon-entertainment
+				| Entretenimiento
+			.c-nav__dropdown
+				.l-container
+					ul.c-nav__dropdown-list
+						li.c-nav__dropdown-list-title Entretenimiento
+						li.c-nav__dropdown-list-item
+							+repeat(8)
+								- var dropdownLink = {}
+								- dropdownLink.link = "javascript:;"
+								- dropdownLink.description = "Lista de items"
+								+c-nav__dropdown-list-item-link(dropdownLink)
+					figure.c-nav__dropdown-big-banner
+						a.c-nav__dropdown-big-banner-link(href="javascript:;")
+							img.c-nav__dropdown-big-banner-image(src!=`${page.url.image}nav/cine-434x355.jpg`, alt="banner")
+					figure.c-nav__dropdown-banner
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/actividadesni%C3%B1os-300x170.jpg`, alt="banner")
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/deportesaventura-300x170.jpg`, alt="banner")
+
+
+		li.c-nav__item
+			a.c-nav__item-link(href="javascript:;")
+				span.icon.icon-interest
+				| Tiempo Libre
+			.c-nav__dropdown
+				.l-container
+					ul.c-nav__dropdown-list
+						li.c-nav__dropdown-list-title Tiempo Libre
+						li.c-nav__dropdown-list-item
+							+repeat(10)
+								- var dropdownLink = {}
+								- dropdownLink.link = "javascript:;"
+								- dropdownLink.description = "Lista de items"
+								+c-nav__dropdown-list-item-link(dropdownLink)
+					figure.c-nav__dropdown-big-banner
+						a.c-nav__dropdown-big-banner-link(href="javascript:;")
+							img.c-nav__dropdown-big-banner-image(src!=`${page.url.image}nav/fotografia-434x355.jpg`, alt="banner")
+					figure.c-nav__dropdown-banner
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/clases-300x170.jpg`, alt="banner")
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/deporte-300x170.jpg`, alt="banner")
+		li.c-nav__item
+			a.c-nav__item-link(href="javascript:;")
+				span.icon.icon-fitness
+				| Servicios
+			.c-nav__dropdown
+				.l-container
+					ul.c-nav__dropdown-list
+						li.c-nav__dropdown-list-title Servicios
+						li.c-nav__dropdown-list-item
+							+repeat(10)
+								- var dropdownLink = {}
+								- dropdownLink.link = "javascript:;"
+								- dropdownLink.description = "Lista de items"
+								+c-nav__dropdown-list-item-link(dropdownLink)
+					figure.c-nav__dropdown-big-banner
+						a.c-nav__dropdown-big-banner-link(href="javascript:;")
+							img.c-nav__dropdown-big-banner-image(src!=`${page.url.image}nav/servicios-434x355.jpg`, alt="banner")
+					figure.c-nav__dropdown-banner
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/automotriz-300x170.jpg`, alt="banner")
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/mascotas-300x170.jpg`, alt="banner")
+		li.c-nav__item
+			a.c-nav__item-link(href="javascript:;")
+				span.icon.icon-home
+				| Casa y Hogar
+			.c-nav__dropdown
+				.l-container
+					ul.c-nav__dropdown-list
+						li.c-nav__dropdown-list-title Casa y Hogar
+						li.c-nav__dropdown-list-item
+							+repeat(10)
+								- var dropdownLink = {}
+								- dropdownLink.link = "javascript:;"
+								- dropdownLink.description = "Lista de items"
+								+c-nav__dropdown-list-item-link(dropdownLink)
+					figure.c-nav__dropdown-big-banner
+						a.c-nav__dropdown-big-banner-link(href="javascript:;")
+							img.c-nav__dropdown-big-banner-image(src!=`${page.url.image}nav/limpieza-434x355.jpg`, alt="banner")
+					figure.c-nav__dropdown-banner
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/cocina-300x170.jpg`, alt="banner")
+						a.c-nav__dropdown-banner-link(href="javascript:;")
+							img.c-nav__dropdown-banner-image(src!=`${page.url.image}nav/decoracion-300x170.jpg`, alt="banner")

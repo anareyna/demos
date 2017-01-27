@@ -1,0 +1,60 @@
+//------------------------ Utility mixins ------------------------------//
+
+mixin repeat(limit)
+	- for (var i = 1; i <= limit; i++) {
+		block
+	- }
+
+
+//---------------- General mixins for rendering content ----------------//
+
+mixin c-radio(label, custom_class)
+	label.c-radio__label(class=custom_class)= label
+		input.c-radio__input&attributes(attributes)(type="radio")
+		span.c-radio__radio
+
+
+mixin c-checkbox(label, custom_class)
+	label.c-checkbox__label(class=custom_class)
+		input.c-checkbox__input&attributes(attributes)(type="checkbox")
+		span.c-checkbox__checkbox
+		| !{label}
+
+mixin c-form-group(label)
+	.c-form-group&attributes(attributes)
+		label.c-form-group__label= label
+		.c-form-group__inputs
+			block
+
+
+mixin c-campaign(config)
+	a.c-campaign(href!=config.link, title!=config.description, class!=config.class)&attributes(attributes)
+		img.c-campaign__image.lazy(src!=`${page.url.image}${config.image_low}`, alt!=config.alt)
+		.c-campaign__info
+			p.c-campaign__description!= config.description
+			.c-campaign__price-container
+				.c-campaign__first-line!= config.first_line
+				.c-campaign__price!= config.price
+				.c-campaign__button!= config.button
+
+
+mixin c-nav__dropdown-list-item-link(config)
+	a.c-nav__dropdown-list-item-link(href!=config.link, title!=config.description)!= config.description
+
+mixin c-note-blog__item(config)
+	a.c-note-blog__item(href!=config.link)&attributes(attributes)
+		img.c-note-blog__image(src!=config.image, alt!=config.alt)
+		span.c-note-blog__info
+			h5.c-note-blog__title!= config.title
+			span.c-note-blog__description!= config.description
+				span.c-note-blog__link(href!=config.link, title!=config.title, target="_blank") &nbsp;Leer más
+
+mixin c-banners__item(config)
+	.c-banners__item&attributes(attributes)
+		a.c-banners__link(href!=config.link, title!=config.title)
+			img.c-banners__image(src!=`${page.url.image}${config.image}`, alt!=config.alt)
+
+
+mixin c-slider__item(config)
+	a.c-slider__link(href!=config.link, title!=config.title)
+		img.c-slider__image(src!=`${page.url.image}${config.image}`, alt!=config.alt)

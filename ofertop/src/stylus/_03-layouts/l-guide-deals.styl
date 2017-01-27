@@ -1,0 +1,31 @@
+.l-guide-deals
+	display flex
+	margin 24px auto 0
+	justify-content space-between
+	border-bottom 1px dashed $gray
+	padding-bottom 24px
+	&__banners
+		margin-left 10px
+
++mobile()
+	.l-guide-deals
+		border-bottom none
+		margin-top 10px
+		padding-bottom 0
+		&__banners
+			display none
+		&__nav
+			display none
+		&__slider
+			max-width 100%
+			width 100%
+
++tablet()
+	.l-guide-deals
+		&__banners
+			display none
+		&__slider
+			//max-width 100%
+			height  100%
+			width 75%
+			margin-left 10px

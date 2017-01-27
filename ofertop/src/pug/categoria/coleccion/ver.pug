@@ -1,0 +1,52 @@
+extends /_templates/master
+
+block content
+	section.l-category.l-container.c-special-collection
+		.l-category__header
+			h2.l-category__title Colección <?php echo $this->coleccion['nombre'];?>
+
+	.l-container
+		ul.c-breadcrumb
+			li.c-breadcrumb__item
+				a.c-breadcrumb__link(href="/") Ofertop
+				li.c-breadcrumb__item.c-breadcrumb__item--active
+					a.c-breadcrumb__link(href!="/coleccion/<?php echo $this->coleccion['alias'];?>") <?php echo $this->coleccion['nombre'];?>
+
+	.l-container.l-results
+		include /_layouts/l-filters
+		.l-search-result
+			.l-search-result__details
+				p.l-search-result__message Mostrando #[+echo("$this->total;")] resultado(s)
+				.l-search-result__order
+					span.l-search-result__order-text Ordenar por
+					select.l-search-result__order-select.e-select
+						include /modules/partials/order_select
+			.l-search-result__content#scrollingContent
+				.l-search-result__page
+					+foreach("$this->campanas as $campana")
+						- var campana = {}
+						- campana.class = "<?php echo (($campana['campana_especial'])?'c-campaign--special':'');?>"
+						- campana.link = "<?php echo $campana['campana_url_full'];?>"
+						- campana.image = "<?php echo $campana['imagen_url_full'];?>"
+						- campana.image_low = "<?php echo $campana['imagen_url_low'];?>"
+						- campana.alt = "<?php echo $campana['titulo'];?>"
+						- campana.description = "<?php echo $campana['titulo'];?>"
+						- campana.first_line = "<?php echo $campana['precio_regular'];?>"
+						- campana.price = "<?php echo $campana['precio_cupon'];?>"
+						- campana.button = "<?php echo $campana['beneficio_text'];?>"
+						+c-campaign(campana)
+
+			+echo("$this->partial('buscador/template/ver.phtml')")
+			+echo("$this->paginationControl($this->paginador, 'Sliding', 'partials/pagination_search.phtml', array('paginadorRoute'=>$this->paginadorRoute,'paginadorVars'=>$this->paginadorVars))")
+
+			//-ul.c-pagination.c-pagination--fixed
+				li.c-pagination__item
+					a.c-pagination__link.c-pagination__link--previous.c-pagination__link--disabled(href="javascript:;") ‹
+				li.c-pagination__item
+					a.c-pagination__link.c-pagination__link--active(href="javascript:;") 1
+				li.c-pagination__item
+					a.c-pagination__link(href="javascript:;") 2
+				li.c-pagination__item
+					a.c-pagination__link(href="javascript:;") 3
+				li.c-pagination__item
+					a.c-pagination__link.c-pagination__link--next(href="javascript:;") ›

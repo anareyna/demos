@@ -1,0 +1,40 @@
+.c-filter-list
+	margin-bottom 35px
+	&__title
+		text-transform uppercase
+		font-weight bold
+		margin-bottom 10px
+		font-size 16px
+		margin-top 0
+	&__group
+		list-style none
+	&__link
+		padding 6px 0
+		display block
+		font-size 14px
+		transition 0.3s all ease
+		&:hover
+			transition 0.3s all ease
+			opacity 0.5
+
++mobile()
+	.c-filter-list
+		margin-bottom 0
+		&__title
+			background-color darken($light_gray, 2%)
+			padding 10px 15px
+			border-radius $border_radius
+			text-transform none
+			margin-top 10px
+			cursor pointer
+		&__link
+			font-size 16px
+			padding-left 15px
+			padding-right 15px
+		&__group
+			display none
+
++above(rupture.mobile-cutoff)
+	.c-filter-list
+		&__group
+			display block !important

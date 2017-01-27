@@ -1,0 +1,36 @@
+.c-pagination
+	border-top 1px dashed $gray
+	text-align center
+	padding 12px 10px
+	clear both
+	&--fixed
+		position fixed
+		width 100%
+		z-index 2
+		bottom 0
+		background-color white
+		left 0
+	&__item
+		display inline-block
+		margin 5px
+	&__link
+		padding 6px 12px
+		background-color $light_gray
+		border-radius $border_radius
+		color $dark_gray
+		transition 0.1s all ease
+		outline none
+		&--disabled
+			opacity 0.4
+			pointer-events none
+		&:hover, &--active
+			background-color $brand_color
+			color white
+			transition 0.2s all ease
+		&--active
+			pointer-events none
+
++mobile()
+	.c-pagination
+		display none
+

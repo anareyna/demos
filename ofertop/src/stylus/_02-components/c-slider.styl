@@ -1,0 +1,13 @@
+.c-slider
+	margin 0
+	width 100%
+	max-width 630px
+	height 100%
+	&__image
+		margin 0
+		width 100%
+	&__link
+		&:nth-child(n+2) // for slider delay
+			&:not(.slick-slide)
+				display none
+

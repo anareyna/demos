@@ -1,0 +1,46 @@
+.l-search-result
+	.c-campaign
+		lost-column 1/3
+		&--medium
+			lost-column 1/2
+	&__details
+		display flex
+		margin-bottom 10px
+		align-items center
+		margin-top -10px
+
+	&__message
+		margin 0
+		flex-grow 1
+		font-weight bold
+		font-size 15px
+
+	&__order
+		display flex
+		align-items center
+	&__order-text
+		flex-shrink 0
+		margin-right 10px
+		font-size 15px
+	&__order-select
+		height 32px
+		line-height 32px
+	&__content
+		lost-utility clearfix
+	&__page
+		lost-utility clearfix // important for scrolling to work
+
+
++mobile()
+	.l-search-result
+		.c-campaign
+			lost-column 1/1
+		&__details
+			margin-top 0
+			display none
+
++tablet()
+	.l-search-result
+		.c-campaign
+			lost-column 1/2
+

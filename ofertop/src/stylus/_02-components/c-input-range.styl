@@ -1,0 +1,28 @@
+.c-input-range
+	position relative
+	margin-top 20px
+	text-align center
+	&__inputs
+		margin-top 10px
+		lost-utility clearfix
+	&__input-container
+		display flex
+		align-items center
+		flex-basis 40%
+		&:first-child
+			float left
+		&:nth-child(2)
+			float right
+	&__slider
+		opacity 0
+	&__quantity
+		width 70px
+		height 30px
+		margin-left 5px
+
++tablet()
+	.c-input-range
+		&__quantity
+			width 57px
+
+

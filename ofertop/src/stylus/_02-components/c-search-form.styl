@@ -1,0 +1,51 @@
+.c-search-form
+	position relative
+	flex-grow 1
+	&__input
+		font-size 16px
+	&__button
+		outline 0
+		position absolute
+		padding 0
+		right 0
+		bottom 0
+		top 0
+		margin auto
+		background $brand_color
+		color white
+		border none
+		border-radius 0 $border_radius $border_radius 0
+	&__autocomplete
+		visibility visible
+		z-index 210
+		position absolute
+		background white
+		width calc(100% - 45px) !important
+		padding 0
+		margin 0
+		border-right  1px solid $gray
+		border-left  1px solid $gray
+		border-bottom  1px solid $gray
+		list-style none
+	&__autocomplete-item
+		margin 0
+		list-style none
+	&__autocomplete-link
+		outline none
+		color $dark_gray
+		padding 10px
+		display flex
+		justify-content space-between
+		align-items center
+		font-size 16px
+		&:hover
+			background $light_gray
+	&__autocomplete-image
+		max-height 30px
+		max-width 60px
+		width 60px
+		display block
+	&__autocomplete-product
+		flex-grow 1
+		margin 0 10px
+

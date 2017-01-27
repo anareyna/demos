@@ -1,0 +1,35 @@
+// Buttons
+//
+// A majority of buttons in the site are built from the same base class.
+//
+// Markup: e-button.html
+
+// e-button--disabled  - Make the button change appearance to reflect it being disabled.
+// Style guide: ofertop.elements.buttons
+
+.e-button
+	border none
+	padding 10px 20px
+	border-radius $border_radius
+	background $brand_color
+	color white
+	margin 0
+	outline none
+	display inline-block
+	font-size 14px
+	font-family $font_family_primary
+	& + .e-button
+		margin-left 10px
+	&--block
+		display block
+		width 100%
+	&:disabled,
+	&[disabled],
+	&.is-disabled,
+	&--disabled
+		cursor	not-allowed
+		opacity	0.5
+		pointer-events none
+	&:hover
+		background-color darken($brand_color, 10%)
+		transition 0.2s all ease

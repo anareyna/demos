@@ -1,0 +1,301 @@
+/*Header*/
+.l-header
+	background-color white // reset for internal pages
+	&--active
+		position fixed !important // for js mobile
+		width 100%
+		z-index 200
+		top 0
+		background white
+		border none
+		.l-header__nav
+			display block !important // for p-index override
+
+	.l-container
+		display  flex
+		justify-content space-between
+		align-items center
+		padding 13.5px 0
+	&__mobile-menu
+		display none
+	&__logo
+		width 135px
+		margin-right 55px
+		display block
+		margin-bottom -8px // for custom aligning
+	&__logo-img
+		height 100% // ie11 fix
+	&__auth
+		list-style none
+		padding 0
+		margin-left 20px
+	&__auth-item
+		margin 0
+		position relative
+		display inline-block
+		font-size 14px
+		&:first-child
+			border-right 1px solid $gray
+			&:hover
+				.c-login-form
+					visibility visible
+					transition 0.2s all ease
+	&__logged // logged
+		margin-left 10px
+		background $light_gray
+		border-radius $border_radius
+		&:first-child
+			border-right none
+		&:hover
+			& > .c-menu-account
+				visibility visible
+
+	&__auth-link
+		color $black
+		padding 7px 10px
+		display block
+		text-decoration none
+		font-weight bold
+
+	&__cart
+		background $light_gray
+		padding 8px 10px 8px 0
+		border-radius $border_radius
+		font-weight bold
+
+	.icon-search
+		margin 0
+
+	&__nav
+		lost-center $container_width
+		background $light_gray
+		width 100%
+		max-width 100%
+		position relative
+		box-shadow  0 7px 6px -6px rgba(0,0,0,0.2)
+
+		.icon-menu, .icon-arrow-right, .icon-x-mark
+			display none
+
+		.c-nav
+			max-width $container_width
+			margin 0 auto
+			position initial
+			&__dropdown
+				left 0
+				height 215px
+				z-index 200
+				top 30px // initial fix ie11
+				background white
+				width 100%
+				box-shadow  0 7px 6px -6px rgba(0,0,0,0.2)
+				.l-container
+					max-width $container_width
+					flex-basis 100%
+			&__dropdown-banner
+				margin 0
+				display flex
+			&__dropdown-banner-link
+				width 50%
+				&:first-child
+					margin 0 30px 0 0
+			&__dropdown-banner-image
+				display block
+				width 100%
+			&__dropdown-list
+				padding 0
+				background white
+				flex-basis 42%
+			&__dropdown-list-item
+				height 174px
+				margin 0
+			&__dropdown-list-item-link
+				width 33.33%
+				line-height 1.3
+			&__title
+				display none
+			&__list
+				width initial
+				display flex
+				justify-content space-between
+				align-items center
+				width 100% // fix ie11 bug
+			&__dropdown-list-title
+				display none
+			&__dropdown-big-banner
+				display none
+			&__item
+				flex-grow 1
+				text-align center
+				border none
+			&__item-link
+				padding 6px 10px
+				font-size 16px
+				&:hover
+					background white
+					.c-nav__dropdown
+						visibility visible
+					.c-nav__title-item-link
+						color $brand_color
+			.icon
+				display none
+
+/*
+	Mobile Styles for Header
+*/
+
++mobile()
+	.l-header
+		border-bottom none
+		.l-container
+			flex-wrap wrap
+			position relative
+			justify-content center
+			box-shadow 0 7px 6px -6px rgba(0,0,0,0.2)
+			padding 15px 0
+
+		&__auth
+			display none
+			width 100%
+			margin-left 0
+			text-align center
+			position absolute
+			background white
+			padding 10px 3%
+			top 60px
+			border-top 1px solid lighten($gray, 40%)
+			flex-wrap wrap
+			left 0
+
+		&__auth-item
+			flex-grow 1
+			position initial // for c-login-form
+			&:first-child
+				border-right none
+				margin-right 15px
+
+		&__logged
+			flex-basis 100%
+			top 0
+			position initial
+			width 100%
+			left 0
+			right 0
+			margin 0
+			&:first-child
+				margin-right 0
+			&:hover
+				& > .c-menu-account
+					visibility hidden
+
+		&__auth-link
+			padding 12px 0
+			background darken($light_gray, 2%)
+			border-radius $border_radius
+
+		&__logo
+			margin-right 0
+		&__logo-img
+			height 40px // ie11
+		&__search-form
+			flex-basis 100%
+			margin-top 10px
+
+		&__nav
+			display block
+			position initial
+		.icon-menu, .icon-arrow-right, .icon-x-mark
+			cursor pointer
+			padding 10px 0
+			position absolute
+			top 5px
+			left 2%
+			z-index 1
+
+		.icon-menu
+			display block
+		.icon-arrow-right
+			transform rotate(180deg)
+
+		.c-nav
+			position absolute
+			top 115px
+			background white
+			z-index 300
+			display none
+			box-shadow 0 7px 6px -6px rgba(0,0,0,0.2)
+			width 100%
+			.icon // replace icons for icon plus and icon minus
+				display block
+				position absolute
+				right 1%
+				color $dark_gray
+				top 10px
+				&:before
+					@extend .icon-plus-circle:before
+
+			&__list
+				flex-wrap wrap
+			&__item
+				width 100%
+				text-align initial
+				&:hover
+					background initial
+					.c-nav__dropdown
+						visibility initial
+					.c-nav__item-link
+						color $brand_color
+				&--active  // replace icons for icon plus and icon minus
+					.icon
+						&:before
+							display none
+						&:after
+							@extend  .icon-minus-circle:before
+			&__item-link
+				padding 12px 3%
+				border-bottom 1px solid lighten($gray, 50%)
+				position relative // for icon position
+			&__dropdown
+				display none
+				visibility visible
+				position initial
+				height initial
+				box-shadow none
+				background $light_gray
+				.l-container
+					width 100%
+					padding-top 0
+					padding-bottom 0
+			&__dropdown-list
+				background transparent
+				margin-right 0
+				flex-basis initial
+				width 100%
+			&__dropdown-list-item
+				height initial
+				max-height initial
+			&__dropdown-list-item-link
+				width 100%
+				padding 10px 15px
+				margin 0
+				border-top 1px solid lighten($gray, 40%)
+				font-size 16px
+				&:first-child
+					border-top none
+			&__dropdown-banner
+				display none
+
+
++above(rupture.mobile-cutoff)
+	.l-header
+		&__auth,
+		.c-nav
+			display block !important // fixes problems with mobile menu
+		&__nav
+			.icon-menu, .icon-arrow-right, .icon-x-mark
+				display none !important
+
+		&__logged
+			&:hover
+				> .c-menu-account
+					visibility visible !important

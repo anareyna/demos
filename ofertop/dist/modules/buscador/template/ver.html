@@ -1,0 +1,50 @@
+
+<script id="tmplCampana" type="text/template">
+  {{ if(is_special){ }}
+  <a class="c-campaign c-campaign--special" href="{{=campana_url_full}}" title="{{=titulo}}" data-id="{{=id}}">
+  {{ } else { }}
+  <a class="c-campaign" href="{{=campana_url_full}}" title="{{=titulo}}" data-id="{{=id}}">
+  {{ } }}
+  	<img class="c-campaign__image lazy" data-original="{{=imagen_url_full}}" src="{{=imagen_url_low}}" alt="{{=titulo}}">
+  	<div class="c-campaign__info">
+  		<p class="c-campaign__description">{{=titulo}}</p>
+  		<div class="c-campaign__price-container">
+  			<div class="c-campaign__first-line">{{=precio_regular}}</div>
+  			<div class="c-campaign__price">{{=precio_cupon}}</div>
+  			<div class="c-campaign__button">{{=beneficio_text}}</div>
+  		</div>
+  	</div>
+  </a>
+  
+</script>
+<script id="tmplPaginator" type="text/template">
+  <ul class="">
+  	{{ if(isFirstCurrentUrl){ }}
+  	<li class="c-pagination__item">
+  		<a class="c-pagination__link c-pagination__link--previous c-pagination__link--disabled" title="Anterior">‹</a>
+  	</li>
+  	{{ } else { }}
+  	<li class="c-pagination__item"><a href="{{=prevUrl}}" class="c-pagination__link c-pagination__link--previous" title="Anterior">‹</a></li>
+  	{{ } }}
+  	{{ _.each(pages, function(linkPage, labelPage){ }}
+  	{{ if(labelPage == currentNumPage){ }}
+  	<li class="c-pagination__item">
+  		<a class="c-pagination__link c-pagination__link--active" href="javascript:;">{{=currentNumPage}}</a>
+  	</li>
+  	{{ } else { }}
+  	<li class="c-pagination__item">
+  		<a class="c-pagination__link" href="{{=linkPage}}" data="{{=labelPage}}">{{=labelPage}}</a>
+  	</li>
+  	{{ } }}
+  	{{ }); }}
+  	{{ if(isLastCurrentUrl){ }}
+  	<li class="c-pagination__item">
+  		<a class="c-pagination__link c-pagination__link--next c-pagination__link--disabled" href="javascript:;">›</a>
+  	</li>
+  	{{ } else { }}
+  	<li class="c-pagination__item">
+  		<a class="c-pagination__link c-pagination__link--next" href="{{=nextUrl}}" title="Siguiente">›</a>
+  	</li>
+  	{{ } }}
+  </ul>
+</script>

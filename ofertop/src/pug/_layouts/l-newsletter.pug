@@ -1,0 +1,24 @@
+section.l-newsletter
+	form.l-container#frmNewsletter(data-parsley-validate)
+		.l-newsletter__highlight
+			.icon.icon-newsletter
+			.l-newsletter__message
+				h5.l-newsletter__message-title ¡Suscríbete al Boletín!
+				//- p.l-newsletter__message-subtitle Y gana S/.20.00 en tu primera compra
+		.l-newsletter__form
+			.l-newsletter__form-genre#rdNewsletterGenre
+				+c-radio("Mujer")(name="rdGender", data-parsley-errors-container="#errorGender", required, value="2")
+				+c-radio("Hombre")(name="rdGender", data-parsley-errors-container="#errorGender", required, value="1")
+				#errorGender
+			.l-newsletter__form-inputs
+				.l-newsletter__form-name
+					input.l-newsletter__form-input.e-input-text#txtNewsletterName(type="text", required,  placeholder="Ingresa tu nombre")
+					input.l-newsletter__form-input.e-input-text#txtNewsletterEmail(type="email",  required, placeholder="Ingresa tu correo electrónico")
+					button.l-newsletter__form-button.e-button#btnNewsletterSubscribe Suscribirme
+					a#lnkHideNewsletter(href="javascript:;").icon.icon-x-mark-circle
+
+				p.l-newsletter__form-policies  Al suscribirme estoy aceptando los&nbsp;
+					a.l-newsletter__form-policies-link(href="/interes/terminos-y-condiciones") términos y condiciones&nbsp;
+					| y&nbsp;
+					a.l-newsletter__form-policies-link(href="/interes/politicas-de-privacidad") políticas de privacidad&nbsp;
+					| de Ofertop.

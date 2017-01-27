@@ -1,0 +1,104 @@
+@font-face
+	font-family "iconFonts"
+	src url("../../o/wf/iconFonts/iconFonts-webfont.eot")
+	src url("../../o/wf/iconFonts/iconFonts-webfont.eot?#iefix") format("embedded-opentype"), \
+		url("../../o/wf/iconFonts/iconFonts-webfont.woff") format("woff"), \
+		url("../../o/wf/iconFonts/iconFonts-webfont.ttf") format("truetype"), \
+		url("../../o/wf/iconFonts/iconFonts-webfont.svg#iconFonts") format("svg");
+	font-style normal
+	font-weight normal
+
+
+// Styles for internal pages
+@import	"_00-toolbox/*"
+@import	"_01-elements/*"
+@import	"_02-components/*"
+@import	"_03-layouts/l-header"
+@import	"_03-layouts/l-footer"
+@import	"_03-layouts/l-container"
+@import	"ie"
+
+.l-container
+	max-width 1000px
+.l-header
+	position fixed !important // for js mobile
+	width 100%
+	z-index 200
+	top 0
+	background white
+	border none
+	.l-header__nav
+		display block
+
+	&__nav
+		.c-nav__dropdown .l-container
+			max-width 1000px
+	&__logo
+		flex-shrink 0
+	&__auth
+		flex-shrink 0
+	.c-nav
+		max-width 1000px
+	.c-nav__dropdown-list
+		flex-basis 50%
+
+
+.canal_box
+	top 75px //92px
+.header_payment
+	background white
+
+.fancybox-close
+	background-image none
+	right 30px
+
+.l-footer
+	ul
+		li
+			padding 0
+			font-size 14px
+	.l-container
+		&:first-child
+			position relative
+			padding-top 80px
+	&__title
+		font-size 16px !important
+	&__logo-svg
+		width 130px // fix ie11
+		position absolute
+		left 0
+		right 0
+		margin auto
+		top 10px
+		height 40px
+	&__contact-item-available
+		line-height 1.4
+	&__social-networks-mobile
+		&:first-child
+			margin-bottom 10px
+	&__logo
+		display none
+	&__faq
+		lost-column 3/12
+	&__partner
+		lost-column 3/12
+	&__contact
+		lost-column 3/12
+	&__social-networks
+		lost-column 3/12
+.tmp_space
+	padding-top 100px
+
++mobile()
+	.l-header
+		.c-nav__dropdown-list
+			flex-basis initial
+	.l-footer
+		&__contact, &__social-networks
+			lost-column 12/12
+		&__contact-item
+			padding 10px 0 !important
+	.tmp_space
+		padding-top 50px
+
+

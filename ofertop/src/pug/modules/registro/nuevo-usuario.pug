@@ -1,0 +1,58 @@
+extends /_templates/master
+
+block content
+	.l-container.l-register
+		.l-register__column
+			h3 CREAR CUENTA
+			form(data-parsley-validate,method='post')
+				.l-register__group-container
+					+c-form-group("Nombres*")
+						//-input.e-input-text(type="text", required)
+						<?php echo $this->formUsuario->nombre->renderViewHelper(); ?>
+					+c-form-group("Apellidos*")
+						//-input.e-input-text(type="text", required)
+						<?php echo $this->formUsuario->apellido->renderViewHelper(); ?>
+					+c-form-group("Email*")
+						//-input.e-input-text(type="email", required)
+						<?php echo $this->formUsuario->email->setAttrib('csrf', $this->Csrf()->getToken('validarEmail'))->renderViewHelper(); ?>
+						img.loading(style="position:absolute; right:10px; top:10px;display:none;", src!=`${page.url.image}loader.gif`, width="16", height="16")
+					+c-form-group("Contraseña*")
+						//-input.e-input-text#txtRegisterPassword(type="password", required)
+						<?php echo $this->formUsuario->clave->renderViewHelper(); ?>
+					+c-form-group("Repetir contraseña*")
+						//-input.e-input-text(type="password", required, data-parsley-equalto="#txtRegisterPassword", data-parsley-error-message="Repita la contraseña"	)
+						<?php echo $this->formUsuario->clave2->renderViewHelper(); ?>
+					+c-form-group("Documento*")
+						//-select.e-select(required)
+							option DNI
+						<?php echo $this->formUsuario->tipo_documento->renderViewHelper(); ?>
+					+c-form-group("Nro de documento*")
+						//-input.e-input-text(type="text", required)
+						<?php echo $this->formUsuario->nro_documento->renderViewHelper(); ?>
+					+c-form-group("Teléfono*")
+						//-input.e-input-text(type="text", required)
+						<?php echo $this->formUsuario->telefono->renderViewHelper(); ?>
+					+c-form-group("Celular*")
+						//-input.e-input-text(type="text", required)
+						<?php echo $this->formUsuario->celular->renderViewHelper(); ?>
+					+c-form-group("Género*")
+						//-+c-radio("Mujer")(name="rdGender", data-parsley-errors-container="#errorGender", required, value="2")
+						//-+c-radio("Hombre")(name="rdGender", data-parsley-errors-container="#errorGender", required, value="1")
+						<?php echo $this->formUsuario->genero->renderViewHelper(); ?>
+						#errorGender
+				p.l-register__terms Presionando el botón "Registrarme" estoy aceptando los&nbsp;
+					a.e-link(href="/interes/terminos-y-condiciones") Términos y Condiciones&nbsp;
+					| y&nbsp;
+					a.e-link(href="/interes/politicas-de-privacidad") Políticas de Privacidad&nbsp;
+					| del sitio.
+				.u-textCenter
+					<?php echo $this->Csrf()->getInput('userRegistro'); ?>
+					input.e-button.l-register__button(type="submit", value="Registrarme")
+
+		.l-register__column
+			h3 CONECTAR CON FACEBOOK
+			p Conecta tu cuenta de Facebook para ingresar a Ofertop
+			a.l-register__fb-button.fb-connect-js(href="javascript:;")
+				span.l-register__fb-icon
+				| Conectar con Facebook
+

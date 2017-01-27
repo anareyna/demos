@@ -1,0 +1,100 @@
+/*Offer suggested */
+.l-section-menu
+	padding 15px 0 15px 0
+	&__header
+		display flex
+		align-items center
+		justify-content space-between
+		margin-bottom 10px
+	&__filters
+		list-style none
+		display inline-block
+		float right
+	&__filter-item
+		float left
+	&__filter-link
+		background $light_gray
+		color black
+		text-decoration none
+		width 130px
+		margin-left 5px
+		font-size 15px
+		height 35px
+		line-height 35px
+		text-align center
+		display block
+		border-radius $border_radius
+		transition 0.2s all ease
+		&:hover
+			transition 0.2s all ease
+			background darken($light_gray, 3%)
+		&--active
+			color white
+			background $brand_color
+			&:hover
+				background darken($brand_color, 3%)
+	&__title
+		flex-shrink 0
+		margin-right 15px
+		font-size 20px
+		text-transform uppercase
+	&__subtitle
+		flex-shrink 0
+		flex-grow 1
+		span
+			font-weight bold
+	&__select
+		display none
+		margin-left 10px
+		width 31%
+	&__link
+		color $brand_color
+		border 1px solid $brand_color
+		padding 6px 20px
+		float right
+		cursor pointer
+		border-radius $border_radius
+		font-weight bold
+		font-size 14px
+		transition 0.2s all ease
+		&:hover
+			opacity 0.8
+			transition 0.2s all ease
+	&__list
+		margin 0
+	&__see-all
+		display none
+
+
++tablet()
+	.l-section-menu
+		&__filters
+			display none
+		&__select
+			display inline-block
+
++mobile()
+	.l-section-menu
+		&__filters
+			display none
+		&__header
+			flex-direction column
+			align-items flex-start
+		&__select
+			display block
+			margin 0
+			width 100%
+		&__title
+			width 100%
+			border-bottom 1px solid $gray
+			padding-bottom 10px
+		&__subtitle
+			display none
+		&__see-all
+			display block
+			width 200px
+			clear both
+			margin-left auto
+			margin-right auto
+			text-align center
+

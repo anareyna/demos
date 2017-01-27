@@ -1,0 +1,149 @@
+.c-campaign
+	display block
+	margin-bottom 22px
+	background-color  #F4F4F7
+	lost-column 1/4
+	position relative
+	transition 0.2s all ease
+	&:before
+		content 'Ver más'
+		color white
+		background $brand_color
+		position absolute
+		right 10px
+		bottom 12px
+		border-radius 20px
+		z-index 1
+		height 0
+		font-size 0
+		padding 0
+		visibility hidden
+		transition height 0.1s ease
+
+	&__image
+		margin 0
+		width 100%
+		display block
+		min-height 147px
+	&__info
+		padding 10px 15px
+		position relative
+	&__description
+		margin 0
+		overflow hidden
+		margin-bottom 10px
+		height 58px
+	&__first-line
+		margin-top 10px
+		padding-top 10px
+		text-decoration line-through
+		font-size 13px
+		color $dark_gray
+		border-top 1px dashed $gray
+		&:before
+			content 'Antes '
+	&__price
+		margin 0
+		color $brand_color
+		font-weight bold
+		&:before
+			content 'Ahora '
+	&__button
+		margin 0
+		position absolute
+		right 10px
+		bottom 12px
+		padding 6px 10px
+		background white
+		border-radius 35%
+
+	&--special
+		.c-campaign__first-line
+			font-weight bold
+			margin-top 10px
+			padding-top 10px
+			font-size 13px
+			border-top 1px dashed $gray
+			color $brand_color
+			text-decoration none
+			&:before
+				content ""
+		.c-campaign__button
+			margin 0
+			position absolute
+			right 10px
+			bottom 12px
+			padding 6px 10px
+			background $brand_color
+			color white
+			border-radius 20px
+
+
++tablet()
+	.c-campaign
+		lost-column 1/3
+
++mobile()
+	.c-campaign
+		lost-column 1/1
+		position relative
+		&__info
+			position absolute
+			bottom 0
+			background rgba(0,0,0,0.5)
+			color white
+			display flex
+			padding 0
+			width 100%
+		&__description
+			height 48px
+			margin-bottom 0
+			padding 7px 12px
+			width 100%
+		&__button
+			display none
+		&__price-container
+			background $brand_color
+			color white
+			padding 10px
+			flex-shrink 0
+			text-align  center
+		&__first-line
+			border-top none
+			color inherit
+			margin-top 0
+			padding-top 0
+			color $gray
+			&:before
+				content ''
+		&__price
+			color inherit
+			&:before
+				content ''
+		&--special
+			.c-campaign__first-line
+				color white
+				border-top none
+				margin 0
+				padding 0
+			.c-campaign__button
+				display none
+
+
++above(rupture.mobile-cutoff)
+	.c-campaign
+		&:hover
+			transition 0.2s all ease
+			box-shadow 0 2px 8px rgba(0,0,0,0.15)
+		&:not(.c-campaign--special)
+			&:hover
+				&:before
+					transition height 0.1s ease
+					padding 6px 10px
+					height 31px
+					font-size inherit
+					visibility visible
+		&--special
+			.c-campaign__price
+				&:before
+					content ''

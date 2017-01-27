@@ -1,0 +1,5 @@
+//- +if("$this->fmsgs")
+//- 	+foreach("$this->fmsgs as $msg")
+//- 		.l-container.u-mt30
+//- 			.c-message(class!="c-message--<?php echo $msg->level == 'debug' ? 'error block-message' : $msg->level ?>")
+//- 				<?php echo $msg->message; ?>

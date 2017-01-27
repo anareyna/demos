@@ -1,0 +1,118 @@
+.c-nav
+	position relative
+	&__title
+		margin-top 15px
+		margin-bottom 10px
+		margin-right 0
+		text-transform uppercase
+		font-size 14px
+		font-weight 700
+	&__list
+		margin 0
+		list-style none
+		padding 0
+		width 180px
+	&__item
+		border-top 1px solid darken($light_gray, 5%)
+		&:hover
+			background $light_gray
+			.c-nav__dropdown
+				visibility visible
+			.c-nav__item-link
+				color $brand_color
+	&__item-link
+		display block
+		text-decoration none
+		padding 5.5px 0
+		outline none
+		&:hover
+			color $brand_color
+			background $light_gray
+
+	.icon
+		margin-right 5px
+
+	&__dropdown
+		display flex
+		visibility hidden
+		position absolute
+		z-index 300
+		background-color white
+		top 0
+		left 180px
+		width 960px
+		height 355px
+		overflow hidden
+		.l-container
+			max-width 100%
+			display inline-flex
+		&-big-banner
+			margin 0
+			display block
+		&-big-banner-link
+			margin 0
+			display block
+		&-big-banner-image
+			margin 0
+			display block
+			max-width 434px
+			height 355px
+			overflow hidden
+			object-fit cover
+		&-banner
+			margin-top 0
+			margin-left 20px
+			margin-right 0
+		&-banner-link
+			margin 0
+			display inline-block
+			&:first-child
+				margin-bottom 15px
+		&-banner-image
+			margin 0
+			display block
+		&-list
+			list-style none
+			display inline-block
+			margin 0
+			width 560px
+			padding 15px 20px
+			color white
+			text-align left
+			flex-basis 100%
+			background-color $light_gray
+			margin-right 20px
+			// &--large
+			// 	.c-nav__dropdown-list-item-link
+			// 		width 50%
+		&-list-title
+			margin 0
+			text-transform uppercase
+			font-size 16px
+			font-weight 700
+			color black
+			padding-bottom 10px
+			border-bottom 1px solid darken($light_gray, 10%)
+		&-list-item
+			margin-top 5px
+			position relative
+			display flex
+			flex-flow column wrap
+			justify-content flex-start
+			align-items flex-start
+			max-height 300px
+		&-list-item-link
+			padding 5px
+			font-size 14px
+			&:hover
+				opacity 0.7
+
++mobile()
+	.c-nav
+		display none
++tablet()
+	.c-nav
+		&__dropdown-big-banner
+			display  none
+
+

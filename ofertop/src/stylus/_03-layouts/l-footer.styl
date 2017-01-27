@@ -1,0 +1,238 @@
+/* l-footer */
+
+.l-footer
+	background $black
+	color darken($gray, 20%)
+	font-size 14px
+	padding-top 20px
+	.l-container
+		display flex
+		justify-content space-between
+		padding 10px 0
+		&:last-child
+			border-top 1px solid darken($gray, 20%)
+	&--active
+		position fixed
+		bottom 0
+		width 100%
+	&__btn-how-buy
+		display none
+	&__link
+		margin 0
+		color inherit
+		text-decoration none
+		transition all 0.3s ease
+		padding 5px 0
+		display block
+		font-size 14px
+		&:hover
+			opacity 0.6
+			transition all 0.3s ease
+	&__title
+		margin-bottom 20px
+		font-size 16px
+		text-transform uppercase
+	&__logo
+		max-width 265px
+		lost-column 3/12
+		margin-right 0
+		padding 0
+	&__logo-svg
+		width 120px
+		display block
+		margin auto auto 20px
+		fill darken($gray, 20%)
+		height 40px
+	&__logo-description
+		margin 0
+	&__faq
+		list-style none
+		lost-column 2/12
+		padding 0
+	&__partner
+		list-style none
+		padding 0
+		lost-column 2/12
+
+	&__contact
+		list-style none
+		padding 0
+		lost-column 2/12
+	&__contact-item
+			margin 0 0 10px 0
+	&__contact-item-available
+		width 130px
+		display inline-block
+		position relative
+		right -8px
+	.icon-time
+		width 30px
+		position relative
+		left -3px
+		top -2px
+	.icon-phone
+		font-size 40px
+	.icon-subscription
+		font-size 33px
+		margin-left 4px
+
+	&__social-networks
+		list-style none
+		padding 0
+		lost-column 3/12
+	&__social-networks-item
+		margin-right 10px
+		display inline-block
+
+	&__social-networks-list
+		list-style none
+		text-decoration none
+		margin 0
+		padding 0
+	&__social-networks-link
+		margin 0
+		color inherit
+		text-decoration none
+		transition all 0.3s ease
+		&:hover
+			transition all 0.3s ease
+			opacity 0.6
+
+		.icon
+			border 1px solid darken($gray, 20%)
+			border-radius 50%
+			position relative
+			height 38px
+			width 38px
+			&:before
+				position absolute
+				top 50%
+				left 50%
+				transform translate(-50%, -50%)
+
+		.icon-fb,.icon-google
+			font-size 35px
+		.icon-youtube, .icon-twitter
+			font-size 28px
+	&__social-networks-list-mobile
+		margin-top 20px
+
+	&__social-networks-mobile
+		display inline-block
+		&:first-child
+			margin-right 6px
+
+	&__social-networks-mobile-link
+		margin 0
+		.ico-appstore
+			sprite($app_store)
+			display inline-block
+		.ico-playstore
+			sprite($google_play)
+			display inline-block
+
+	&__copyright
+		margin 0
+		lost-column 1/2 0 0
+	&__payments
+		display flex
+		justify-content flex-end
+		lost-column 1/2 0 0
+	&__payments-list
+		list-style none
+		margin 0 0 0 10px
+		padding 0
+		display inline-block
+		.ico_visa
+			sprite($payment_visa)
+			display inline-block
+		.ico_amex
+			sprite($payment_amex)
+			display inline-block
+		.ico_mc
+			sprite($payment_mc)
+			display inline-block
+		.ico_pe
+			sprite($payment_pe)
+			display inline-block
+		.ico_dc
+			sprite($payment_dc)
+			display inline-block
+	&__payments-item
+		margin 0 5px 0  0
+		display inline-block
+		&:last-child
+			margin 0
+	&__payments-link
+		margin 0
+	&__payments-image
+		margin 0
+
+
++mobile()
+	.l-footer
+		text-align center
+		padding 10px 20px
+		&__btn-how-buy
+			display block
+			background-color $brand_color
+			text-align center
+			padding 12px
+			color white
+			outline none
+			margin-top 10px
+		.l-container
+			border none
+			width 100%
+			&:last-child
+				border-top none
+		.icon-phone
+			margin-right 5px
+		.icon-subscription
+			margin-right 10px
+		.icon-time
+			margin-right 10px
+		&__payments
+			display inline-block
+			width 100%
+			&-span
+				width 100%
+				display inline-block
+			&-list
+				margin 15px 0 0 10px
+		&__logo
+			width 100%
+			display inline-block
+			max-width 100% // ie11
+			&-description
+				display none
+		.l-container
+			display inline-block
+			padding-bottom 0
+		&__social-networks-list
+			border-top 1px solid darken($gray, 20%)
+			padding 15px 0 10px 0
+		&__contact
+			text-align left
+			&-item
+				border-top 1px solid darken($gray, 20%)
+				padding 10px 0
+				margin 0
+				&:first-child
+					display none
+		&__title, &__faq, &__partner, &__social-networks-list-mobile, &__copyright
+			display none
+
+		&__logo, &__contact, &__social-networks
+			lost-column 1/1
++tablet()
+	.l-footer
+		padding 10px 25px
+		&__payments
+			&-span
+				display none
+		&__logo
+			display none
+		&__faq, &__partner, &__contact, &__social-networks
+			lost-column 1/4 4 0
+

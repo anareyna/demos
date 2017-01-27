@@ -1,0 +1,82 @@
+.c-login-form
+	position absolute
+	background-color #fff
+	border 1px solid transparent
+	border-radius $border_radius
+	right -50%
+	width 268px
+	padding 20px
+	text-align center
+	box-shadow 1px -3px 21px rgba(0,0,0,0.175)
+	visibility hidden
+	transition 0.2s all ease
+	z-index 210
+	hr
+		border-top none
+		border-bottom 1px solid $gray
+	&:before
+		content ''
+		top -13px
+		left 25%
+		position absolute
+		border 6px solid transparent
+		border-bottom-color #FFF
+		margin-left 125px
+	&__group
+		margin-bottom 12px
+	&__link-recovery
+		margin 16px 0
+		display block
+		font-size 15px
+		color $fb_color
+	&__message
+		margin 0
+		display block
+		font-size 15px
+	&__link
+		margin 0
+		color $brand_color
+		font-size 15px
+	&__fb-button
+		background $fb_color
+		color white
+		display block
+		padding 5px 0
+		border-radius 5px
+		font-weight bold
+		margin-bottom 20px
+		width 100%
+		line-height 1.5
+		&:hover
+			transition 0.2s all ease
+			color white
+			opacity 0.9
+	&__fb-icon
+		sprite($ico_fb_white)
+		display inline-block
+		margin 2px 7px 0 2px
+		vertical-align bottom
+
+	.msg_info
+		padding 5px 10px
+		background #d89d9d
+		border-radius 3px
+		color white
+		font-size 12px
+		text-align center
+		width 100%
+		display none
+		margin-bottom 5px
+		&.active
+			display block
++mobile()
+	.c-login-form
+		display none
+		visibility visible
+		width 100%
+		left 0
+		box-shadow none
+		top 0
+		box-shadow 0 7px 6px -6px rgba(0,0,0,0.2)
+		&:before
+			display none

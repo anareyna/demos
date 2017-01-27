@@ -1,0 +1,33 @@
+/*Anchors*/
+.c-anchors
+	right 0
+	top 40%
+	position fixed
+	display flex
+	align-items center
+	justify-content center
+	transform-origin 100% 50%
+	transform rotate(90deg) translate(50%, 50%)
+	z-index 2
+	&__btn-how-buy
+		background $brand_color
+		color white
+		font-weight bold
+		padding 10px 10px 14px 10px
+		position relative
+		border-radius 0 0 $border_radius $border_radius
+	&__btn-suscription
+		background black
+		color white
+		padding 10px 7px 10px 7px
+		margin-right 15px
+		display inline
+		border-radius $border_radius 0 0 $border_radius
+		transform rotate(270deg)
+		.icon-subscription
+			font-size 30px
+
+
++mobile()
+	.c-anchors
+		display none

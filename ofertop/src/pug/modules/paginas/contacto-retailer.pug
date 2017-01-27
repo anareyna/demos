@@ -1,0 +1,31 @@
+extends /_templates/master
+
+block content
+	.l-container.l-retailer
+		h2.l-retailer__title SOLICITUD DE PARTICIPACIÓN COMO SOCIO DE OFERTOP
+		form(method="POST", data-parsley-validate)
+			.l-retailer__column
+				+c-form-group("Razón Social*")
+					<?php echo $this->form->razon_social->renderViewHelper(); ?>
+				+c-form-group("RUC*")
+					<?php echo $this->form->ruc->renderViewHelper(); ?>
+				+c-form-group("Rubro de la Empresa*")
+					<?php echo $this->form->rubro->renderViewHelper(); ?>
+				+c-form-group("Dirección – Distrito*")
+					<?php echo $this->form->direccion->renderViewHelper(); ?>
+				+c-form-group("Teléfono*")
+					<?php echo $this->form->telefono->renderViewHelper(); ?>
+
+			.l-retailer__column
+				+c-form-group("Correo Electrónico*")
+					<?php echo $this->form->email->renderViewHelper(); ?>
+				+c-form-group("Persona de Contacto*")
+					<?php echo $this->form->contacto->renderViewHelper(); ?>
+				+c-form-group("Descripción de la Empresa*")
+					<?php echo $this->form->descripcion->renderViewHelper(); ?>
+
+			<?php echo $this->Csrf()->getInput('formularioDeRetailerContactos'); ?>
+
+			+c-form-group("")(class="l-retailer__special-block")
+				small.u-block.u-mb20.u-textLeft Este formulario debe contener  la información real y precisa. Una vez validado estos datos nuestra empresa iniciará la evaluación respectiva, solo en caso de ser aprobada, un asesor de ventas se comunicará con usted a la brevedad posible.
+				<?php echo $this->form->submit->renderViewHelper(); ?>

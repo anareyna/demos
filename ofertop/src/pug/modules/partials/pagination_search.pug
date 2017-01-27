@@ -1,0 +1,32 @@
+include /_mixins/php
+
++if("$this->pageCount > 1")
+	.c-pagination.c-pagination--fixed
+		ul
+			+if("$this->pageCount")
+				// First page link
+				+if("isset($this->previous)")
+					<?php $this->paginadorVars['pag'] = $this->previous; ?>
+					li.c-pagination__item
+						a.c-pagination__link.c-pagination__link--previous(href!="<?php echo $this->url($this->paginadorVars, $this->paginadorRoute, FALSE, FALSE); ?>", title="Anterior") ‹
+					+else
+						li.c-pagination__item
+							a.c-pagination__link.c-pagination__link--previous.c-pagination__link--disabled(title="Anterior") ‹
+				// Numbered page links
+				+if("$this->pageCount")
+					+foreach("$this->pagesInRange as $page")
+						+if("$page != $this->current")
+							<?php $this->paginadorVars['pag'] = $page; ?>
+							li.c-pagination__item
+								a.c-pagination__link(href!="<?php echo $this->url($this->paginadorVars, $this->paginadorRoute, FALSE, FALSE); ?>", data!="<?php echo $page; ?>") <?php echo $page; ?>
+							+else
+								li.c-pagination__item
+									a.c-pagination__link.c-pagination__link--active(href="javascript:;") <?php echo $page; ?>
+				// Last page link
+				+if("isset($this->next)")
+					<?php $this->paginadorVars['pag'] = $this->next; ?>
+					li.c-pagination__item
+						a.c-pagination__link.c-pagination__link--next(href!="<?php echo $this->url($this->paginadorVars, $this->paginadorRoute, FALSE, FALSE); ?>", title="Siguiente") ›
+					+else
+						li.c-pagination__item
+							a.c-pagination__link.c-pagination__link--next.c-pagination__link--disabled(href="javascript:;") ›

@@ -1,0 +1,82 @@
+.p-registro
+	.l-register
+		margin-top 20px
+		display flex
+		flex-flow row wrap
+		&__column
+			lost-column 1/2 2 80px
+			margin-bottom 20px
+			position relative
+			&:first-child
+				&:after
+					content " "
+					border-right 1px solid $gray
+					height 100%
+					position absolute
+					right -40px
+					top 0
+
+		&__fb-button
+			background $fb_color
+			color white
+			padding 10px 20px
+			border-radius 5px
+			font-weight bold
+			margin-top 10px
+			line-height 1.2
+			display inline-block
+			&:hover
+				transition 0.2s all ease
+				color white
+				opacity 0.9
+		&__fb-icon
+			sprite($ico_fb_white)
+			display inline-block
+			vertical-align bottom
+			margin-right 10px
+		&__button
+			padding-left 40px
+			padding-right 40px
+			font-size 16px
+		&__terms
+			font-size 14px
+			margin 30px 0
+
++mobile()
+	.p-registro
+		.l-register
+			flex-flow column wrap
+			&__column
+				lost-column 12/12 0 0
+				&:first-child
+					order 2
+					&:after
+						border-right none
+				&:nth-child(2)
+					order 1
+					padding-bottom 30px
+					border-bottom 1px solid $gray
+			&__fb-button
+				display block
+				text-align center
+
++tablet()
+	.p-registro
+		.l-register
+			flex-flow column wrap
+			&__column
+				lost-column 12/12 0 0
+				&:nth-child(2)
+					text-align center
+					border-top 1px solid $gray
+					padding 20px 0
+			&__terms
+				text-align center
+				margin 20px 0
+			&__group-container
+				max-height 270px
+				display flex
+				flex-flow column wrap
+				.c-form-group__inputs
+					flex-grow 0
+					flex-basis 60%
