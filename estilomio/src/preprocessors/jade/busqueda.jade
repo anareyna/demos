@@ -1,0 +1,20 @@
+extends _layout/layout.jade
+
+block content
+	.container.box_search_results
+		.breadcrumb 
+			.bread-crumb
+				ul 
+					li 
+						a(href="javascript:;") Home 
+					li.last 
+						strong 
+							a(href="javascript:;") Niños y bebés
+		//-a.btn.btn_filter(href="javascript:;") REFINAR
+		.filter_sidebar
+			include _partials/filter_sidebar.jade
+		.product_grid.search_result_layout
+			include _partials/list_products.jade
+	
+	.container 
+		include _partials/como_comprar_mobile.jade	

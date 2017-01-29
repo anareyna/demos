@@ -1,0 +1,108 @@
+.main
+	p.searchResultsTime
+		span.resultado-busca-numero
+			span.label Productos encontrados:
+			span.value 5
+		span.resultado-busca-termo
+			span.label Resultado da Pesquisa por:
+			strong.value ejemplo1
+		span.resultado-busca-tempo
+			span.label en
+			span.value 24 ms
+	.sub
+		.resultado-busca-filtro
+			fieldset.orderBy
+				label Ordenar por:
+				select#O(onchange="window.location.href= '/estilos?PS=12&' + 'O=' + this.options[this.selectedIndex].value")
+					option(value='') Seleccione
+					option(value='OrderByPriceASC') Menor Precio
+					option(value='OrderByPriceDESC') Mayor Precio
+					option(value='OrderByTopSaleDESC') Más vendidos
+					option(value='OrderByReviewRateDESC') Mejor Valorados
+					option(value='OrderByNameASC') A - Z
+					option(value='OrderByNameDESC') Z - A
+					option(value='OrderByReleaseDateDESC') Fecha de lanzamiento
+					option(value='OrderByBestDiscountDESC') Melhor Desconto
+			fieldset.filterBy
+				| Items por página:
+				select#PS(onchange="window.location.href= '/estilos?' + 'PS=' + this.options[this.selectedIndex].value")
+					option(selected='selected', value='12') 12
+					option(value='24') 24
+					option(value='36') 36
+					option(value='48') 48
+			p.compare
+				| Produtos selecionados para comparar: 
+				strong
+					span#NumeroSuperior.compare-selection-count 0
+				a.btn-comparar(title='Comparar', href='#') Comparar
+	//- .filter_mobile
+	//- 	include filter_sidebar.jade 
+	.vitrine.resultItemsWrapper
+		#PagerTop_29596299.pager.top
+			ul.pages
+				li.first.pgEmpty primeiro
+				li.previous.pgEmpty anterior
+				li.page-number.pgCurrent 1
+				li.next.pgEmpty próximo
+				li.last.pgEmpty último
+		#ResultItems_29596299.MasVendidoList
+			.list_products.n4colunas
+				- for (var b = 0; b<2; b++)
+					ul
+						- for (var x = 0; x<4; x++)
+							li
+								a.product_box(href="producto.html")
+									.img_container
+										img.unveil(data-src="http://placem.at/things?w=210&h=200")
+									.text
+										p.product_description.ellipsis Disney pluto interactivo control a radio texto de tres lineas visible  
+										span.original_price S/. 199,00
+										span.price S/.149,00
+							li.helperComplement.hide
+		#PagerBottom_29596299.pager.bottom
+			ul.pages
+				li.first.pgEmpty primeiro
+				li.previous.pgEmpty anterior
+				li.page-number.pgCurrent 1
+				li.page-number 2
+				li.page-number 3
+				li.page-number 4
+				li.page-number 5
+				li.next.pgEmpty próximo
+				li.last.pgEmpty último
+	p.searchResultsTime
+		span.resultado-busca-numero
+			span.label Productos encontrados:
+			span.value 5
+		span.resultado-busca-termo
+			span.label Resultado da Pesquisa por:
+			strong.value ejemplo
+		span.resultado-busca-tempo
+			span.label en
+			span.value 24 ms
+	.sub
+		.resultado-busca-filtro
+			fieldset.orderBy
+				label Ordenar por:
+				select#O(onchange="window.location.href= '/estilos?PS=12&' + 'O=' + this.options[this.selectedIndex].value")
+					option(value='') Seleccione
+					option(value='OrderByPriceASC') Menor Precio
+					option(value='OrderByPriceDESC') Mayor Precio
+					option(value='OrderByTopSaleDESC') Más vendidos
+					option(value='OrderByReviewRateDESC') Mejor Valorados
+					option(value='OrderByNameASC') A - Z
+					option(value='OrderByNameDESC') Z - A
+					option(value='OrderByReleaseDateDESC') Fecha de lanzamiento
+					option(value='OrderByBestDiscountDESC') Melhor Desconto
+			fieldset.filterBy
+				| Items por página:
+				select#PS(onchange="window.location.href= '/estilos?' + 'PS=' + this.options[this.selectedIndex].value")
+					option(selected='selected', value='12') 12
+					option(value='24') 24
+					option(value='36') 36
+					option(value='48') 48
+			p.compare
+				| Produtos selecionados para comparar: 
+				strong
+					span#NumeroSuperior.compare-selection-count 0
+				a.btn-comparar(title='Comparar', href='#') Comparar

@@ -1,0 +1,565 @@
+extends _layout/layoutCheckout.jade
+
+
+block content
+    div(style='display: none')
+      .modal.hide.fade.default-modal.guest-login-modal
+        .modal-body.default-modal-body.guest-login-modal-body
+          .default-modal-security.guest-login-security
+            i.icon-lock
+          p.guest-login-title(data-i18n='modal.guestLoginTitle') Necesitamos sus datos
+          p.guest-login-message(data-i18n='modal.guestLoginMessage') Para continuar sin autenticación, debe completar sus datos de registro de nuevo.
+          .guest-login-actions.pull-right
+            a#btn-guest-login-cancel-button(href='javsacript:void(0);', data-dismiss='modal', data-i18n='global.back_') Volver
+            span(data-i18n='global.or') o
+            button#btn-guest-login-button.btn.btn-large.guest-login-button(autofocus='', data-dismiss='modal', data-i18n='modal.guestLoginMessageContinue') Continuar sin autenticación
+      .modal.hide.fade.default-modal.identified-user-modal.modal-email-template
+        .modal-body.default-modal-body.identified-user-modal-body
+          .default-modal-security.identified-user-security
+            i.icon-lock
+          p.identified-user-hello(data-i18n='clientProfileData.hi') Hola!
+          p.identified-user-message(data-i18n='clientProfileData.autoFill')
+            | El correo que introdujo ya se encuentra registrado, se completará el formulario automáticamente con sus datos.
+          button#btn-identified-user-button.btn.btn-large.identified-user-button(autofocus='', data-dismiss='modal', data-i18n='clientProfileData.autoFillContinue') Continuar con la compra
+      .modal.hide.fade.default-modal.payment-confirmation-modal.modal-payment-template(data-backdrop='static')
+        .modal-body.default-modal-body.payment-confirmation-modal-body
+          .default-modal-security.payment-confirmation-security
+            i.icon-lock
+          p.payment-confirmation-content
+            i.payment-confirmation-loading.loading-img.icon-spinner.icon-spin
+              span(data-i18n='global.loading') Cargando...
+            span.payment-confirmation-thanks(data-i18n='global.thanks') ¡Muchas gracias!
+          p.payment-confirmation-message(data-i18n='paymentData.finishing') Tu pedido está siendo procesado.
+      .modal.hide.fade.default-modal.masked-info-modal.modal-masked-info-template
+        .modal-body.default-modal-body.masked-info-modal-body
+          .default-modal-security.masked-info-security
+            i.icon-lock
+          p.masked-info-hello(data-i18n='modal.maskedInfoHello') ¿Por qué aparecen mis datos con asteriscos?
+          .masked-info-message
+            p.masked-info-message1(data-i18n='modal.maskedInfoMessage1')
+              | Usted no está autenticado, por lo cual, protegemos sus datos personales ocultando los mismos con asteriscos.
+            p.masked-info-message2(data-i18n='modal.maskedInfoMessage2')
+              | Si usted reconoce que los datos personales y la dirección son suyos, finalize el proceso de compras sin problemas.
+            p.masked-info-message3(data-i18n='modal.maskedInfoMessage3')
+              | Si desea cambiar algún dato, le pedimos que haga clic en el ícono de edición de datos personales o la dirección para autenticarse en la tienda y cambiar los datos.
+          button.btn.btn-large.masked-info-button(data-dismiss='modal', data-i18n='global.close') Cerrar
+      .modal.hide.fade.confirmation-modal.unavailable-modal(data-backdrop='static')
+        .modal-body.confirmation-modal-body.unavailable-modal-body
+          .unavailable-message
+            p(data-i18n='modal.unavailableHello', data-bind='visible: unavailableItems().length == 1', style='display: none;') El item no está disponible para envío en el momento:
+            p(data-i18n='modal.unavailableHelloPlural', data-bind='visible: unavailableItems().length > 1', style='display: none;') Los itenes no están disponibles para envío en el momento:
+          ul.unavailable-items.unstyled.clearfix(data-bind='foreach: unavailableItems')
+          .unavailable-actions
+            // ko if: unavailableItemsCannotBeDelivered
+            button.btn.btn-large.btn-block.unavailable-button(autofocus='', data-dismiss='modal', data-i18n='modal.editShipping') Modificar datos de entrega
+            // /ko
+            // ko ifnot: unavailableItemsCannotBeDelivered
+            // /ko
+            button.btn.btn-success.btn-large.btn-block.unavailable-button.pull-right(data-dismiss='modal', data-bind='click: removeUnavailableProducts')
+              span(data-i18n='modal.unavailableButFinish', data-dismiss='modal', data-bind='visible: unavailableItems().length == 1', style='display: none;') Finalizar la compra sin el item
+              span(data-i18n='modal.unavailableButFinishPlural', data-dismiss='modal', data-bind='visible: unavailableItems().length > 1', style='display: none;') Finalizar la compra sin los itenes
+      .modal.hide.fade.default-modal.payment-unauthorized-modal.modal-payment-unauthorized-template
+        .modal-body.default-modal-body.payment-unauthorized-modal-body
+          .default-modal-security.payment-unauthorized-security
+            i.icon-lock
+          p.payment-unauthorized-hello(data-i18n='modal.paymentUnauthorizedReviewData') Por favor revise los detalles de pago
+          .default-modal-message.payment-unauthorized-message
+            p.payment-unauthorized-message1(data-i18n='modal.paymentUnauthorizedMessage1')
+              | Su compra no se ha finalizado debido a algún problema en la autorización de pago.
+            p.payment-unauthorized-message2(data-i18n='modal.paymentUnauthorizedMessage2')
+              | Es posible que haya llenado algunos datos de forma incorrecta o puede haber habido algún problema con la tarjeta en caso de compra con tarjeta.
+            p.payment-unauthorized-show-details(data-bind="visible: showingTransactionDetails() == false && tidText() != ''")
+              small
+                a(href='javascript:void(0);', data-bind='click: showTransactionDetails', data-i18n='modal.showDetails') Ver detalles
+            p.payment-unauthorized-message3(data-bind='visible: showingTransactionDetails() == true')
+              small(data-bind='text: tidText')
+          button.btn.btn-large.payment-unauthorized-button(data-dismiss='modal', data-i18n='modal.paymentUnauthorizedChangeData') Hacer la revisión de datos o pagar de otra manera
+    script(type='text/javascript').
+      (function () { try { var vx = document.createElement('script'); vx.type = 'text/javascript'; vx.async = true; vx.src = '//dmx56ht1p4edz.cloudfront.net/rc.js?an=marketplace'; vx.target = '_blank'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(vx, s); } catch (err) { }})();
+    script(type='text/javascript').
+      vtex.vtexid = vtex.vtexid || {};
+      vtex.vtexid.accountId = "ba75e297-3f23-420f-9d88-d7ad896ac8d6";
+      vtex.vtexid.accountName = "estilomio";
+    script(type='text/javascript').
+      (function () {
+      window.vtex = window.vtex || {};
+      vtex.portal = vtex.portal || {};
+      vtex.portal.context = {
+      accountId: 'ba75e297-3f23-420f-9d88-d7ad896ac8d6'
+      };
+      })()
+    script(type='text/javascript', src='//io.vtex.com.br/portal-ui/1.4.1/scripts/vtex-events-all.min.js')
+    script(type='text/javascript').
+      (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+      new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+      '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-MSN356');
+    script(type='text/javascript', src='//io.vtex.com.br/portal-ui/1.4.1/scripts/vtex-analytics.js')
+    .container-fluid.pci-alert-topbar(data-bind="style: { display: cookiePCIExists() ? 'block' : 'none' }", style='display: none;')
+      span(data-bind='text: alertPCICookieMessage()')
+        | Esta en el modo de pruebas del nuevo servicio de cuotas de PCI Gateway. Los métodos de pago configurados pueden llevar hasta 10 minutos para ser aplicados y unicamente estan visibles para usted.
+      a(href='javascript:void(0);', data-bind='click: killCookiePCI, text: alertPCICookieClick()') Haga click aqui 
+      span(data-bind='text: alertPCICookieClickInfo()') para salir del modo de pruebas.
+
+    // DESATIVA PLUGIN SKYPE
+    span#skype_highlighting_settings(display='none', autoextractnumbers='0')
+    // END
+    .container.container-main.container-cart
+      h1#orderform-title.hide(data-i18n='title', data-bind='fadeVisible: inOrderForm', style='display: none;') Finalizar la compra
+      h1#cart-title.hide(data-i18n='shoppingCart', data-bind='fadeVisible: inCart', style='display: block;') Carrito de compras
+      small.gift-list-alert.alert(style='display:none;', data-bind='visible: isUsingGiftRegistry')
+        i.icon-gift.icon-large
+        span.gift-list-alert-text(data-i18n='giftListAlert') Usted está haciendo compras para la lista
+        b.gift-list-alert-name(data-bind='text: giftRegistryDescription')
+        | .
+        a(href='javascript:void(0);', data-bind='click: removeGiftRegistry', data-i18n='giftListDismiss') No comprar en esta lista
+        | .
+      .loading.loading-bg(data-bind='visible: loading', style='display: none;')
+        .loading-img
+          i.icon-spinner.icon-spin.icon-3x
+            span(data-i18n='global.loading') Cargando...
+      .checkout-container.row-fluid.cart-active
+        // CART
+        .cart-template.full-cart.span12.active
+          #cartLoadedDiv.cart-template-holder(data-bind="template: 'cart-template'")
+            .empty-cart-content(data-bind='fadeVisible: !hasItems() && !loading()', style='display: none;')
+              h2.empty-cart-title(data-i18n='cart.emptyTitle') Su carrito está vacio
+              .empty-cart-message
+                p(data-i18n='cart.emptyMessage')
+                  | Para seguir comprando, navegar por las categorías en el sitio, o busque su producto.
+              .clearfix.empty-cart-links
+                a#cart-choose-products.btn.btn-large.btn-success.link-choose-products(href='/', data-i18n='cart.chooseProducts') Elegir productos
+            .cart(data-bind='visible: hasItems() && !loading()')
+              table.table.cart-items
+                thead
+                  tr
+                    th.product(colspan='2', data-i18n='global.product') Producto
+                    th.shipping-date(data-i18n='global.delivery') Envío
+                    th.product-price(data-i18n='global.price') Precio
+                    th.quantity(data-i18n='global.quantity') Cantidad
+                    th.quantity-price(data-i18n='global.total') Total
+                    th.item-remove
+                tbody
+                  // ko template: { name: 'cart-item-template', foreach: items, afterRender: vtex.i18n.translateHtml }
+                  tr.product-item(data-bind="attr: {'data-sku': id}, availableCSS: available()", rowspan='2', data-sku='653532')
+                    td.product-image(data-bind="css: { 'product-image': imageUrl }")
+                      a(href='http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p', data-bind="attr: {'href': ('http://' + location.host + detailUrl())}")
+                        img#product-image-653532(height='45', width='45', data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'product-image-' + id()}", src='//estilomio.vteximg.com.br/arquivos/ids/182933-100-100/STEVE-MADDEN-LEIRA-SM-SMW3510-NAT-38_0.jpg', alt='STEVE MADDEN LEIRA SM SMW3510-NAT-38')
+                    td.product-name
+                      a#product-name653532(href='http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p', data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl()), 'id': 'product-name' + id() }") STEVE MADDEN LEIRA SM SMW3510-NAT-38
+                      .brand
+                        span.brand-label(data-i18n='cart.seller.brand') Marca
+                        span.brand-name(data-bind='text: brand') Steve Madden
+                      small.seller.muted(data-bind='if: sellerName')
+                        span(data-i18n='cart.soldBy') Suministrados y entregados por
+                        span(data-bind='text: sellerName') Coliseum
+                      ul.item-discount-descriptions(data-bind='foreach: priceTags')
+                      // ko if: router.inCart() == true  && availableOfferings()
+                      // ko if: availableOfferings().length > 1
+                      // /ko
+                      // ko if: availableOfferings().length == 1
+                      // /ko
+                      // ko if: itemAttachmentOfferings().length > 1
+                      // /ko
+                      // ko if: itemAttachmentOfferings().length == 1
+                      // /ko
+                      // /ko
+                    td.shipping-date.empty(data-bind="css: { 'empty': estimateLabel() == 'a calcular' }")
+                      // ko if: available()
+                      span.shipping-estimate-date(data-bind='text: estimateLabel') a calcular
+                      span.shipping-estimate-date.shipping-estimate-detail(data-bind='text: estimateDetailLabel')
+                      .sla-info.hide
+                        .sla-price(data-bind='text: shippingPriceLabel')
+                        .sla-name
+                          small(data-bind='text: shippingName')
+                      // /ko
+                      // ko ifnot: available()
+                      // /ko
+                    td.product-price
+                      // ko if: isPriceVisible
+                      span.list-price.hide(data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() && manualPrice() == null)")
+                        span.old-product-price-label(data-i18n='cart.oldPrice') De
+                        del.old-product-price.muted(data-bind='text: listPriceLabel')
+                      br.hide(data-bind="css: { 'hide' : !isListPriceVisible() }")
+                      span.best-price
+                        span.new-product-price-label.hide(data-i18n='cart.newPrice', data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() && manualPrice() == null)") Por
+                        // ko ifnot: isManualPriceActive()
+                        span.new-product-real-price.hide(data-bind='text: priceLabel') S/. 279.00
+                        // ko if: $parent.allowManualPrice()
+                        // /ko
+                        // ko ifnot: $parent.allowManualPrice()
+                        span.new-product-price(data-bind='text: sellingPriceLabel') S/. 279.00
+                        // /ko
+                        a.manualprice-link-remove(href='javascript:void(0);', data-bind='click: removeManualPrice, visible: manualPrice() != null', data-i18n='[title]global.remove', title='Retirar', style='display: none;')
+                          i.icon.icon-remove.item-remove-ico
+                          span.hide.manualprice-remove-text(data-i18n='global.remove') Retirar
+                        // /ko
+                        // ko if: isManualPriceActive()
+                        // /ko
+                        small.new-product-real-price-per-unit(data-bind='text: priceLabelPerUnit')
+                        a.discount(href='javascript:void(0);', data-bind='fadeVisible: showDiscountButton', style='display: none;')
+                          span.how-much-discount(data-bind="event: { 'mouseover': toggleDiscount, 'mouseout': toggleDiscount }")
+                            i.icon-question-sign
+                        span.field-help(data-bind='fadeVisible: showDiscount', style='display: none;')
+                          span.help-arrow.top-arrow
+                          span.fast-shopping-help-message.help-message
+                            strong.fast-shopping-help-message-title.help-message-title
+                              i.icon-info-sign
+                              span(data-i18n='totalizers.Discounts') Descuentos
+                            br
+                            // ko if: price() > sellingPrice()
+                            // /ko
+                      // /ko
+                    td.quantity(data-bind="css: {'cant-change-qty': !canChangeQty(), 'quantity-large': quantity() > 999},                   attr: { 'disabled': window.cart.loadingItem }")
+                      // ko if: router.inCart
+                      a#item-quantity-change-decrement-653532.item-quantity-change.item-quantity-change-decrement(href='javascript:void(0);', data-bind="click: function() { if (canChangeQty()) { decrement(); } }, css: { 'disabled': !canChangeQty() }, attr: { 'id': 'item-quantity-change-decrement-' + id() }", data-i18n='[title]cart.decrement')
+                        i.icon.icon-minus-sign
+                        span.hide.item-quantity-change-decrement-text(data-i18n='cart.decrement')
+                      input#item-quantity-653532(type='tel', min='1', data-bind="valueUpdate: 'keyup',                        value: quantity,                        maskOnBlur: '99999',                        event: { blur: quantityBlurHandler },                       attr: { 'disabled': !canChangeQty(), 'id': 'item-quantity-' + id() }")
+                      a#item-quantity-change-increment-653532.item-quantity-change.item-quantity-change-increment(href='javascript:void(0);', data-bind="click: function() { if (canChangeQty()) { increment(); } }, css: { 'disabled': !canChangeQty() }, attr: { 'id': 'item-quantity-change-increment-' + id() }", data-i18n='[title]cart.increment')
+                        i.icon.icon-plus-sign
+                        span.hide.item-quantity-change-increment-text(data-i18n='cart.increment')
+                      // /ko
+                      // ko if: router.inOrderForm
+                      // /ko
+                      small.item-multiplier-label(data-bind='text: multiplierLabel')
+                      small.item-unit-label(data-bind='text: unitLabel')
+                    td.quantity-price
+                      span.total-price.hide(data-bind='text: priceValueLabel, if: isPriceVisible') S/. 279.00
+                      span.total-selling-price(data-bind='text: valueLabel, if: isPriceVisible') S/. 279.00
+                    td.item-remove
+                      a#item-remove-653532.item-link-remove(href='javascript:void(0);', data-bind="click: remove, fadeVisible: !window.cart.loadingItem(), attr: { 'id': 'item-remove-' + id() }", data-i18n='[title]global.remove', title='Retirar')
+                        i.icon.icon-remove.item-remove-ico
+                        span.hide.item-remove-text(data-i18n='global.remove') Retirar
+                      i.loading-text.icon-spinner.icon-spin.hide(data-bind='fadeInlineVisible: window.cart.loadingItem', style='display: none; opacity: 0;')
+                        span(data-i18n='cart.wait') Cargando datos...
+                  tr.product-item(data-bind="attr: {'data-sku': id}, availableCSS: available()", rowspan='2', data-sku='653532')
+                    td.product-image(data-bind="css: { 'product-image': imageUrl }")
+                      a(href='http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p', data-bind="attr: {'href': ('http://' + location.host + detailUrl())}")
+                        img#product-image-653532(height='45', width='45', data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'product-image-' + id()}", src='//estilomio.vteximg.com.br/arquivos/ids/182933-100-100/STEVE-MADDEN-LEIRA-SM-SMW3510-NAT-38_0.jpg', alt='STEVE MADDEN LEIRA SM SMW3510-NAT-38')
+                    td.product-name
+                      a#product-name653532(href='http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p', data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl()), 'id': 'product-name' + id() }") STEVE MADDEN LEIRA SM SMW3510-NAT-38
+                      .brand
+                        span.brand-label(data-i18n='cart.seller.brand') Marca
+                        span.brand-name(data-bind='text: brand') Steve Madden
+                      small.seller.muted(data-bind='if: sellerName')
+                        span(data-i18n='cart.soldBy') Suministrados y entregados por
+                        span(data-bind='text: sellerName') Coliseum
+                      ul.item-discount-descriptions(data-bind='foreach: priceTags')
+                      // ko if: router.inCart() == true  && availableOfferings()
+                      // ko if: availableOfferings().length > 1
+                      // /ko
+                      // ko if: availableOfferings().length == 1
+                      // /ko
+                      // ko if: itemAttachmentOfferings().length > 1
+                      // /ko
+                      // ko if: itemAttachmentOfferings().length == 1
+                      // /ko
+                      // /ko
+                    td.shipping-date.empty(data-bind="css: { 'empty': estimateLabel() == 'a calcular' }")
+                      // ko if: available()
+                      span.shipping-estimate-date(data-bind='text: estimateLabel') a calcular
+                      span.shipping-estimate-date.shipping-estimate-detail(data-bind='text: estimateDetailLabel')
+                      .sla-info.hide
+                        .sla-price(data-bind='text: shippingPriceLabel')
+                        .sla-name
+                          small(data-bind='text: shippingName')
+                      // /ko
+                      // ko ifnot: available()
+                      // /ko
+                    td.product-price
+                      // ko if: isPriceVisible
+                      span.list-price.hide(data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() && manualPrice() == null)")
+                        span.old-product-price-label(data-i18n='cart.oldPrice') De
+                        del.old-product-price.muted(data-bind='text: listPriceLabel')
+                      br.hide(data-bind="css: { 'hide' : !isListPriceVisible() }")
+                      span.best-price
+                        span.new-product-price-label.hide(data-i18n='cart.newPrice', data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() && manualPrice() == null)") Por
+                        // ko ifnot: isManualPriceActive()
+                        span.new-product-real-price.hide(data-bind='text: priceLabel') S/. 279.00
+                        // ko if: $parent.allowManualPrice()
+                        // /ko
+                        // ko ifnot: $parent.allowManualPrice()
+                        span.new-product-price(data-bind='text: sellingPriceLabel') S/. 279.00
+                        // /ko
+                        a.manualprice-link-remove(href='javascript:void(0);', data-bind='click: removeManualPrice, visible: manualPrice() != null', data-i18n='[title]global.remove', title='Retirar', style='display: none;')
+                          i.icon.icon-remove.item-remove-ico
+                          span.hide.manualprice-remove-text(data-i18n='global.remove') Retirar
+                        // /ko
+                        // ko if: isManualPriceActive()
+                        // /ko
+                        small.new-product-real-price-per-unit(data-bind='text: priceLabelPerUnit')
+                        a.discount(href='javascript:void(0);', data-bind='fadeVisible: showDiscountButton', style='display: none;')
+                          span.how-much-discount(data-bind="event: { 'mouseover': toggleDiscount, 'mouseout': toggleDiscount }")
+                            i.icon-question-sign
+                        span.field-help(data-bind='fadeVisible: showDiscount', style='display: none;')
+                          span.help-arrow.top-arrow
+                          span.fast-shopping-help-message.help-message
+                            strong.fast-shopping-help-message-title.help-message-title
+                              i.icon-info-sign
+                              span(data-i18n='totalizers.Discounts') Descuentos
+                            br
+                            // ko if: price() > sellingPrice()
+                            // /ko
+                      // /ko
+                    td.quantity(data-bind="css: {'cant-change-qty': !canChangeQty(), 'quantity-large': quantity() > 999},                   attr: { 'disabled': window.cart.loadingItem }")
+                      // ko if: router.inCart
+                      a#item-quantity-change-decrement-653532.item-quantity-change.item-quantity-change-decrement(href='javascript:void(0);', data-bind="click: function() { if (canChangeQty()) { decrement(); } }, css: { 'disabled': !canChangeQty() }, attr: { 'id': 'item-quantity-change-decrement-' + id() }", data-i18n='[title]cart.decrement')
+                        i.icon.icon-minus-sign
+                        span.hide.item-quantity-change-decrement-text(data-i18n='cart.decrement')
+                      input#item-quantity-653532(type='tel', min='1', data-bind="valueUpdate: 'keyup',                        value: quantity,                        maskOnBlur: '99999',                        event: { blur: quantityBlurHandler },                       attr: { 'disabled': !canChangeQty(), 'id': 'item-quantity-' + id() }")
+                      a#item-quantity-change-increment-653532.item-quantity-change.item-quantity-change-increment(href='javascript:void(0);', data-bind="click: function() { if (canChangeQty()) { increment(); } }, css: { 'disabled': !canChangeQty() }, attr: { 'id': 'item-quantity-change-increment-' + id() }", data-i18n='[title]cart.increment')
+                        i.icon.icon-plus-sign
+                        span.hide.item-quantity-change-increment-text(data-i18n='cart.increment')
+                      // /ko
+                      // ko if: router.inOrderForm
+                      // /ko
+                      small.item-multiplier-label(data-bind='text: multiplierLabel')
+                      small.item-unit-label(data-bind='text: unitLabel')
+                    td.quantity-price
+                      span.total-price.hide(data-bind='text: priceValueLabel, if: isPriceVisible') S/. 279.00
+                      span.total-selling-price(data-bind='text: valueLabel, if: isPriceVisible') S/. 279.00
+                    td.item-remove
+                      a#item-remove-653532.item-link-remove(href='javascript:void(0);', data-bind="click: remove, fadeVisible: !window.cart.loadingItem(), attr: { 'id': 'item-remove-' + id() }", data-i18n='[title]global.remove', title='Retirar')
+                        i.icon.icon-remove.item-remove-ico
+                        span.hide.item-remove-text(data-i18n='global.remove') Retirar
+                      i.loading-text.icon-spinner.icon-spin.hide(data-bind='fadeInlineVisible: window.cart.loadingItem', style='display: none; opacity: 0;')
+                        span(data-i18n='cart.wait') Cargando datos...
+                  // ko ifnot: available
+                  // /ko
+                  // ko if: itemAttachments() && itemAttachments().length > 0
+                  // /ko
+                  // ko if: bundleItems() && bundleItems().length > 0
+                  // /ko
+                  // ko if: components() && components().length > 0
+                  // /ko
+                  // /ko
+                  // ko if: gifts().length > 0
+                  // /ko
+          .cart-select-gift-placeholder
+          .summary-template-holder(data-bind="template: {name: 'summary-template', afterRender: vtex.i18n.translateHtml}")
+            .row-fluid.summary(data-bind='fadeVisible: window.cart.hasItems() && !loading()', style='display: block;')
+              .forms.coupon-column.summary-coupon-wrap.span7.pull-left(data-bind="css: { 'span7 pull-left': !window.checkout.hasSelectableGifts(), 'span4 pull-right': window.checkout.hasSelectableGifts() }")
+                .coupon.summary-coupon.pull-right(data-bind='with: coupon, visible: hasTotal')
+                  form.coupon-form(action='', data-bind='submit: addCoupon')
+                    fieldset.coupon-fieldset
+                      div(data-bind='fadeVisible: isUsingCoupon()', style='display: none;')
+                        p.coupon-label
+                          label(for='cart-coupon', data-i18n='totalizers.couponCapitalize') Cupón de descuento
+                        p.coupon-fields
+                          span(data-bind='visible: !isCouponTyped()')
+                            input#cart-coupon.coupon-value.input-small(type='text', data-bind="value: couponCode, valueUpdate:'afterkeydown', disable: loadingCoupon()", placeholder='Código', data-i18n='[placeholder]totalizers.couponCode;')
+                            span.loading-inline.loading-coupon(data-bind='fadeInlineVisible: loadingCoupon', style='display: none; opacity: 0;')
+                              span(data-i18n='cart.wait') Cargando datos...
+                            button#cart-coupon-add.btn(type='submit', data-bind='disable: loadingCoupon', data-i18n='global.add') Sumar
+                          span.info(data-bind='visible: isCouponTyped', style='display: none;')
+                            span(data-bind='text: value')
+                            small.delete
+                              a#cart-coupon-remove(href='javascript:void(0);', data-bind='click: removeCoupon', data-i18n='global.delete') Borrar
+                      p.coupon-data.pull-right(data-bind='fadeVisible: !isUsingCoupon()')
+                        a#cart-link-coupon-add.link-coupon-add(href='javascript:void(0);', data-bind='click: isUsingCoupon')
+                          span(data-i18n='global.add') Sumar
+                          span(data-i18n='totalizers.coupon') cupón de descuento
+              .span5.totalizers.summary-totalizers.cart-totalizers.pull-right
+                .accordion-group(data-bind='fadeVisible: window.cart.hasItems() && !loading()', style='display: block;')
+                  .accordion-heading
+                    span.accordion-toggle.collapsed(data-i18n='totalizers.summary') Resumen de la compra
+                  .accordion-body.collapse.in
+                    .accordion-inner
+                      .summary-discount-descriptions(data-bind='visible: discounts().length', style='display: none;')
+                        h3.summary-discount-title(data-i18n='totalizers.Discounts') Descuentos
+                        ul.all-discount-descriptions.unstyled(data-bind='foreach: discounts()')
+                      table.table
+                        tbody.totalizers-list(data-bind='foreach: { data: totalizers }')
+                          tr.Items(data-bind="visible: visible, attr: { 'class': id }")
+                            // ko if: id() == 'Shipping'
+                            // /ko
+                            // ko ifnot: id() == 'Shipping'
+                            td.info(data-bind="attr: {'data-i18n': 'totalizers.' + id()}", data-i18n='totalizers.Items') Subtotal
+                            td.space
+                            td.monetary(data-bind='text: valueLabel') S/. 279.00
+                            td.empty
+                            // /ko
+                        tbody.shipping-reset(data-bind='visible: isShippingKnown()                                                    && !window.checkout.isNotUsingPostalCode()                                                    && window.cart.items().length == window.cart.unavailableItems().length', style='display: none;')
+                          tr
+                            td.info
+                              span.postal-code-for-sla
+                                span.shipping-name(data-bind="attr: {'data-i18n': 'totalizers.Shipping'}", data-i18n='totalizers.Shipping') Costo del envío
+                                span.shipping-name-to(data-i18n='global.to') para
+                                span.postal-code-value(data-bind='html: window.summary.maskedPostalCode')
+                                a#cart-reset-postal-code.cart-reset-postal-code(href='javascript:void(0);', data-bind='visible : window.checkout.canEditData, click: summary.resetShipping', data-i18n='[title]global.edit', title='Cambiar')
+                                  i.icon-remove-sign
+                                br
+                                a#cart-reset-postal-code.cart-reset-postal-code(href='javascript:void(0);', data-bind='visible : window.checkout.canEditData, click: window.summary.resetShipping', data-i18n='cart.resetShipping') Elegir otro código postal
+                            td.space
+                            td.monetary.shipping-unavailable(data-i18n='global.unavailable') No disponible
+                        tbody.shipping-calculate(data-bind='visible: !isShippingKnown() && !window.checkout.isNotUsingPostalCode()', style='display: none;')
+                          tr
+                            td.info
+                              span(data-i18n='cart.calculateShipping') Envío
+                            td.space(data-bind='visible: !isUsingPostalCode()')
+                            td.monetary(data-bind='visible: !isUsingPostalCode()')
+                              a#shipping-calculate-link.shipping-calculate-link(href='javascript:void(0)', data-bind='click: usingPostalCode', data-i18n='cart.calculate') Calcular
+                            td.monetary.form-postal-code.forms(data-bind='visible: isUsingPostalCode() && !isShippingKnown()', colspan='3', style='display: none;')
+                              .shipping.summary-shipping
+                                form.shipping-form-inline(action='', data-bind='submit: calculateShipping')
+                                  fieldset.shipping-fieldset
+                                    .shipping-fields
+                                      input#summary-postal-code.postal-code.input-mini(type='tel', data-bind="value: postalCode, valueUpdate:'afterkeydown',                                                               validate: 'postalCode', disable: loadingPostalCode,                                                               maskOnBlur: window.checkout.postalCodeMask,                                                               attr: {'placeholder': postalCodeLabel, 'maxlength': window.checkout.postalCodeMask() ? window.checkout.postalCodeMask().length : 9},                                                               css: {'loading-postal-code': loadingPostalCode}", placeholder='CPPER', maxlength='4')
+                                      i.loading-inline.icon-spinner.icon-spin(data-bind='fadeInlineVisible: loadingPostalCode', style='display: none; opacity: 0;')
+                                        span(data-i18n='cart.wait') Cargando datos...
+                                      button#cart-shipping-calculate.btn(type='submit', data-bind='disable: loadingPostalCode', data-i18n='cart.calculate') Calcular
+                                    small.postal-code-service.summary-postal-code-service
+                                      a#cart-dont-know-postal-code(data-bind="attr: { 'href': window.checkout.postalCodeForgottenURL }", target='_blank', data-i18n='totalizers.dontKnowPostalCode', href='#') No conozco mi Código Postal (CP)
+                            td.empty(data-bind='visible: !isUsingPostalCode()')
+                        tfoot
+                          tr(data-bind="css: {'muted': !hasTotal()}")
+                            td.info(data-i18n='global.total') Total
+                            td.space
+                            td.monetary(data-bind='text: totalLabel') S/. 279.00
+                            td.empty
+          .clearfix.pull-right.cart-links.cart-links-bottom.hide(style='display: block;')
+            span.link-choose-more-products-wrapper
+              a#cart-choose-more-products.more.link-choose-more-products(href='/', data-i18n='cart.chooseMoreProducts') Elegir más productos
+            span.link-print-cart-wrapper.hide(data-bind="fadeVisible: userType() == 'callCenterOperator'", style='display: none;')
+              a#cart-print.btn.btn-large.link-print-cart(onclick='window.print()', data-i18n='cart.print') Imprimir
+            span.btn-place-order-wrapper
+              a#cart-to-orderform.btn.btn-large.btn-success.pull-left-margin.btn-place-order(href='#/orderform', target='_self', data-event='cartToOrderform', data-i18n='cart.finalize', data-bind='visible: !disableCheckoutButton(), click: goToFirstInvalidStep') Finalizar compra
+              a#cart-to-orderform-disabled.btn.btn-large.btn-success.pull-left-margin.btn-place-order.disable(href='javascript:void(0);', target='_self', disabled='disabled', data-i18n='cart.finalize', data-bind='visible: disableCheckoutButton()', style='display: none;') Finalizar compra
+        // /END CART
+        // ORDERFORM
+        .row-fluid.orderform-template.span12.inactive
+          .cart-template.mini-cart.span4
+            .cart-fixed.cart-fixed-transition(style='height: auto;')
+              h2(data-i18n='totalizers.summary') Resumen de la compra
+              // TODO remove window.router
+              .summary-cart-template-holder(data-bind="fadeVisible: window.router.inOrderForm, template: { name: 'orderForm-summary-cart-template', afterRender: vtex.i18n.translateHtml }", style='display: none; height: auto;')
+                .cart
+                  ul.cart-items.unstyled.clearfix
+                    // ko foreach: { data: items, afterRender: vtex.i18n.translateHtml }
+                    li.hproduct.item.muted(data-bind="attr: {'data-sku': id}", data-sku='653532')
+                      a.url(href='http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p', data-bind="attr: {'href': ('http://' + location.host + detailUrl())}")
+                        img#hproduct-item-653532.photo(height='45', width='45', data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'hproduct-item-' + id()}", src='//estilomio.vteximg.com.br/arquivos/ids/182933-100-100/STEVE-MADDEN-LEIRA-SM-SMW3510-NAT-38_0.jpg', alt='STEVE MADDEN LEIRA SM SMW3510-NAT-38')
+                      span.fn.product-name(data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl())}", href='http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p') STEVE MADDEN LEIRA SM SMW3510-NAT-38
+                      span.quantity.badge(data-bind='text: quantity') 1
+                      .description
+                        span.shipping-date.pull-left.empty(data-bind="text: estimateLabel, css: { 'empty': estimateLabel() == 'a calcular' }") a calcular
+                        strong.item-price.pull-right.hide(data-bind='text: priceLabel') S/. 279.00
+                        strong.price.pull-right(data-bind='text: sellingPriceLabel') S/. 279.00
+                      // ko if: bundleItems() && bundleItems().length > 0
+                      // /ko
+                      // ko if: components() && components().length > 0
+                      // /ko
+                      // ko ifnot: available
+                      // /ko
+                    // /ko
+                    // ko if: gifts() && gifts().length > 0
+                    // /ko
+              p.link.link-cart.pull-right
+                small
+                  a#orderform-minicart-to-cart(href='#/cart', target='_self', data-event='orderformToCart', data-i18n='global.backToCart') Volver a carrito
+              .summary-template-holder(data-bind="template: 'summary-template'")
+                .row-fluid.summary(data-bind='fadeVisible: window.cart.hasItems() && !loading()', style='display: block;')
+                  .forms.coupon-column.summary-coupon-wrap.span7.pull-left(data-bind="css: { 'span7 pull-left': !window.checkout.hasSelectableGifts(), 'span4 pull-right': window.checkout.hasSelectableGifts() }")
+                    .coupon.summary-coupon.pull-right(data-bind='with: coupon, visible: hasTotal')
+                      form.coupon-form(action='', data-bind='submit: addCoupon')
+                        fieldset.coupon-fieldset
+                          div(data-bind='fadeVisible: isUsingCoupon()', style='display: none;')
+                            p.coupon-label
+                              label(for='cart-coupon', data-i18n='totalizers.couponCapitalize') Cupón de descuento
+                            p.coupon-fields
+                              span(data-bind='visible: !isCouponTyped()')
+                                input#cart-coupon.coupon-value.input-small(type='text', data-bind="value: couponCode, valueUpdate:'afterkeydown', disable: loadingCoupon()", placeholder='Código', data-i18n='[placeholder]totalizers.couponCode;')
+                                span.loading-inline.loading-coupon(data-bind='fadeInlineVisible: loadingCoupon', style='display: none; opacity: 0;')
+                                  span(data-i18n='cart.wait') Cargando datos...
+                                button#cart-coupon-add.btn(type='submit', data-bind='disable: loadingCoupon', data-i18n='global.add') Sumar
+                              span.info(data-bind='visible: isCouponTyped', style='display: none;')
+                                span(data-bind='text: value')
+                                small.delete
+                                  a#cart-coupon-remove(href='javascript:void(0);', data-bind='click: removeCoupon', data-i18n='global.delete') Borrar
+                          p.coupon-data.pull-right(data-bind='fadeVisible: !isUsingCoupon()')
+                            a#cart-link-coupon-add.link-coupon-add(href='javascript:void(0);', data-bind='click: isUsingCoupon')
+                              span(data-i18n='global.add') Sumar
+                              span(data-i18n='totalizers.coupon') cupón de descuento
+                  .span5.totalizers.summary-totalizers.cart-totalizers.pull-right
+                    .accordion-group(data-bind='fadeVisible: window.cart.hasItems() && !loading()', style='display: block;')
+                      .accordion-heading
+                        span.accordion-toggle.collapsed(data-i18n='totalizers.summary') Resumen de la compra
+                      .accordion-body.collapse.in
+                        .accordion-inner
+                          .summary-discount-descriptions(data-bind='visible: discounts().length', style='display: none;')
+                            h3.summary-discount-title(data-i18n='totalizers.Discounts') Descuentos
+                            ul.all-discount-descriptions.unstyled(data-bind='foreach: discounts()')
+                          table.table
+                            tbody.totalizers-list(data-bind='foreach: { data: totalizers }')
+                              tr.Items(data-bind="visible: visible, attr: { 'class': id }")
+                                // ko if: id() == 'Shipping'
+                                // /ko
+                                // ko ifnot: id() == 'Shipping'
+                                td.info(data-bind="attr: {'data-i18n': 'totalizers.' + id()}", data-i18n='totalizers.Items') Subtotal
+                                td.space
+                                td.monetary(data-bind='text: valueLabel') S/. 279.00
+                                td.empty
+                                // /ko
+                            tbody.shipping-reset(data-bind='visible: isShippingKnown()                                                    && !window.checkout.isNotUsingPostalCode()                                                    && window.cart.items().length == window.cart.unavailableItems().length', style='display: none;')
+                              tr
+                                td.info
+                                  span.postal-code-for-sla
+                                    span.shipping-name(data-bind="attr: {'data-i18n': 'totalizers.Shipping'}", data-i18n='totalizers.Shipping') Costo del envío
+                                    span.shipping-name-to(data-i18n='global.to') para
+                                    span.postal-code-value(data-bind='html: window.summary.maskedPostalCode')
+                                    a#cart-reset-postal-code.cart-reset-postal-code(href='javascript:void(0);', data-bind='visible : window.checkout.canEditData, click: summary.resetShipping', data-i18n='[title]global.edit', title='Cambiar')
+                                      i.icon-remove-sign
+                                    br
+                                    a#cart-reset-postal-code.cart-reset-postal-code(href='javascript:void(0);', data-bind='visible : window.checkout.canEditData, click: window.summary.resetShipping', data-i18n='cart.resetShipping') Elegir otro código postal
+                                td.space
+                                td.monetary.shipping-unavailable(data-i18n='global.unavailable') No disponible
+                            tbody.shipping-calculate(data-bind='visible: !isShippingKnown() && !window.checkout.isNotUsingPostalCode()', style='display: none;')
+                              tr
+                                td.info
+                                  span(data-i18n='cart.calculateShipping') Envío
+                                td.space(data-bind='visible: !isUsingPostalCode()')
+                                td.monetary(data-bind='visible: !isUsingPostalCode()')
+                                  a#shipping-calculate-link.shipping-calculate-link(href='javascript:void(0)', data-bind='click: usingPostalCode', data-i18n='cart.calculate') Calcular
+                                td.monetary.form-postal-code.forms(data-bind='visible: isUsingPostalCode() && !isShippingKnown()', colspan='3', style='display: none;')
+                                  .shipping.summary-shipping
+                                    form.shipping-form-inline(action='', data-bind='submit: calculateShipping')
+                                      fieldset.shipping-fieldset
+                                        .shipping-fields
+                                          input#summary-postal-code.postal-code.input-mini(type='tel', data-bind="value: postalCode, valueUpdate:'afterkeydown',                                                               validate: 'postalCode', disable: loadingPostalCode,                                                               maskOnBlur: window.checkout.postalCodeMask,                                                               attr: {'placeholder': postalCodeLabel, 'maxlength': window.checkout.postalCodeMask() ? window.checkout.postalCodeMask().length : 9},                                                               css: {'loading-postal-code': loadingPostalCode}", placeholder='CPPER', maxlength='4')
+                                          i.loading-inline.icon-spinner.icon-spin(data-bind='fadeInlineVisible: loadingPostalCode', style='display: none; opacity: 0;')
+                                            span(data-i18n='cart.wait') Cargando datos...
+                                          button#cart-shipping-calculate.btn(type='submit', data-bind='disable: loadingPostalCode', data-i18n='cart.calculate') Calcular
+                                        small.postal-code-service.summary-postal-code-service
+                                          a#cart-dont-know-postal-code(data-bind="attr: { 'href': window.checkout.postalCodeForgottenURL }", target='_blank', data-i18n='totalizers.dontKnowPostalCode', href='#') No conozco mi Código Postal (CP)
+                                td.empty(data-bind='visible: !isUsingPostalCode()')
+                            tfoot
+                              tr(data-bind="css: {'muted': !hasTotal()}")
+                                td.info(data-i18n='global.total') Total
+                                td.space
+                                td.monetary(data-bind='text: totalLabel') S/. 279.00
+                                td.empty
+              .payment-confirmation-wrap
+                .note.summary-note.hide(data-bind="template: 'note-template', css: { hide: !window.cart.allowManualPrice() }")
+                  p.note-data(data-bind='fadeVisible: !isUsingNote()')
+                    a#cart-link-note-add.link-note-add(href='javascript:void(0);', data-bind='click: setUsingNote')
+                      span(data-i18n='global.addNote') Sumar observacíon
+                  div(data-bind='fadeVisible: isUsingNote()', style='display: none;')
+                    p.note-label
+                      label(for='cart-note', data-i18n='global.note') Observacíon
+                    textarea#cart-note.note-textarea(row='3', data-bind="value: note, valueUpdate:'blur'", maxlength='1000')
+                p.payment-submit-wrap
+                  button#payment-data-submit.submit.btn.btn-success.btn-large.btn-block(data-bind='click: submit, disable: window.checkout.disablePaymentButton', tabindex='200')
+                    i.icon-lock(data-bind='visible: !window.checkout.disablePaymentButton()')
+                    i.icon-spinner.icon-spin(data-bind='visible: window.checkout.disablePaymentButton()', style='display: none;')
+                    span(data-i18n='paymentData.confirm') Comprar ahora
+        // /END ORDERFORM
+    .container.sup
+      | Al comprar acepta los 
+      a(href='/condiciones/', target='_blank') Términos y Condiciones
+      |  de EstiloMio.com.
+

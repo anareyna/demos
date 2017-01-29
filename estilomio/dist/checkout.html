@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="//io.vtex.com.br/front-libs/bootstrap/2.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/front-libs/bootstrap/2.3.2/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/front-libs/font-awesome/3.2.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/checkout-ui/3.54.1/lib/front-messages-ui/vtex-message.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/checkout-ui/3.54.1/style/style.css">
+    <link href="/demos/estilomio/dist/arquivos//layout_checkout.css" media="all" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <div class="seguro"></div><a href="/" title="Ir para a página inicial" class="logo"></a>
+      </div>
+    </div>
+    <!-- end header-->
+    <div style="display: none">
+      <div class="modal hide fade default-modal guest-login-modal">
+        <div class="modal-body default-modal-body guest-login-modal-body">
+          <div class="default-modal-security guest-login-security"><i class="icon-lock"></i></div>
+          <p data-i18n="modal.guestLoginTitle" class="guest-login-title">Necesitamos sus datos</p>
+          <p data-i18n="modal.guestLoginMessage" class="guest-login-message">Para continuar sin autenticación, debe completar sus datos de registro de nuevo.</p>
+          <div class="guest-login-actions pull-right"><a id="btn-guest-login-cancel-button" href="javsacript:void(0);" data-dismiss="modal" data-i18n="global.back_">Volver</a><span data-i18n="global.or">o</span>
+            <button id="btn-guest-login-button" autofocus="" data-dismiss="modal" data-i18n="modal.guestLoginMessageContinue" class="btn btn-large guest-login-button">Continuar sin autenticación</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal hide fade default-modal identified-user-modal modal-email-template">
+        <div class="modal-body default-modal-body identified-user-modal-body">
+          <div class="default-modal-security identified-user-security"><i class="icon-lock"></i></div>
+          <p data-i18n="clientProfileData.hi" class="identified-user-hello">Hola!</p>
+          <p data-i18n="clientProfileData.autoFill" class="identified-user-message">El correo que introdujo ya se encuentra registrado, se completará el formulario automáticamente con sus datos.</p>
+          <button id="btn-identified-user-button" autofocus="" data-dismiss="modal" data-i18n="clientProfileData.autoFillContinue" class="btn btn-large identified-user-button">Continuar con la compra</button>
+        </div>
+      </div>
+      <div data-backdrop="static" class="modal hide fade default-modal payment-confirmation-modal modal-payment-template">
+        <div class="modal-body default-modal-body payment-confirmation-modal-body">
+          <div class="default-modal-security payment-confirmation-security"><i class="icon-lock"></i></div>
+          <p class="payment-confirmation-content"><i class="payment-confirmation-loading loading-img icon-spinner icon-spin"><span data-i18n="global.loading">Cargando...</span></i><span data-i18n="global.thanks" class="payment-confirmation-thanks">¡Muchas gracias!</span></p>
+          <p data-i18n="paymentData.finishing" class="payment-confirmation-message">Tu pedido está siendo procesado.</p>
+        </div>
+      </div>
+      <div class="modal hide fade default-modal masked-info-modal modal-masked-info-template">
+        <div class="modal-body default-modal-body masked-info-modal-body">
+          <div class="default-modal-security masked-info-security"><i class="icon-lock"></i></div>
+          <p data-i18n="modal.maskedInfoHello" class="masked-info-hello">¿Por qué aparecen mis datos con asteriscos?</p>
+          <div class="masked-info-message">
+            <p data-i18n="modal.maskedInfoMessage1" class="masked-info-message1">Usted no está autenticado, por lo cual, protegemos sus datos personales ocultando los mismos con asteriscos.</p>
+            <p data-i18n="modal.maskedInfoMessage2" class="masked-info-message2">Si usted reconoce que los datos personales y la dirección son suyos, finalize el proceso de compras sin problemas.</p>
+            <p data-i18n="modal.maskedInfoMessage3" class="masked-info-message3">Si desea cambiar algún dato, le pedimos que haga clic en el ícono de edición de datos personales o la dirección para autenticarse en la tienda y cambiar los datos.</p>
+          </div>
+          <button data-dismiss="modal" data-i18n="global.close" class="btn btn-large masked-info-button">Cerrar</button>
+        </div>
+      </div>
+      <div data-backdrop="static" class="modal hide fade confirmation-modal unavailable-modal">
+        <div class="modal-body confirmation-modal-body unavailable-modal-body">
+          <div class="unavailable-message">
+            <p data-i18n="modal.unavailableHello" data-bind="visible: unavailableItems().length == 1" style="display: none;">El item no está disponible para envío en el momento:</p>
+            <p data-i18n="modal.unavailableHelloPlural" data-bind="visible: unavailableItems().length &gt; 1" style="display: none;">Los itenes no están disponibles para envío en el momento:</p>
+          </div>
+          <ul data-bind="foreach: unavailableItems" class="unavailable-items unstyled clearfix"></ul>
+          <div class="unavailable-actions">
+            <!-- ko if: unavailableItemsCannotBeDelivered-->
+            <button autofocus="" data-dismiss="modal" data-i18n="modal.editShipping" class="btn btn-large btn-block unavailable-button">Modificar datos de entrega</button>
+            <!-- /ko-->
+            <!-- ko ifnot: unavailableItemsCannotBeDelivered-->
+            <!-- /ko-->
+            <button data-dismiss="modal" data-bind="click: removeUnavailableProducts" class="btn btn-success btn-large btn-block unavailable-button pull-right"><span data-i18n="modal.unavailableButFinish" data-dismiss="modal" data-bind="visible: unavailableItems().length == 1" style="display: none;">Finalizar la compra sin el item</span><span data-i18n="modal.unavailableButFinishPlural" data-dismiss="modal" data-bind="visible: unavailableItems().length &gt; 1" style="display: none;">Finalizar la compra sin los itenes</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="modal hide fade default-modal payment-unauthorized-modal modal-payment-unauthorized-template">
+        <div class="modal-body default-modal-body payment-unauthorized-modal-body">
+          <div class="default-modal-security payment-unauthorized-security"><i class="icon-lock"></i></div>
+          <p data-i18n="modal.paymentUnauthorizedReviewData" class="payment-unauthorized-hello">Por favor revise los detalles de pago</p>
+          <div class="default-modal-message payment-unauthorized-message">
+            <p data-i18n="modal.paymentUnauthorizedMessage1" class="payment-unauthorized-message1">Su compra no se ha finalizado debido a algún problema en la autorización de pago.</p>
+            <p data-i18n="modal.paymentUnauthorizedMessage2" class="payment-unauthorized-message2">Es posible que haya llenado algunos datos de forma incorrecta o puede haber habido algún problema con la tarjeta en caso de compra con tarjeta.</p>
+            <p data-bind="visible: showingTransactionDetails() == false &amp;&amp; tidText() != ''" class="payment-unauthorized-show-details"><small><a href="javascript:void(0);" data-bind="click: showTransactionDetails" data-i18n="modal.showDetails">Ver detalles</a></small></p>
+            <p data-bind="visible: showingTransactionDetails() == true" class="payment-unauthorized-message3"><small data-bind="text: tidText"></small></p>
+          </div>
+          <button data-dismiss="modal" data-i18n="modal.paymentUnauthorizedChangeData" class="btn btn-large payment-unauthorized-button">Hacer la revisión de datos o pagar de otra manera</button>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">(function () { try { var vx = document.createElement('script'); vx.type = 'text/javascript'; vx.async = true; vx.src = '//dmx56ht1p4edz.cloudfront.net/rc.js?an=marketplace'; vx.target = '_blank'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(vx, s); } catch (err) { }})();</script>
+    <script type="text/javascript">
+      vtex.vtexid = vtex.vtexid || {};
+      vtex.vtexid.accountId = "ba75e297-3f23-420f-9d88-d7ad896ac8d6";
+      vtex.vtexid.accountName = "estilomio";
+    </script>
+    <script type="text/javascript">
+      (function () {
+      window.vtex = window.vtex || {};
+      vtex.portal = vtex.portal || {};
+      vtex.portal.context = {
+      accountId: 'ba75e297-3f23-420f-9d88-d7ad896ac8d6'
+      };
+      })()
+    </script>
+    <script type="text/javascript" src="//io.vtex.com.br/portal-ui/1.4.1/scripts/vtex-events-all.min.js"></script>
+    <script type="text/javascript">
+      (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+      new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+      '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-MSN356');
+    </script>
+    <script type="text/javascript" src="//io.vtex.com.br/portal-ui/1.4.1/scripts/vtex-analytics.js"></script>
+    <div data-bind="style: { display: cookiePCIExists() ? 'block' : 'none' }" style="display: none;" class="container-fluid pci-alert-topbar"><span data-bind="text: alertPCICookieMessage()">Esta en el modo de pruebas del nuevo servicio de cuotas de PCI Gateway. Los métodos de pago configurados pueden llevar hasta 10 minutos para ser aplicados y unicamente estan visibles para usted.</span><a href="javascript:void(0);" data-bind="click: killCookiePCI, text: alertPCICookieClick()">Haga click aqui </a><span data-bind="text: alertPCICookieClickInfo()">para salir del modo de pruebas.</span></div>
+    <!-- DESATIVA PLUGIN SKYPE--><span id="skype_highlighting_settings" display="none" autoextractnumbers="0"></span>
+    <!-- END-->
+    <div class="container container-main container-cart">
+      <h1 id="orderform-title" data-i18n="title" data-bind="fadeVisible: inOrderForm" style="display: none;" class="hide">Finalizar la compra</h1>
+      <h1 id="cart-title" data-i18n="shoppingCart" data-bind="fadeVisible: inCart" style="display: block;" class="hide">Carrito de compras</h1><small style="display:none;" data-bind="visible: isUsingGiftRegistry" class="gift-list-alert alert"><i class="icon-gift icon-large"></i><span data-i18n="giftListAlert" class="gift-list-alert-text">Usted está haciendo compras para la lista</span><b data-bind="text: giftRegistryDescription" class="gift-list-alert-name"></b>.<a href="javascript:void(0);" data-bind="click: removeGiftRegistry" data-i18n="giftListDismiss">No comprar en esta lista</a>.</small>
+      <div data-bind="visible: loading" style="display: none;" class="loading loading-bg">
+        <div class="loading-img"><i class="icon-spinner icon-spin icon-3x"><span data-i18n="global.loading">Cargando...</span></i></div>
+      </div>
+      <div class="checkout-container row-fluid cart-active">
+        <!-- CART-->
+        <div class="cart-template full-cart span12 active">
+          <div id="cartLoadedDiv" data-bind="template: 'cart-template'" class="cart-template-holder">
+            <div data-bind="fadeVisible: !hasItems() &amp;&amp; !loading()" style="display: none;" class="empty-cart-content">
+              <h2 data-i18n="cart.emptyTitle" class="empty-cart-title">Su carrito está vacio</h2>
+              <div class="empty-cart-message">
+                <p data-i18n="cart.emptyMessage">Para seguir comprando, navegar por las categorías en el sitio, o busque su producto.</p>
+              </div>
+              <div class="clearfix empty-cart-links"><a id="cart-choose-products" href="/" data-i18n="cart.chooseProducts" class="btn btn-large btn-success link-choose-products">Elegir productos</a></div>
+            </div>
+            <div data-bind="visible: hasItems() &amp;&amp; !loading()" class="cart">
+              <table class="table cart-items">
+                <thead>
+                  <tr>
+                    <th colspan="2" data-i18n="global.product" class="product">Producto</th>
+                    <th data-i18n="global.delivery" class="shipping-date">Envío</th>
+                    <th data-i18n="global.price" class="product-price">Precio</th>
+                    <th data-i18n="global.quantity" class="quantity">Cantidad</th>
+                    <th data-i18n="global.total" class="quantity-price">Total</th>
+                    <th class="item-remove"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- ko template: { name: 'cart-item-template', foreach: items, afterRender: vtex.i18n.translateHtml }-->
+                  <tr data-bind="attr: {'data-sku': id}, availableCSS: available()" rowspan="2" data-sku="653532" class="product-item">
+                    <td data-bind="css: { 'product-image': imageUrl }" class="product-image"><a href="http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p" data-bind="attr: {'href': ('http://' + location.host + detailUrl())}"><img id="product-image-653532" height="45" width="45" data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'product-image-' + id()}" src="//estilomio.vteximg.com.br/arquivos/ids/182933-100-100/STEVE-MADDEN-LEIRA-SM-SMW3510-NAT-38_0.jpg" alt="STEVE MADDEN LEIRA SM SMW3510-NAT-38"></a></td>
+                    <td class="product-name"><a id="product-name653532" href="http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p" data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl()), 'id': 'product-name' + id() }">STEVE MADDEN LEIRA SM SMW3510-NAT-38</a>
+                      <div class="brand"><span data-i18n="cart.seller.brand" class="brand-label">Marca</span><span data-bind="text: brand" class="brand-name">Steve Madden</span></div><small data-bind="if: sellerName" class="seller muted"><span data-i18n="cart.soldBy">Suministrados y entregados por</span><span data-bind="text: sellerName">Coliseum</span></small>
+                      <ul data-bind="foreach: priceTags" class="item-discount-descriptions"></ul>
+                      <!-- ko if: router.inCart() == true  && availableOfferings()-->
+                      <!-- ko if: availableOfferings().length > 1-->
+                      <!-- /ko-->
+                      <!-- ko if: availableOfferings().length == 1-->
+                      <!-- /ko-->
+                      <!-- ko if: itemAttachmentOfferings().length > 1-->
+                      <!-- /ko-->
+                      <!-- ko if: itemAttachmentOfferings().length == 1-->
+                      <!-- /ko-->
+                      <!-- /ko-->
+                    </td>
+                    <td data-bind="css: { 'empty': estimateLabel() == 'a calcular' }" class="shipping-date empty">
+                      <!-- ko if: available()--><span data-bind="text: estimateLabel" class="shipping-estimate-date">a calcular</span><span data-bind="text: estimateDetailLabel" class="shipping-estimate-date shipping-estimate-detail"></span>
+                      <div class="sla-info hide">
+                        <div data-bind="text: shippingPriceLabel" class="sla-price"></div>
+                        <div class="sla-name"><small data-bind="text: shippingName"></small></div>
+                      </div>
+                      <!-- /ko-->
+                      <!-- ko ifnot: available()-->
+                      <!-- /ko-->
+                    </td>
+                    <td class="product-price">
+                      <!-- ko if: isPriceVisible--><span data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() &amp;&amp; manualPrice() == null)" class="list-price hide"><span data-i18n="cart.oldPrice" class="old-product-price-label">De</span>
+                        <del data-bind="text: listPriceLabel" class="old-product-price muted"></del></span><br data-bind="css: { 'hide' : !isListPriceVisible() }" class="hide"><span class="best-price"><span data-i18n="cart.newPrice" data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() &amp;&amp; manualPrice() == null)" class="new-product-price-label hide">Por</span>
+                        <!-- ko ifnot: isManualPriceActive()--><span data-bind="text: priceLabel" class="new-product-real-price hide">S/. 279.00</span>
+                        <!-- ko if: $parent.allowManualPrice()-->
+                        <!-- /ko-->
+                        <!-- ko ifnot: $parent.allowManualPrice()--><span data-bind="text: sellingPriceLabel" class="new-product-price">S/. 279.00</span>
+                        <!-- /ko--><a href="javascript:void(0);" data-bind="click: removeManualPrice, visible: manualPrice() != null" data-i18n="[title]global.remove" title="Retirar" style="display: none;" class="manualprice-link-remove"><i class="icon icon-remove item-remove-ico"></i><span data-i18n="global.remove" class="hide manualprice-remove-text">Retirar</span></a>
+                        <!-- /ko-->
+                        <!-- ko if: isManualPriceActive()-->
+                        <!-- /ko--><small data-bind="text: priceLabelPerUnit" class="new-product-real-price-per-unit"></small><a href="javascript:void(0);" data-bind="fadeVisible: showDiscountButton" style="display: none;" class="discount"><span data-bind="event: { 'mouseover': toggleDiscount, 'mouseout': toggleDiscount }" class="how-much-discount"><i class="icon-question-sign"></i></span></a><span data-bind="fadeVisible: showDiscount" style="display: none;" class="field-help"><span class="help-arrow top-arrow"></span><span class="fast-shopping-help-message help-message"><strong class="fast-shopping-help-message-title help-message-title"><i class="icon-info-sign"></i><span data-i18n="totalizers.Discounts">Descuentos</span></strong><br>
+                            <!-- ko if: price() > sellingPrice()-->
+                            <!-- /ko--></span></span></span>
+                      <!-- /ko-->
+                    </td>
+                    <td data-bind="css: {'cant-change-qty': !canChangeQty(), 'quantity-large': quantity() &gt; 999},                   attr: { 'disabled': window.cart.loadingItem }" class="quantity">
+                      <!-- ko if: router.inCart--><a id="item-quantity-change-decrement-653532" href="javascript:void(0);" data-bind="click: function() { if (canChangeQty()) { decrement(); } }, css: { 'disabled': !canChangeQty() }, attr: { 'id': 'item-quantity-change-decrement-' + id() }" data-i18n="[title]cart.decrement" class="item-quantity-change item-quantity-change-decrement"><i class="icon icon-minus-sign"></i><span data-i18n="cart.decrement" class="hide item-quantity-change-decrement-text"></span></a>
+                      <input id="item-quantity-653532" type="tel" min="1" data-bind="valueUpdate: 'keyup',                        value: quantity,                        maskOnBlur: '99999',                        event: { blur: quantityBlurHandler },                       attr: { 'disabled': !canChangeQty(), 'id': 'item-quantity-' + id() }"><a id="item-quantity-change-increment-653532" href="javascript:void(0);" data-bind="click: function() { if (canChangeQty()) { increment(); } }, css: { 'disabled': !canChangeQty() }, attr: { 'id': 'item-quantity-change-increment-' + id() }" data-i18n="[title]cart.increment" class="item-quantity-change item-quantity-change-increment"><i class="icon icon-plus-sign"></i><span data-i18n="cart.increment" class="hide item-quantity-change-increment-text"></span></a>
+                      <!-- /ko-->
+                      <!-- ko if: router.inOrderForm-->
+                      <!-- /ko--><small data-bind="text: multiplierLabel" class="item-multiplier-label"></small><small data-bind="text: unitLabel" class="item-unit-label"></small>
+                    </td>
+                    <td class="quantity-price"><span data-bind="text: priceValueLabel, if: isPriceVisible" class="total-price hide">S/. 279.00</span><span data-bind="text: valueLabel, if: isPriceVisible" class="total-selling-price">S/. 279.00</span></td>
+                    <td class="item-remove"><a id="item-remove-653532" href="javascript:void(0);" data-bind="click: remove, fadeVisible: !window.cart.loadingItem(), attr: { 'id': 'item-remove-' + id() }" data-i18n="[title]global.remove" title="Retirar" class="item-link-remove"><i class="icon icon-remove item-remove-ico"></i><span data-i18n="global.remove" class="hide item-remove-text">Retirar</span></a><i data-bind="fadeInlineVisible: window.cart.loadingItem" style="display: none; opacity: 0;" class="loading-text icon-spinner icon-spin hide"><span data-i18n="cart.wait">Cargando datos...</span></i></td>
+                  </tr>
+                  <tr data-bind="attr: {'data-sku': id}, availableCSS: available()" rowspan="2" data-sku="653532" class="product-item">
+                    <td data-bind="css: { 'product-image': imageUrl }" class="product-image"><a href="http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p" data-bind="attr: {'href': ('http://' + location.host + detailUrl())}"><img id="product-image-653532" height="45" width="45" data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'product-image-' + id()}" src="//estilomio.vteximg.com.br/arquivos/ids/182933-100-100/STEVE-MADDEN-LEIRA-SM-SMW3510-NAT-38_0.jpg" alt="STEVE MADDEN LEIRA SM SMW3510-NAT-38"></a></td>
+                    <td class="product-name"><a id="product-name653532" href="http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p" data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl()), 'id': 'product-name' + id() }">STEVE MADDEN LEIRA SM SMW3510-NAT-38</a>
+                      <div class="brand"><span data-i18n="cart.seller.brand" class="brand-label">Marca</span><span data-bind="text: brand" class="brand-name">Steve Madden</span></div><small data-bind="if: sellerName" class="seller muted"><span data-i18n="cart.soldBy">Suministrados y entregados por</span><span data-bind="text: sellerName">Coliseum</span></small>
+                      <ul data-bind="foreach: priceTags" class="item-discount-descriptions"></ul>
+                      <!-- ko if: router.inCart() == true  && availableOfferings()-->
+                      <!-- ko if: availableOfferings().length > 1-->
+                      <!-- /ko-->
+                      <!-- ko if: availableOfferings().length == 1-->
+                      <!-- /ko-->
+                      <!-- ko if: itemAttachmentOfferings().length > 1-->
+                      <!-- /ko-->
+                      <!-- ko if: itemAttachmentOfferings().length == 1-->
+                      <!-- /ko-->
+                      <!-- /ko-->
+                    </td>
+                    <td data-bind="css: { 'empty': estimateLabel() == 'a calcular' }" class="shipping-date empty">
+                      <!-- ko if: available()--><span data-bind="text: estimateLabel" class="shipping-estimate-date">a calcular</span><span data-bind="text: estimateDetailLabel" class="shipping-estimate-date shipping-estimate-detail"></span>
+                      <div class="sla-info hide">
+                        <div data-bind="text: shippingPriceLabel" class="sla-price"></div>
+                        <div class="sla-name"><small data-bind="text: shippingName"></small></div>
+                      </div>
+                      <!-- /ko-->
+                      <!-- ko ifnot: available()-->
+                      <!-- /ko-->
+                    </td>
+                    <td class="product-price">
+                      <!-- ko if: isPriceVisible--><span data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() &amp;&amp; manualPrice() == null)" class="list-price hide"><span data-i18n="cart.oldPrice" class="old-product-price-label">De</span>
+                        <del data-bind="text: listPriceLabel" class="old-product-price muted"></del></span><br data-bind="css: { 'hide' : !isListPriceVisible() }" class="hide"><span class="best-price"><span data-i18n="cart.newPrice" data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() &amp;&amp; manualPrice() == null)" class="new-product-price-label hide">Por</span>
+                        <!-- ko ifnot: isManualPriceActive()--><span data-bind="text: priceLabel" class="new-product-real-price hide">S/. 279.00</span>
+                        <!-- ko if: $parent.allowManualPrice()-->
+                        <!-- /ko-->
+                        <!-- ko ifnot: $parent.allowManualPrice()--><span data-bind="text: sellingPriceLabel" class="new-product-price">S/. 279.00</span>
+                        <!-- /ko--><a href="javascript:void(0);" data-bind="click: removeManualPrice, visible: manualPrice() != null" data-i18n="[title]global.remove" title="Retirar" style="display: none;" class="manualprice-link-remove"><i class="icon icon-remove item-remove-ico"></i><span data-i18n="global.remove" class="hide manualprice-remove-text">Retirar</span></a>
+                        <!-- /ko-->
+                        <!-- ko if: isManualPriceActive()-->
+                        <!-- /ko--><small data-bind="text: priceLabelPerUnit" class="new-product-real-price-per-unit"></small><a href="javascript:void(0);" data-bind="fadeVisible: showDiscountButton" style="display: none;" class="discount"><span data-bind="event: { 'mouseover': toggleDiscount, 'mouseout': toggleDiscount }" class="how-much-discount"><i class="icon-question-sign"></i></span></a><span data-bind="fadeVisible: showDiscount" style="display: none;" class="field-help"><span class="help-arrow top-arrow"></span><span class="fast-shopping-help-message help-message"><strong class="fast-shopping-help-message-title help-message-title"><i class="icon-info-sign"></i><span data-i18n="totalizers.Discounts">Descuentos</span></strong><br>
+                            <!-- ko if: price() > sellingPrice()-->
+                            <!-- /ko--></span></span></span>
+                      <!-- /ko-->
+                    </td>
+                    <td data-bind="css: {'cant-change-qty': !canChangeQty(), 'quantity-large': quantity() &gt; 999},                   attr: { 'disabled': window.cart.loadingItem }" class="quantity">
+                      <!-- ko if: router.inCart--><a id="item-quantity-change-decrement-653532" href="javascript:void(0);" data-bind="click: function() { if (canChangeQty()) { decrement(); } }, css: { 'disabled': !canChangeQty() }, attr: { 'id': 'item-quantity-change-decrement-' + id() }" data-i18n="[title]cart.decrement" class="item-quantity-change item-quantity-change-decrement"><i class="icon icon-minus-sign"></i><span data-i18n="cart.decrement" class="hide item-quantity-change-decrement-text"></span></a>
+                      <input id="item-quantity-653532" type="tel" min="1" data-bind="valueUpdate: 'keyup',                        value: quantity,                        maskOnBlur: '99999',                        event: { blur: quantityBlurHandler },                       attr: { 'disabled': !canChangeQty(), 'id': 'item-quantity-' + id() }"><a id="item-quantity-change-increment-653532" href="javascript:void(0);" data-bind="click: function() { if (canChangeQty()) { increment(); } }, css: { 'disabled': !canChangeQty() }, attr: { 'id': 'item-quantity-change-increment-' + id() }" data-i18n="[title]cart.increment" class="item-quantity-change item-quantity-change-increment"><i class="icon icon-plus-sign"></i><span data-i18n="cart.increment" class="hide item-quantity-change-increment-text"></span></a>
+                      <!-- /ko-->
+                      <!-- ko if: router.inOrderForm-->
+                      <!-- /ko--><small data-bind="text: multiplierLabel" class="item-multiplier-label"></small><small data-bind="text: unitLabel" class="item-unit-label"></small>
+                    </td>
+                    <td class="quantity-price"><span data-bind="text: priceValueLabel, if: isPriceVisible" class="total-price hide">S/. 279.00</span><span data-bind="text: valueLabel, if: isPriceVisible" class="total-selling-price">S/. 279.00</span></td>
+                    <td class="item-remove"><a id="item-remove-653532" href="javascript:void(0);" data-bind="click: remove, fadeVisible: !window.cart.loadingItem(), attr: { 'id': 'item-remove-' + id() }" data-i18n="[title]global.remove" title="Retirar" class="item-link-remove"><i class="icon icon-remove item-remove-ico"></i><span data-i18n="global.remove" class="hide item-remove-text">Retirar</span></a><i data-bind="fadeInlineVisible: window.cart.loadingItem" style="display: none; opacity: 0;" class="loading-text icon-spinner icon-spin hide"><span data-i18n="cart.wait">Cargando datos...</span></i></td>
+                  </tr>
+                  <!-- ko ifnot: available-->
+                  <!-- /ko-->
+                  <!-- ko if: itemAttachments() && itemAttachments().length > 0-->
+                  <!-- /ko-->
+                  <!-- ko if: bundleItems() && bundleItems().length > 0-->
+                  <!-- /ko-->
+                  <!-- ko if: components() && components().length > 0-->
+                  <!-- /ko-->
+                  <!-- /ko-->
+                  <!-- ko if: gifts().length > 0-->
+                  <!-- /ko-->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="cart-select-gift-placeholder"></div>
+          <div data-bind="template: {name: 'summary-template', afterRender: vtex.i18n.translateHtml}" class="summary-template-holder">
+            <div data-bind="fadeVisible: window.cart.hasItems() &amp;&amp; !loading()" style="display: block;" class="row-fluid summary">
+              <div data-bind="css: { 'span7 pull-left': !window.checkout.hasSelectableGifts(), 'span4 pull-right': window.checkout.hasSelectableGifts() }" class="forms coupon-column summary-coupon-wrap span7 pull-left">
+                <div data-bind="with: coupon, visible: hasTotal" class="coupon summary-coupon pull-right">
+                  <form action="" data-bind="submit: addCoupon" class="coupon-form">
+                    <fieldset class="coupon-fieldset">
+                      <div data-bind="fadeVisible: isUsingCoupon()" style="display: none;">
+                        <p class="coupon-label">
+                          <label for="cart-coupon" data-i18n="totalizers.couponCapitalize">Cupón de descuento</label>
+                        </p>
+                        <p class="coupon-fields"><span data-bind="visible: !isCouponTyped()">
+                            <input id="cart-coupon" type="text" data-bind="value: couponCode, valueUpdate:'afterkeydown', disable: loadingCoupon()" placeholder="Código" data-i18n="[placeholder]totalizers.couponCode;" class="coupon-value input-small"><span data-bind="fadeInlineVisible: loadingCoupon" style="display: none; opacity: 0;" class="loading-inline loading-coupon"><span data-i18n="cart.wait">Cargando datos...</span></span>
+                            <button id="cart-coupon-add" type="submit" data-bind="disable: loadingCoupon" data-i18n="global.add" class="btn">Sumar</button></span><span data-bind="visible: isCouponTyped" style="display: none;" class="info"><span data-bind="text: value"></span><small class="delete"><a id="cart-coupon-remove" href="javascript:void(0);" data-bind="click: removeCoupon" data-i18n="global.delete">Borrar</a></small></span></p>
+                      </div>
+                      <p data-bind="fadeVisible: !isUsingCoupon()" class="coupon-data pull-right"><a id="cart-link-coupon-add" href="javascript:void(0);" data-bind="click: isUsingCoupon" class="link-coupon-add"><span data-i18n="global.add">Sumar</span><span data-i18n="totalizers.coupon">cupón de descuento</span></a></p>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+              <div class="span5 totalizers summary-totalizers cart-totalizers pull-right">
+                <div data-bind="fadeVisible: window.cart.hasItems() &amp;&amp; !loading()" style="display: block;" class="accordion-group">
+                  <div class="accordion-heading"><span data-i18n="totalizers.summary" class="accordion-toggle collapsed">Resumen de la compra</span></div>
+                  <div class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                      <div data-bind="visible: discounts().length" style="display: none;" class="summary-discount-descriptions">
+                        <h3 data-i18n="totalizers.Discounts" class="summary-discount-title">Descuentos</h3>
+                        <ul data-bind="foreach: discounts()" class="all-discount-descriptions unstyled"></ul>
+                      </div>
+                      <table class="table">
+                        <tbody data-bind="foreach: { data: totalizers }" class="totalizers-list">
+                          <tr data-bind="visible: visible, attr: { 'class': id }" class="Items">
+                            <!-- ko if: id() == 'Shipping'-->
+                            <!-- /ko-->
+                            <!-- ko ifnot: id() == 'Shipping'-->
+                            <td data-bind="attr: {'data-i18n': 'totalizers.' + id()}" data-i18n="totalizers.Items" class="info">Subtotal</td>
+                            <td class="space"></td>
+                            <td data-bind="text: valueLabel" class="monetary">S/. 279.00</td>
+                            <td class="empty"></td>
+                            <!-- /ko-->
+                          </tr>
+                        </tbody>
+                        <tbody data-bind="visible: isShippingKnown()                                                    &amp;&amp; !window.checkout.isNotUsingPostalCode()                                                    &amp;&amp; window.cart.items().length == window.cart.unavailableItems().length" style="display: none;" class="shipping-reset">
+                          <tr>
+                            <td class="info"><span class="postal-code-for-sla"><span data-bind="attr: {'data-i18n': 'totalizers.Shipping'}" data-i18n="totalizers.Shipping" class="shipping-name">Costo del envío</span><span data-i18n="global.to" class="shipping-name-to">para</span><span data-bind="html: window.summary.maskedPostalCode" class="postal-code-value"></span><a id="cart-reset-postal-code" href="javascript:void(0);" data-bind="visible : window.checkout.canEditData, click: summary.resetShipping" data-i18n="[title]global.edit" title="Cambiar" class="cart-reset-postal-code"><i class="icon-remove-sign"></i></a><br><a id="cart-reset-postal-code" href="javascript:void(0);" data-bind="visible : window.checkout.canEditData, click: window.summary.resetShipping" data-i18n="cart.resetShipping" class="cart-reset-postal-code">Elegir otro código postal</a></span></td>
+                            <td class="space"></td>
+                            <td data-i18n="global.unavailable" class="monetary shipping-unavailable">No disponible</td>
+                          </tr>
+                        </tbody>
+                        <tbody data-bind="visible: !isShippingKnown() &amp;&amp; !window.checkout.isNotUsingPostalCode()" style="display: none;" class="shipping-calculate">
+                          <tr>
+                            <td class="info"><span data-i18n="cart.calculateShipping">Envío</span></td>
+                            <td data-bind="visible: !isUsingPostalCode()" class="space"></td>
+                            <td data-bind="visible: !isUsingPostalCode()" class="monetary"><a id="shipping-calculate-link" href="javascript:void(0)" data-bind="click: usingPostalCode" data-i18n="cart.calculate" class="shipping-calculate-link">Calcular</a></td>
+                            <td data-bind="visible: isUsingPostalCode() &amp;&amp; !isShippingKnown()" colspan="3" style="display: none;" class="monetary form-postal-code forms">
+                              <div class="shipping summary-shipping">
+                                <form action="" data-bind="submit: calculateShipping" class="shipping-form-inline">
+                                  <fieldset class="shipping-fieldset">
+                                    <div class="shipping-fields">
+                                      <input id="summary-postal-code" type="tel" data-bind="value: postalCode, valueUpdate:'afterkeydown',                                                               validate: 'postalCode', disable: loadingPostalCode,                                                               maskOnBlur: window.checkout.postalCodeMask,                                                               attr: {'placeholder': postalCodeLabel, 'maxlength': window.checkout.postalCodeMask() ? window.checkout.postalCodeMask().length : 9},                                                               css: {'loading-postal-code': loadingPostalCode}" placeholder="CPPER" maxlength="4" class="postal-code input-mini"><i data-bind="fadeInlineVisible: loadingPostalCode" style="display: none; opacity: 0;" class="loading-inline icon-spinner icon-spin"><span data-i18n="cart.wait">Cargando datos...</span></i>
+                                      <button id="cart-shipping-calculate" type="submit" data-bind="disable: loadingPostalCode" data-i18n="cart.calculate" class="btn">Calcular</button>
+                                    </div><small class="postal-code-service summary-postal-code-service"><a id="cart-dont-know-postal-code" data-bind="attr: { 'href': window.checkout.postalCodeForgottenURL }" target="_blank" data-i18n="totalizers.dontKnowPostalCode" href="#">No conozco mi Código Postal (CP)</a></small>
+                                  </fieldset>
+                                </form>
+                              </div>
+                            </td>
+                            <td data-bind="visible: !isUsingPostalCode()" class="empty"></td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr data-bind="css: {'muted': !hasTotal()}">
+                            <td data-i18n="global.total" class="info">Total</td>
+                            <td class="space"></td>
+                            <td data-bind="text: totalLabel" class="monetary">S/. 279.00</td>
+                            <td class="empty"></td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display: block;" class="clearfix pull-right cart-links cart-links-bottom hide"><span class="link-choose-more-products-wrapper"><a id="cart-choose-more-products" href="/" data-i18n="cart.chooseMoreProducts" class="more link-choose-more-products">Elegir más productos</a></span><span data-bind="fadeVisible: userType() == 'callCenterOperator'" style="display: none;" class="link-print-cart-wrapper hide"><a id="cart-print" onclick="window.print()" data-i18n="cart.print" class="btn btn-large link-print-cart">Imprimir</a></span><span class="btn-place-order-wrapper"><a id="cart-to-orderform" href="#/orderform" target="_self" data-event="cartToOrderform" data-i18n="cart.finalize" data-bind="visible: !disableCheckoutButton(), click: goToFirstInvalidStep" class="btn btn-large btn-success pull-left-margin btn-place-order">Finalizar compra</a><a id="cart-to-orderform-disabled" href="javascript:void(0);" target="_self" disabled="disabled" data-i18n="cart.finalize" data-bind="visible: disableCheckoutButton()" style="display: none;" class="btn btn-large btn-success pull-left-margin btn-place-order disable">Finalizar compra</a></span></div>
+        </div>
+        <!-- /END CART-->
+        <!-- ORDERFORM-->
+        <div class="row-fluid orderform-template span12 inactive">
+          <div class="cart-template mini-cart span4">
+            <div style="height: auto;" class="cart-fixed cart-fixed-transition">
+              <h2 data-i18n="totalizers.summary">Resumen de la compra</h2>
+              <!-- TODO remove window.router-->
+              <div data-bind="fadeVisible: window.router.inOrderForm, template: { name: 'orderForm-summary-cart-template', afterRender: vtex.i18n.translateHtml }" style="display: none; height: auto;" class="summary-cart-template-holder">
+                <div class="cart">
+                  <ul class="cart-items unstyled clearfix">
+                    <!-- ko foreach: { data: items, afterRender: vtex.i18n.translateHtml }-->
+                    <li data-bind="attr: {'data-sku': id}" data-sku="653532" class="hproduct item muted"><a href="http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p" data-bind="attr: {'href': ('http://' + location.host + detailUrl())}" class="url"><img id="hproduct-item-653532" height="45" width="45" data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'hproduct-item-' + id()}" src="//estilomio.vteximg.com.br/arquivos/ids/182933-100-100/STEVE-MADDEN-LEIRA-SM-SMW3510-NAT-38_0.jpg" alt="STEVE MADDEN LEIRA SM SMW3510-NAT-38" class="photo"></a><span data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl())}" href="http://www.estilomio.com/steve-madden-leira-sm-smw3510-nat-13345/p" class="fn product-name">STEVE MADDEN LEIRA SM SMW3510-NAT-38</span><span data-bind="text: quantity" class="quantity badge">1</span>
+                      <div class="description"><span data-bind="text: estimateLabel, css: { 'empty': estimateLabel() == 'a calcular' }" class="shipping-date pull-left empty">a calcular</span><strong data-bind="text: priceLabel" class="item-price pull-right hide">S/. 279.00</strong><strong data-bind="text: sellingPriceLabel" class="price pull-right">S/. 279.00</strong></div>
+                      <!-- ko if: bundleItems() && bundleItems().length > 0-->
+                      <!-- /ko-->
+                      <!-- ko if: components() && components().length > 0-->
+                      <!-- /ko-->
+                      <!-- ko ifnot: available-->
+                      <!-- /ko-->
+                    </li>
+                    <!-- /ko-->
+                    <!-- ko if: gifts() && gifts().length > 0-->
+                    <!-- /ko-->
+                  </ul>
+                </div>
+              </div>
+              <p class="link link-cart pull-right"><small><a id="orderform-minicart-to-cart" href="#/cart" target="_self" data-event="orderformToCart" data-i18n="global.backToCart">Volver a carrito</a></small></p>
+              <div data-bind="template: 'summary-template'" class="summary-template-holder">
+                <div data-bind="fadeVisible: window.cart.hasItems() &amp;&amp; !loading()" style="display: block;" class="row-fluid summary">
+                  <div data-bind="css: { 'span7 pull-left': !window.checkout.hasSelectableGifts(), 'span4 pull-right': window.checkout.hasSelectableGifts() }" class="forms coupon-column summary-coupon-wrap span7 pull-left">
+                    <div data-bind="with: coupon, visible: hasTotal" class="coupon summary-coupon pull-right">
+                      <form action="" data-bind="submit: addCoupon" class="coupon-form">
+                        <fieldset class="coupon-fieldset">
+                          <div data-bind="fadeVisible: isUsingCoupon()" style="display: none;">
+                            <p class="coupon-label">
+                              <label for="cart-coupon" data-i18n="totalizers.couponCapitalize">Cupón de descuento</label>
+                            </p>
+                            <p class="coupon-fields"><span data-bind="visible: !isCouponTyped()">
+                                <input id="cart-coupon" type="text" data-bind="value: couponCode, valueUpdate:'afterkeydown', disable: loadingCoupon()" placeholder="Código" data-i18n="[placeholder]totalizers.couponCode;" class="coupon-value input-small"><span data-bind="fadeInlineVisible: loadingCoupon" style="display: none; opacity: 0;" class="loading-inline loading-coupon"><span data-i18n="cart.wait">Cargando datos...</span></span>
+                                <button id="cart-coupon-add" type="submit" data-bind="disable: loadingCoupon" data-i18n="global.add" class="btn">Sumar</button></span><span data-bind="visible: isCouponTyped" style="display: none;" class="info"><span data-bind="text: value"></span><small class="delete"><a id="cart-coupon-remove" href="javascript:void(0);" data-bind="click: removeCoupon" data-i18n="global.delete">Borrar</a></small></span></p>
+                          </div>
+                          <p data-bind="fadeVisible: !isUsingCoupon()" class="coupon-data pull-right"><a id="cart-link-coupon-add" href="javascript:void(0);" data-bind="click: isUsingCoupon" class="link-coupon-add"><span data-i18n="global.add">Sumar</span><span data-i18n="totalizers.coupon">cupón de descuento</span></a></p>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="span5 totalizers summary-totalizers cart-totalizers pull-right">
+                    <div data-bind="fadeVisible: window.cart.hasItems() &amp;&amp; !loading()" style="display: block;" class="accordion-group">
+                      <div class="accordion-heading"><span data-i18n="totalizers.summary" class="accordion-toggle collapsed">Resumen de la compra</span></div>
+                      <div class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                          <div data-bind="visible: discounts().length" style="display: none;" class="summary-discount-descriptions">
+                            <h3 data-i18n="totalizers.Discounts" class="summary-discount-title">Descuentos</h3>
+                            <ul data-bind="foreach: discounts()" class="all-discount-descriptions unstyled"></ul>
+                          </div>
+                          <table class="table">
+                            <tbody data-bind="foreach: { data: totalizers }" class="totalizers-list">
+                              <tr data-bind="visible: visible, attr: { 'class': id }" class="Items">
+                                <!-- ko if: id() == 'Shipping'-->
+                                <!-- /ko-->
+                                <!-- ko ifnot: id() == 'Shipping'-->
+                                <td data-bind="attr: {'data-i18n': 'totalizers.' + id()}" data-i18n="totalizers.Items" class="info">Subtotal</td>
+                                <td class="space"></td>
+                                <td data-bind="text: valueLabel" class="monetary">S/. 279.00</td>
+                                <td class="empty"></td>
+                                <!-- /ko-->
+                              </tr>
+                            </tbody>
+                            <tbody data-bind="visible: isShippingKnown()                                                    &amp;&amp; !window.checkout.isNotUsingPostalCode()                                                    &amp;&amp; window.cart.items().length == window.cart.unavailableItems().length" style="display: none;" class="shipping-reset">
+                              <tr>
+                                <td class="info"><span class="postal-code-for-sla"><span data-bind="attr: {'data-i18n': 'totalizers.Shipping'}" data-i18n="totalizers.Shipping" class="shipping-name">Costo del envío</span><span data-i18n="global.to" class="shipping-name-to">para</span><span data-bind="html: window.summary.maskedPostalCode" class="postal-code-value"></span><a id="cart-reset-postal-code" href="javascript:void(0);" data-bind="visible : window.checkout.canEditData, click: summary.resetShipping" data-i18n="[title]global.edit" title="Cambiar" class="cart-reset-postal-code"><i class="icon-remove-sign"></i></a><br><a id="cart-reset-postal-code" href="javascript:void(0);" data-bind="visible : window.checkout.canEditData, click: window.summary.resetShipping" data-i18n="cart.resetShipping" class="cart-reset-postal-code">Elegir otro código postal</a></span></td>
+                                <td class="space"></td>
+                                <td data-i18n="global.unavailable" class="monetary shipping-unavailable">No disponible</td>
+                              </tr>
+                            </tbody>
+                            <tbody data-bind="visible: !isShippingKnown() &amp;&amp; !window.checkout.isNotUsingPostalCode()" style="display: none;" class="shipping-calculate">
+                              <tr>
+                                <td class="info"><span data-i18n="cart.calculateShipping">Envío</span></td>
+                                <td data-bind="visible: !isUsingPostalCode()" class="space"></td>
+                                <td data-bind="visible: !isUsingPostalCode()" class="monetary"><a id="shipping-calculate-link" href="javascript:void(0)" data-bind="click: usingPostalCode" data-i18n="cart.calculate" class="shipping-calculate-link">Calcular</a></td>
+                                <td data-bind="visible: isUsingPostalCode() &amp;&amp; !isShippingKnown()" colspan="3" style="display: none;" class="monetary form-postal-code forms">
+                                  <div class="shipping summary-shipping">
+                                    <form action="" data-bind="submit: calculateShipping" class="shipping-form-inline">
+                                      <fieldset class="shipping-fieldset">
+                                        <div class="shipping-fields">
+                                          <input id="summary-postal-code" type="tel" data-bind="value: postalCode, valueUpdate:'afterkeydown',                                                               validate: 'postalCode', disable: loadingPostalCode,                                                               maskOnBlur: window.checkout.postalCodeMask,                                                               attr: {'placeholder': postalCodeLabel, 'maxlength': window.checkout.postalCodeMask() ? window.checkout.postalCodeMask().length : 9},                                                               css: {'loading-postal-code': loadingPostalCode}" placeholder="CPPER" maxlength="4" class="postal-code input-mini"><i data-bind="fadeInlineVisible: loadingPostalCode" style="display: none; opacity: 0;" class="loading-inline icon-spinner icon-spin"><span data-i18n="cart.wait">Cargando datos...</span></i>
+                                          <button id="cart-shipping-calculate" type="submit" data-bind="disable: loadingPostalCode" data-i18n="cart.calculate" class="btn">Calcular</button>
+                                        </div><small class="postal-code-service summary-postal-code-service"><a id="cart-dont-know-postal-code" data-bind="attr: { 'href': window.checkout.postalCodeForgottenURL }" target="_blank" data-i18n="totalizers.dontKnowPostalCode" href="#">No conozco mi Código Postal (CP)</a></small>
+                                      </fieldset>
+                                    </form>
+                                  </div>
+                                </td>
+                                <td data-bind="visible: !isUsingPostalCode()" class="empty"></td>
+                              </tr>
+                            </tbody>
+                            <tfoot>
+                              <tr data-bind="css: {'muted': !hasTotal()}">
+                                <td data-i18n="global.total" class="info">Total</td>
+                                <td class="space"></td>
+                                <td data-bind="text: totalLabel" class="monetary">S/. 279.00</td>
+                                <td class="empty"></td>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="payment-confirmation-wrap">
+                <div data-bind="template: 'note-template', css: { hide: !window.cart.allowManualPrice() }" class="note summary-note hide">
+                  <p data-bind="fadeVisible: !isUsingNote()" class="note-data"><a id="cart-link-note-add" href="javascript:void(0);" data-bind="click: setUsingNote" class="link-note-add"><span data-i18n="global.addNote">Sumar observacíon</span></a></p>
+                  <div data-bind="fadeVisible: isUsingNote()" style="display: none;">
+                    <p class="note-label">
+                      <label for="cart-note" data-i18n="global.note">Observacíon</label>
+                    </p>
+                    <textarea id="cart-note" row="3" data-bind="value: note, valueUpdate:'blur'" maxlength="1000" class="note-textarea"></textarea>
+                  </div>
+                </div>
+                <p class="payment-submit-wrap">
+                  <button id="payment-data-submit" data-bind="click: submit, disable: window.checkout.disablePaymentButton" tabindex="200" class="submit btn btn-success btn-large btn-block"><i data-bind="visible: !window.checkout.disablePaymentButton()" class="icon-lock"></i><i data-bind="visible: window.checkout.disablePaymentButton()" style="display: none;" class="icon-spinner icon-spin"></i><span data-i18n="paymentData.confirm">Comprar ahora</span></button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /END ORDERFORM-->
+      </div>
+    </div>
+    <div class="container sup">Al comprar acepta los <a href="/condiciones/" target="_blank">Términos y Condiciones</a> de EstiloMio.com.</div>
+    <!-- end footer-->
+    <div class="footer">
+      <div class="bg">
+        <div class="container">
+          <div class="left"><img src="http://estilomio.vteximg.com.br/arquivos/pago.png" border="0">
+            <div id="DigiCert"><img src="http://estilomio.vteximg.com.br/arquivos/seal.digicert.png"></div>
+            <p>Esta tienda esta autorizada para realizar transacciones electrónicas.</p>
+          </div>
+          <div class="right">
+            <div class="ico_Send"></div>
+            <p>ENVIOS A TODO EL PERU</p>
+            <div class="logo"></div>
+          </div>
+        </div>
+      </div>
+      <div class="Foo"><a id="milPuntos" href=""></a>
+        <p>©2016 EstiloMio.com. Todos los derechos reservados</p>
+      </div>
+    </div>
+    <script src="/demos/estilomio/dist/arquivos/libs/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="/demos/estilomio/dist/arquivos/app_checkout.js" type="text/javascript"> </script>
+  </body>
+</html>

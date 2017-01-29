@@ -1,0 +1,222 @@
+extends _layout/layoutPedidos.jade
+//- index
+block content
+
+	.rediseno-pedido(ng-app="app_pedidos") 
+		.container(ng-controller="pedidosController")
+			.pedidos-container
+				.pedidos-container-header
+					h1 MIS PEDIDOS
+					.filtros-pedidos
+						label Filtrar por
+						.filterfecha
+							input( type="text",data-toggle="datepicker", ng-model="selectedDate", ng-maxlength="10",value="Fecha", name="Fecha",placeholder="Fecha")
+							span.ico_calendar
+							span.ico_arrow
+							span.ico_borrar
+						label o
+						.filterstatus
+							select(ng-model="status")
+								option(value='') Status
+								option(value='canceled') Cancelado
+								option(value='cancellation-requested') Cancelación solicitada
+								option(value='invoiced') Facturado
+								option(value='payment-approved') Pago aprobado
+								option(value='waiting-ffmt-authorization') En espera para despachar
+								option(value='payment-approved') Pago aprobado
+								option(value='payment-pending') Pago Pendiente
+								option(value='handling') A preparar la entrega
+								option(value='ready-for-handling') Pronto para manejo
+								option(value='cancel' ) Empezando cancelación
+							span.ico_arrow
+						
+						.loading-spiner-holder( ng-show="loading")
+							.loading-spiner
+								img(src='/arquivos/ajax-loader.gif')
+				.pedidos-container-all
+					.pedidos-container-ordergroup( ng-repeat="order in orders  | filter: status | filter:{creationDate: selectedDate }")
+						.pedidos-container-ordergroup-header(ng-click="show_me($event)")
+							h2.order-title 
+								span.descrip Compra realizada el
+								span.fecha {{order.creationDate | date:'dd-MM-yyyy'}}
+								span Pedido
+								span.nropedido {{order.orderId}}
+							.arrow2
+						article
+							.pedidos-container-ordergroup-order
+								.pedidos-container-ordergroup-order-top
+									.medioEnvio
+										.medioEnvio-detail
+											h5 Medio de envío
+											p  Entrega a domicilio EstiloMio 7-10 dias
+									.statusEnvio
+										.statusEnvio-detail
+											h5 Estado del pedido
+											p.facturado  {{order.state}}
+								.pedidos-container-ordergroup-order-down
+									.order-detail-items( ng-repeat='item in order.items')
+										.order-detail-items-producto
+											.order-detail-items-producto-top
+												.thName Producto
+											.order-detail-items-producto-down
+												.order-detail-items-producto-down-left
+													.product-image
+														a(href='{{ item.detailUrl }}', data-bind="attr: {'href': detailUrl}")
+															img(height='45', width='45', src='{{ item.imageUrl }}')
+												.order-detail-items-producto-down-right
+													.product-name
+														a(href='{{ item.detailUrl }}') {{item.name}}
+														.brand.hidden-phone.hidden-tablet
+															span.brand-label
+																span(data-i18n='cart.seller.brand') Marca
+																| :
+															span.brand-name(data-bind='text: brand') {{item.additionalInfo.brandName}}
+										.order-detail-items-envio
+											.thEnvio envío
+											.shipping-date
+												p.shipping-estimate(data-bind='text: shippingEstimateLabel') 10 días hábiles
+													p.sla-info.hide
+														span.sla-name(data-bind='text: shippingName') Entrega a Domicilio EstiloMio 7-10 días
+														| (
+														span.sla-price(data-bind='text: shippingPriceLabel') S/. 95,00
+														| )
+										.order-detail-items-precio 
+											.thPrecio Precio
+											.product-price.align-right
+												span.new-product-list-price.hide(data-bind='text: listPriceLabel') S/. 119,00
+												span.new-product-real-price.hide(data-bind='text: priceLabel') S/. 99,00
+												span.new-product-price.best-price(data-bind='text: sellingPriceLabel') S/. {{ item.price | addDots  }}
+										.order-detail-items-cantidad
+											.thCantidad Cantidad
+											.quantity.align-right.hidden-phone.hidden-tablet
+												span(data-bind='text: quantity') {{ item.quantity }}
+										.order-detail-items-total
+											.thTotal Total
+											.quantity-price.align-right.hidden-phone.hidden-tablet
+												span.total-price.hide(data-bind='text: priceValueLabel') S/. 99,00
+												span.total-selling-price(data-bind='text: valueLabel') S/. {{ item.sellingPrice | addDots  }}
+
+							.pedidos-container-ordergroup-comprafinal
+								p COMPRA FINALIZADA EL {{order.creationDate | date:'dd/MM/yyyy'}}
+							.pedidos-container-ordergroup-info
+								.mediodepago
+									h4 MEDIO DE PAGO
+									.payments 
+										.payment-method-info
+											span.payment-subtitle(data-bind='text: paymentSystemNameTranslation') {{ order.paymentData.payments[0].group }}
+											.payment-value
+												span.payment-total.field-label.hide
+													span(data-i18n='global.value') Valor
+													| :
+												span.payment-value-monetary(data-bind='text: valueLabel') S/.  {{ order.paymentData.payments[0].value | addDots }}
+												span.payment-installmetns(data-bind='text: installmentsLabel') (total)
+											.payment-connector.muted(data-bind='foreach: connectorResponsesValue')
+												p.payment-connector-keypair
+													small(data-bind='text: $parent.connectorResponsesKey()[$index()]') Tid
+													| :					
+													small(data-bind='text: $data') {{ order.paymentData.payments[0].connectorResponses.Tid }}
+												p.payment-connector-keypair
+													small(data-bind='text: $parent.connectorResponsesKey()[$index()]') ReturnCode
+													| :					
+													small(data-bind='text: $data') {{ order.paymentData.payments[0].connectorResponses.ReturnCode }}
+												p.payment-connector-keypair
+													small(data-bind='text: $parent.connectorResponsesKey()[$index()]') Message
+													| :					
+													small(data-bind='text: $data') {{ order.paymentData.payments[0].connectorResponses.Message }}
+												p.payment-connector-keypair
+													small(data-bind='text: $parent.connectorResponsesKey()[$index()]') CIP
+													| :					
+													small(data-bind='text: $data') {{ order.paymentData.payments[0].connectorResponses.CIP }}
+
+								.direccionEnvio
+									h4.section-info-title(data-i18n='order.shippingInfo') Dirección de Envío
+										.shipping(data-bind="template: 'order-shipping-template'")
+											// ko with: shippingData
+											.shipping-address
+												address(data-bind='with: $data.address')
+													// ko if: addressType() == "giftRegistry"
+													// /ko
+													// ko ifnot: addressType() == "giftRegistry"
+													ul
+														li
+															span(data-bind='text: receiverName') 
+															{{order.shippingData.address.receiverName}}
+														li
+															span(data-bind='text: street') {{order.shippingData.address.street}}
+															| ,
+															// ko ifnot: country() == "USA"
+															span(data-bind='text: number') {{order.shippingData.address.number}}
+															// /ko
+															// ko if: complement
+															span(data-bind='text: complement') {{order.shippingData.address.complement}}
+															// /ko
+															// ko if: neighborhood
+															| - 
+															span(data-bind='text: neighborhood') {{order.shippingData.address.neighborhood}}
+															// /ko
+														li
+															span(data-bind='text: city')  {{order.shippingData.address.city}}
+															| /					
+															span(data-bind='text: state') {{order.shippingData.address.state}}
+															|  - 					
+															span(data-bind='text: countryName') global.{{order.shippingData.address.country}}
+															li
+															span(data-bind='text: postalCode') {{order.shippingData.address.postalCode}}
+
+								.datosPersonales
+									h4.section-info-title(data-i18n='order.clientProfileData') Datos Personales
+									.shipping(data-bind="template: 'order-client-template'")
+										// ko with: clientProfileData
+										.client-profile-data
+											.full-name.personal-info
+												span.personal-info-label.hide
+													span(data-i18n='order.fullName') Nombre y Apellidos
+													| :
+												span.personal-info-value
+													span(data-bind='text: fullName()') {{ order.clientProfileData.firstName }} {{ order.clientProfileData.lastName }}
+											.email.personal-info
+												span.personal-info-label.hide
+													span(data-i18n='clientProfileData.email') Correo
+													| :
+												span.personal-info-value
+													span(data-bind='text: email') {{ order.clientProfileData.email }}
+											.phone.personal-info
+												span.personal-info-label.hide
+													span(data-i18n='clientProfileData.phone') Teléfono
+													| :
+												span.personal-info-value
+													span(data-bind='text: phone') {{ order.clientProfileData.phone }}
+											.document.personal-info
+												span.personal-info-label.hide
+													span(data-i18n='clientProfileData.document') Documento
+													| :
+												span.personal-info-value
+													span(data-bind='text: document') {{ order.clientProfileData.document }}
+											.corporate-info-group(data-bind='if: isCorporate')
+
+								.EstadoPedido
+									h4.section-state-pedido(data-i18n='order.orderTotalPrice') ESTADO DEL PEDIDO
+									p.state.facturado {{order.state}}
+								.total
+									h4.section-info-title(data-i18n='order.orderTotalPrice') Total
+									.totals(data-bind="template: 'order-totals-template'")
+										table.table.table-condensed
+											tbody(data-bind='foreach: totals')
+												tr.Items(data-bind="attr: { 'class': id }, visible: totalVisible")
+													th.info.muted(data-bind='text: nameLabel') Subtotal
+													td.monetary.muted(data-bind='text: valueLabel') S/. {{ order.totals[0].value}}
+												tr.Discounts(data-bind="attr: { 'class': id }, visible: totalVisible")
+													th.info.muted(data-bind='text: nameLabel') Descuentos
+													td.monetary.muted(data-bind='text: valueLabel') S/. {{ order.totals[1].value | addDots}}
+												tr.Shipping(data-bind="attr: { 'class': id }, visible: totalVisible")
+													th.info.muted(data-bind='text: nameLabel') Costo del envío
+													td.monetary.muted(data-bind='text: valueLabel') S/. {{ order.totals[2].value | addDots}}
+												tr.Tax(data-bind="attr: { 'class': id }, visible: totalVisible", style='display: none;')
+													th.info.muted(data-bind='text: nameLabel') Impuestos
+													td.monetary.muted(data-bind='text: valueLabel') Gratis
+											tfoot
+												tr
+													th.info(data-i18n='global.total') Total
+													td.monetary(data-bind='text: totalLabel') S/. {{ order.value | addDots }}
+
+

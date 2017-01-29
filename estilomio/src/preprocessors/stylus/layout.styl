@@ -1,0 +1,2448 @@
+/*!!
+* Layout
+* @module layout
+* @author Ana Reyna @anareyna
+*/
+
+@require '_config/*'
+@require '_mixins/*'
+@require '_normalize/*'
+@require '_helpers/*'
+@import '_layouts/*'
+
+*, *:before, *:after
+	box-sizing border-box
+	//outline 1px solid rgba(255,0,0,0.1)
+
+body
+	font-family $family1
+
+a
+	text-decoration none
+	color inherit
+
+img.unveil
+	opacity 0
+	transition opacity .3s ease-in
+
+.container
+	lost-center $wrapperWidth
+	+mobile()
+		padding 0 2%
+
+.site_title
+	font-size 20px
+	text-align center
+	text-transform uppercase
+	position relative
+	z-index 0
+	font-weight normal
+	+mobile()
+		margin-bottom 20px
+	&:after
+		border-top 1px solid $primaryColor
+		content ' '
+		position absolute
+		width 100%
+		left 0
+		top 12px
+		z-index -1
+		+mobile()
+			bottom -5px
+			z-index initial
+			top initial
+	span
+		background white
+		padding 0 20px
+
+.slick-dots
+	li
+		margin 0 2px
+		button
+			&:before
+				width 15px
+				height 15px
+//util 
+
+    
+// Home
+.box_home_top
+	margin-top 20px
+	lost-utility clearfix
+	img
+		width 100%
+		height 100%
+	.slider_home
+		width 61.41%
+		float left
+		+mobile()
+			width 100%
+			clear both
+		.slick-dots
+			display none !important
+			+mobile()
+				display block !important
+		.slick-prev, .slick-next
+			&:before
+				content ''
+			+mobile()
+				display none !important
+		.slick-prev
+			sprite($slider_arrow_left)
+		.slick-next
+			sprite($slider_arrow_right)
+
+
+	.promos
+		width 36.85%
+		float right
+		+mobile()
+			display none
+		a
+			display block
+			overflow hidden
+			&:first-child
+				margin-bottom 4%
+			img
+				transition 0.5s all ease
+				&:hover
+					transition 0.5s all ease
+					transform scale(1.02)
+.box_home_offers
+	lost-utility clearfix
+	+mobile()
+		margin-bottom 20px
+	.offers_carousel
+		a
+			max-height 265px
+			overflow hidden
+			position relative
+			margin 0 10px
+			img
+				width 100%
+				height 100%
+				object-fit cover
+			.description
+				color white
+				text-transform uppercase
+				background $primaryColor
+				font-size 15px
+				position absolute
+				bottom 0
+				padding 0 10px
+				margin 0
+				height 30px
+				line-height 30px
+				text-overflow ellipsis
+				white-space nowrap
+				overflow hidden
+				width 100%
+				+mobile()
+					display none
+
+		.slick-prev, .slick-next
+			&:before
+				content ''
+		.slick-prev
+			sprite($slider_arrow_left)
+
+		.slick-next
+			sprite($slider_arrow_right)
+.box_home_newsletter
+	background $lighterGray
+	display flex
+	align-items center
+	padding 10px
+	+mobile()
+		flex-wrap wrap
+		margin 20px 0
+		background #E6E7E9
+	.newsletter-title, .newsletter-client-name, h3
+		display none
+	.success, .error
+		font-size 14px
+		em
+			font-style normal
+	.newsletter-button-back
+		display inline-block
+		height 30px
+		transition 0.3s all ease
+		padding 0 15px
+		line-height    1
+		text-align     center
+		background     $primaryColor
+		font-family inherit
+		border-radius  $borderRadius
+		border none
+		outline none
+		color white
+		&:hover
+			transition 0.3s all ease
+			opacity 0.8
+	fieldset
+		border none
+		margin 0
+		padding 0
+		position relative
+		> p
+			display none
+		input[type="text"]
+			background-color white
+			border 1px solid $lightGray
+			border-radius $borderRadius
+			font 1em/1.5em $family1
+			height 40px
+			line-height 40px
+			outline none
+			padding 0 10px
+			appearance none
+		.newsletter-button-ok
+			display inline-block
+			height 40px
+			transition 0.3s all ease
+			padding 0 15px
+			line-height    1
+			text-align     center
+			background     $primaryColor
+			font-family inherit
+			border-radius  $borderRadius
+			border none
+			outline none
+			color white
+			+mobile()
+				position absolute
+				top 0
+				right 0
+				border-radius 0
+			&:hover
+				transition 0.3s all ease
+				opacity 0.8
+		.newsletter-client-email
+			width 265px
+			margin-right 5px
+			color #939598
+			+mobile()
+				width 100%
+				padding-right 140px !important
+	.title
+		margin-right 20px
+		+below(1000px)
+			width 20%
+		+mobile()
+			text-align center
+			margin 5px auto 10px
+			width 100%
+
+	.terms
+		font-size 12px
+		color #767676
+		width 16%
+		line-height 1
+		margin-left 10px
+		+mobile()
+			flex 1
+			text-align center
+			margin-top 5px
+			order 2
+		a
+			font-weight bold
+	.newsletter // vtex control
+		flex 1
+		margin 0 5px
+		+mobile()
+			text-align center
+	.form_control
+		margin 0 5px
+		flex 1
+
+		input[type="text"]
+			width 100%
+			+mobile()
+				border-radius 0
+	.btn
+		transition 0.3s all ease
+		+mobile()
+			border-radius 0
+		&:hover
+			transition 0.3s all ease
+			opacity 0.8
+	.box_gender
+		width 15%
+		+mobile()
+			width 100%
+			text-align center
+			order 1
+			margin 10px 0
+		label
+			position relative
+			padding-right 25px
+			cursor pointer
+			+mobile()
+				width 45%
+				display inline-block
+			&:first-child
+				margin-right 10px
+		input[type=radio]
+			position absolute
+			opacity 0
+			z-index -1
+			&:checked ~ .control_indicator
+				&:before
+					content '●'
+					font-size 29px
+					line-height 0.4
+		.control_indicator
+			position absolute
+			width 20px
+			height 20px
+			border-radius 50%
+			background white
+			border 1px solid $lightGray
+			right 0
+			+mobile()
+				right initial
+				margin-left 10px
+
+
+
+.box_home_category
+	border 1px solid $lighterGray
+	border-top 2px solid  $primaryColor
+	margin-top 30px
+	margin-bottom 60px
+	lost-utility clearfix
+	position relative
+	+mobile()
+		border none
+		margin-top 0
+		margin-bottom 5px
+
+	ul
+		list-style none
+		padding 0
+		margin 0
+	.title
+		text-transform uppercase
+		font-weight bold
+		font-size 22px
+		border-bottom 1px solid $lighterGray
+		padding-bottom 10px
+		position absolute
+		left 20px
+		width 14%
+		+mobile()
+			background $primaryColor
+			color white
+			font-size 17px
+			padding 12px 15px
+			position relative
+			width 100%
+			left initial
+			margin 0
+		.ico_arrow
+			sprite($ico_white_triangle_down)
+			display none
+			+mobile()
+				display inline-block
+				position absolute
+				right 15px
+				top 0
+				bottom 0
+				margin auto
+				transition 0.3s all ease
+	.collapsable_mobile
+		+mobile()
+			display none
+		+above(rupture.mobile-cutoff)
+			display block !important
+	.chk_category
+		width 0
+		height 0
+		z-index 1
+		position absolute
+		opacity 0
+		cursor pointer
+		+mobile()
+			height 46px
+			width 100%
+			&:checked
+				// &~.collapsable_mobile
+				// 	display block
+				&~.title .ico_arrow
+					transform rotate(180deg)
+					transition 0.3s all ease
+
+	.submenu
+		lost-column 2/12 0 0
+		padding 20px
+		margin-top 50px
+		+mobile()
+			lost-column 12/12
+			padding 0
+			margin-top 20px
+
+		ul
+			+mobile()
+				display none
+		li
+			margin-bottom 10px
+		a
+			display block
+			transition 0.3s all ease
+			&:hover
+				transition 0.3s all ease
+				opacity 0.6
+
+		.see_all
+			font-weight bold
+			margin-top 30px
+			display block
+			+mobile()
+				display none
+		.sel_offer
+			width 100%
+			border 1px solid $lightGray
+			background none
+			border-radius $borderRadius
+			padding 10px 15px
+			color lighten($primaryColor, 50%)
+			outline none
+			display none
+			margin-bottom 20px
+			position relative
+			+mobile()
+				display block
+				background url(http://i.imgur.com/B4Qo0JN.png) no-repeat right center
+				appearance none
+
+	.slider_category
+		lost-column 4/12 0 0
+		margin-bottom 0
+		+mobile()
+			display none
+		a
+			position relative
+		.slider_discount
+			background $secondaryColor
+			color white
+			position absolute
+			right 20px
+			top 20px
+			font-size 26px
+			font-weight bold
+			padding 10px  20px
+		.slick-dots
+			bottom 10px
+		.slick-prev, .slick-next
+			&:before
+				content ''
+			+mobile()
+				display none !important
+		.slick-prev
+			sprite($arrow_left_big)
+
+		.slick-next
+			sprite($arrow_right_big)
+
+	.products
+		lost-column 6/12 0 0
+		height 100%
+		.item
+			border-left 1px solid $lighterGray
+			border-bottom 1px solid $lighterGray
+			lost-column 1/3 0 0
+			position relative
+			display inline-block
+			height 275px
+			overflow hidden
+			+mobile()
+				lost-column 1/2 0 0
+				border 1px solid $lighterGray
+			&:after // background
+				content ' '
+				position absolute
+				width 100%
+				height 100%
+				background #e6e7e8
+				opacity 0.8
+				left 0
+				top 0
+				display none
+			&:before // button
+				content 'Ver más'
+				background $secondaryColor
+				color white
+				border-radius 5px
+				font-weight bold
+				position absolute
+				z-index 1
+				left 0
+				right 0
+				top 0
+				bottom 0
+				margin auto
+				text-align center
+				line-height 35px
+				height 35px
+				width 120px
+				visibility hidden
+			&:hover
+				&:after
+					display block
+				&:before
+					visibility visible
+			&.medium
+				lost-column 2/3 0 0
+				padding 6px
+				img
+					width 100%
+					height 100%
+					object-fit cover
+				+mobile()
+					lost-column 1/1
+			img
+				display block
+				margin auto
+				+mobile()
+					width 100%
+					height 200px
+					object-fit cover
+			.item_discount
+				color $secondaryColor
+				font-size 15px
+				position absolute
+				right 10px
+				top 10px
+				font-weight bold
+				padding 3px 8px
+				border-radius 6px
+				border 1px solid $secondaryColor
+				+mobile()
+					top 0
+					left 0
+					background $secondaryColor
+					color white
+					right auto
+					border-radius 0
+					border none
+					font-size 16px
+					padding 5px 10px
+
+			p
+				text-align center
+				font-weight bold
+				text-overflow ellipsis
+				white-space nowrap
+				overflow hidden
+				position absolute
+				width 100%
+				&.item_title
+					font-size 15px
+					text-transform uppercase
+					bottom 28px
+				&.item_subtitle
+					font-size 14px
+					color darken($lightGray, 30%)
+					bottom 10px
+		+mobile()
+			lost-column 12/12 0 0
+.box_highlighted_categories
+	lost-utility clearfix
+	margin-bottom 20px
+	+mobile()
+		display none
+	.category
+		lost-column 1/3
+		overflow hidden
+		text-align center
+		img
+			display block
+		.btn
+			border-radius 0
+			display inline-block
+			margin auto
+			text-align center
+			line-height 34px
+			height 34px
+			margin-top 10px
+			font-weight bold
+			width 160px
+			transition 0.3s all ease
+			&:hover
+				transition 0.3s all ease
+				opacity .7
+.mobile_layout
+	margin-top 20px
+	display none
+	+mobile()
+		display block
+	.links
+		lost-utility clearfix
+		a
+			lost-column 1/2
+			border 1px solid $lightGray
+			color #777
+			text-align center
+			padding 10px 5px
+
+.modal_how_to_buy
+	text-align center
+	lost-utility clearfix
+	h3
+		text-align center
+		font-size 20px
+	.steps
+		lost-column 1/3 0 15px
+		+mobile()
+			lost-column 1/1
+	.number
+		text-align center
+		background $primaryColor
+		color white
+		font-size 20px
+		font-weight bold
+		border-radius 50%
+		padding 5px 12px
+		display inline-block
+	img
+		margin 10px auto 20px
+		display block
+		max-width 100%
+	p
+		margin 10px auto
+		+mobile()
+			margin-bottom 30px
+		b
+			display block
+
+ul
+	list-style none
+	padding-left 0
+
+.breadcrumb
+	strong
+		font-weight normal
+	+mobile()
+		color grey
+	li:not(:last-child)
+		float left
+		&:after
+			content "\00a0 /  \00a0 "
+
+.btn_filter, .btn_refine
+	display none
+	+mobile()
+		display inline-block
+		position absolute
+		left 0
+		top 10px
+		line-height 40px
+		background $primaryColor
+		font-weight bold
+.filter_sidebar
+	lost-column 3/14
+	font-size 14px
+	margin-top -4px
+	+mobile()
+		lost-column 1/1
+		
+	.navigation-tabs, .menu, .urlLastSearch, .navigation // hide filter_sidebar but not tags child
+		+mobile()
+			display none
+	a 
+		transition 0.3s all ease
+		&:hover
+			opacity 0.7
+			transition 0.3s all ease
+	.menu-navegue
+		display none
+	.txt_search_brand
+		display block
+		border 1px solid $lightGray
+		padding 5px 10px
+		width 90%
+		outline none
+		margin 10px 0
+	.lnk_see_all_brands, .lnk_see_all_sizes
+		cursor pointer
+		margin-bottom 10px
+		display block
+	.subcategorias
+		li 
+			list-style none 
+		a 
+			display block
+			padding 5px 0
+			
+	fieldset
+		border none
+		padding 0
+		margin 0
+
+	h4
+		display none
+	h5
+		font-size inherit
+		text-transform uppercase
+		margin-bottom 10px
+		margin-top 0
+	label
+		cursor pointer
+		margin 10px 0
+		display block
+	.menu-departamento
+		> div // reorder filter menu order
+			display flex
+			flex-direction column
+	.search-single-navigator
+		order 1
+		h4
+			display block
+			margin 10px 0
+		h3
+			border-top 1px solid $lightGray
+			border-bottom 1px solid $lightGray
+			text-transform uppercase
+			padding 8px 0
+			color $secondaryColor
+			font-size 14px
+			display block
+		.productClusterSearchableIds
+			display none 
+		li.last
+			outline none //1px solid green 
+		ul
+			outline none //1px solid indigo
+		[class^="Hide"]
+			outline none //1px solid indianred
+		h5 //.Hide 
+			margin-top 30px 
+		.HideMarca
+			&:before
+				border-top 1px solid $lightGray
+				border-bottom 1px solid $lightGray
+				text-transform uppercase
+				padding 8px 0
+				color $secondaryColor
+				font-size 14px
+				content "Filtros"
+				display block
+				margin 20px 0
+		.Marca
+			li 
+				&:nth-child(n+6)
+					display none
+		.Talla
+			li 
+				&:nth-child(n+7)
+					display none
+		& > *:first-child
+			a 
+				display none 
+			&:after 
+				content 'Subcategorias'
+
+	.search-multiple-navigator
+		display none
+		background indigo 
+		order 2
+		h3
+			&:before
+				border-top 1px solid $lightGray
+				border-bottom 1px solid $lightGray
+				text-transform uppercase
+				padding 8px 0
+				color $secondaryColor
+				font-size 14px
+				content "Filtros"
+				display block
+
+			a, span
+				display none
+	.search-filter-button, .menu
+		display none !important
+	.refino
+		margin-top 20px
+	.multi-search-checkbox
+		margin-right 5px
+		vertical-align middle
+		outline none
+	.refino-marca
+		&:before
+			content "MARCAS"
+			font-weight bold
+		label
+			display block
+			&:nth-child(n+6)
+				display none
+		h5
+			display none
+	ul
+		li
+			margin 10px 0
+
+
+.box_category
+	position relative
+	+mobile()
+		background white
+		margin-top -20px
+	.search_result_layout
+		text-align right
+		.searchResultsTime
+			.resultado-busca-termo
+				.value
+					display none
+				
+
+	.product_grid
+		margin-top -40px
+		+mobile()
+			margin-top 0
+
+	.box_top_category
+		margin-top 20px
+		border-bottom 1px solid $lightGray
+		padding-bottom 20px
+		lost-utility clearfix
+		+mobile()
+			display none
+		.sticker
+			lost-column 3/12
+			background #F9F7F8
+			border-radius 8px
+			height 190px
+			.ico
+				margin 35px auto 0
+				display block
+
+			p
+				text-align center
+			.title
+				color $secondaryColor
+				font-weight bold
+				font-size 25px
+				margin-bottom 0
+				margin-top 10px
+				text-transform uppercase
+			.description
+				font-size 14px
+				color grey
+				width 60%
+				margin 5px auto 0
+				font-weight bold
+
+		.carousel_container
+			lost-column 9/12
+			.category_carousel
+				width 92%
+				margin auto
+				.collection
+					margin 0 15px
+					border 4px solid $lighterGray
+					border-radius 10px
+					text-align center
+					height 190px
+				.slick-prev, .slick-next
+					&:before
+						content ''
+				.slick-prev
+					sprite($slider_arrow_left_transparent)
+					left -34px
+				.slick-next
+					sprite($slider_arrow_right_transparent)
+					right -34px
+
+.box_search_results
+	position relative
+	.breadcrumb
+		position relative
+		li
+			&:not(:first-child)
+				display none 
+		+mobile()
+			display none
+		.lbl_result
+			left 60px 
+			top 0
+	.search-single-navigator
+		li.last
+			display block
+	.search_result_layout
+		text-align right
+	.main
+		margin-top -40px
+		+mobile()
+			margin-top -5px
+		 .searchResultsTime
+		 	&:first-of-type
+				//text-align center !important   // para que no centre los filtros 
+				vertical-align middle
+			 	.resultado-busca-numero
+					.value:after
+						content " items encontrados" !important /* leave whitespace */
+				.resultado-busca-filtro .orderBy label
+					display initial !important
+					margin-right 10px
+
+.search_result_layout
+	lost-column 11/14
+	+mobile()
+		lost-column 1/1
+		text-align initial
+	.busca-vazio
+		text-align left
+		p
+			margin 0
+	.main // vtex
+		.searchResultsTime
+			display none
+			&:first-of-type
+				display inline-block
+				margin 0
+				text-align right
+				margin-right 20px
+				+mobile()
+					border-top 1px solid $lightGray
+					display block 
+					lost-utility clearfix 
+					display block
+					margin-right 0
+					padding 10px 
+					background-color white
+					font-weight bold 
+				.resultado-busca-tempo
+					display none
+				.resultado-busca-termo
+					display none 
+					+mobile()
+						display inline !important
+						.label 
+							display none !important 
+						.value
+							float left 
+							&:before, &:after
+								content '"'
+				.resultado-busca-numero
+					.label
+						display none
+					.value:after
+						content " Productos" /* leave whitespace */
+		.sub
+			display inline-block
+			vertical-align middle
+			+mobile()
+				display block
+			.resultado-busca-filtro
+				display none
+				position relative
+				+mobile()
+					text-align right
+			&:first-of-type
+				.filterBy, .compare
+					display none
+				.resultado-busca-filtro
+					display block
+					+mobile()
+						border-bottom 1px solid $lightGray
+					.orderBy
+						border none
+						padding 0
+						margin 0
+						+mobile()
+							border-top 1px solid $lightGray
+							padding  10px 0
+						label
+							display none
+						select
+							border 1px solid $lightGray
+							background none
+							border-radius $borderRadius
+							padding 5px 20px 5px 10px
+							color lighten($primaryColor, 50%)
+							outline none
+							appearance none
+							background url(http://i.imgur.com/YMhp5se.png) no-repeat right center
+							+mobile()
+								padding 8px 20px 8px 10px
+
+		.resultItemsWrapper
+			lost-utility clearfix
+			text-align initial
+			.pager
+				clear both
+				padding-top 10px
+				.pages
+					text-align right
+					+mobile()
+						text-align center 
+					.first, .previous, .next, .last
+						color transparent 
+						position relative 
+						&:before 
+							color $primaryColor
+							left 0 
+							right 0 
+							position absolute 
+						&.pgEmpty
+							pointer-events none 
+							&:before
+								color lighten($primaryColor, 70%)
+					.first:before 
+						content '<<'
+					.previous:before
+						content '<'
+					.next:before 
+						content '>'
+					.last:before 
+						content '>>'
+					li
+						display inline-block
+						padding 5px 0px
+						width 32px
+						border 1px solid $lightGray
+						border-radius 8px
+						font-weight bold
+						text-align center
+						cursor pointer
+						margin-left 8px
+						transition 0.2s all ease
+						&:hover
+							opacity 0.6
+							transition 0.2s all ease
+					.pgCurrent
+						color white
+						background $secondaryColor
+						border 1px solid $secondaryColor
+						&:hover
+							opacity 1
+				&.top
+					display none
+
+			.list_products
+				li:nth-child(odd)
+					lost-column 1/4 7 15px
+					+mobile()
+						lost-column 1/1
+
+.product_box
+	border 1px solid $lightGray
+	margin-bottom 15px
+	text-align center
+	position relative
+	display block
+	+mobile()
+		display flex
+		align-items center
+		border none
+		border-bottom  1px solid $lightGray
+		margin 0
+	&:after // background
+		content ' '
+		position absolute
+		width 100%
+		height 100%
+		background #e6e7e8
+		opacity 0.8
+		left 0
+		top 0
+		display none
+	&:before // button
+		content 'COMPRAR'
+		background $secondaryColor
+		color white
+		border-radius 5px
+		font-weight bold
+		position absolute
+		z-index 1
+		left 0
+		right 0
+		top 0
+		bottom 0
+		margin auto
+		text-align center
+		line-height 35px
+		height 35px
+		width 120px
+		visibility hidden
+	&:hover
+		&:after
+			display block
+		&:before
+			visibility visible
+	.img_container
+		+mobile()
+			position relative
+		img
+			//width 100%
+			//max-height 200px
+			overflow hidden
+			width 130px 
+			height auto 
+			margin 20px 0 
+			+mobile()
+				flex 1
+				margin 10px 0
+			
+	.text
+		+mobile()
+			flex 1
+		.product_description
+			font-size 14px
+			font-weight bold
+			padding 5px 10px 10px
+			margin 0
+			position relative
+			height 49px
+			overflow hidden
+			+mobile()
+				width 90%
+				margin auto
+				height auto
+			&:after
+				border-bottom 1px solid $lightGray
+				content " "
+				position absolute
+				width 90%
+				left 0
+				right 0
+				bottom 0
+				margin auto
+		.original_price
+			color $lightGray
+			text-decoration line-through
+			font-weight bold
+			margin-top 10px
+			padding-bottom 10px
+			display inline-block
+			margin-right 10px
+			+mobile()
+				display block
+				margin-right 0
+				padding-bottom 0
+		.price
+			color $secondaryColor
+			font-weight bold
+			margin-top 10px
+			padding-bottom 10px
+			display inline-block
+			+mobile()
+				font-size 17px
+				padding-bottom 0
+				margin-top 4px
+.filter_tags
+	list-style none 
+	text-align left 
+	margin 0 0 20px 
+	+above(rupture.mobile-cutoff)
+		display block 
+		margin-top 12px
+	.number
+		display none 
+	li 
+		position relative
+		margin-bottom 10px 
+		+mobile()
+			display inline-block 
+			width 30%
+			margin-right 3%
+			margin-top 10px 
+			margin-bottom 0
+		&:first-child
+			display none 
+		&:nth-child(3n+1) // because we're hiding first and second child
+			margin-right 0
+		.remove 
+			color white
+			font-weight bold 
+			position absolute
+			right 10px
+			top 0
+			font-size 26px
+			bottom 0
+			line-height 1
+			cursor pointer
+	a 
+		display block
+		color white 
+		background-color $secondaryColor
+		border-radius 5px 
+		padding 5px 30px 5px 10px
+		font-weight bold 
+		overflow hidden 
+		text-overflow ellipsis 
+		white-space nowrap
+		pointer-events none 
+		+mobile()
+			border-radius 10px 
+
+.filter_mobile
+	z-index 1
+	+above(rupture.mobile-cutoff)
+		display none !important 	
+	.menu, .menu-navegue, .filter_tags
+		display none 
+	+mobile()
+		text-align left 
+		display none 
+		position relative 
+		margin-top -8px 
+	.search-single-navigator
+		border-bottom 1px solid $lightGray
+		& > *:first-child
+			a 
+				display none 
+			&:after 
+				content 'Subcategorias'
+	.productClusterSearchableIds
+		display none 
+	.txt_search_brand, .lnk_see_all_brands
+		+mobile()
+			display none 
+	.navigation-tabs
+		ul
+			margin 12px 10px 
+			display none 
+			li 
+				a 
+					display block 
+					margin 5px 0
+		h5, h3
+			border-radius $borderRadius
+			padding 10px 
+			font-size 16px
+			background  $lighterGray url('https://i.imgur.com/oAit7rj.png') no-repeat right center //ico_arrow_down
+			cursor pointer
+			margin 5px 0
+			&.active
+				background  $lighterGray url('http://i.imgur.com/wpzjp24.png') no-repeat right center //ico_arrow_down
+	.subcategorias
+		display none 
+		a 
+			display block
+			padding 5px 10px
+	.Talla 
+		li 
+			display inline-block
+			margin-right 10px 
+			margin-bottom 10px 	
+			&.last 
+				+mobile()
+					display inline-block 
+			a 
+				border 1px solid $lightGray
+				padding 10px
+				margin 0 !important 
+				&:hover 
+					background $secondaryColor
+					color white  		
+		.lnk_see_all_sizes
+			+mobile()
+				display none 
+				
+				 
+.box_product
+	.mobile_title
+		display none
+		+mobile()
+			margin-top 20px
+			display block
+		.productName
+			font-size 20px
+			font-weight bold
+			margin-bottom 5px
+			text-transform uppercase
+		.product_reference
+			font-size 12px
+			display none
+			+mobile()
+				display inline-block
+			.productReference
+				display inline-block
+				margin-right 10px
+				
+		.brand_name
+			display none
+			font-size 14px
+			+mobile()
+				display inline-block
+			.brandName
+				display inline
+				font-weight bold
+				transition 0.3s all ease
+				&:hover
+					opacity 0.7
+					transition 0.3s all ease
+	.site_title
+		&:after
+			+mobile() 
+				bottom initial
+				z-index -1
+				top 12px
+
+		/*+mobile()
+			text-align left
+			font-weight bold
+			margin-top 40px
+			&:after
+				border-top 1px solid $lightGray
+				bottom initial
+				top -20px
+			span
+				padding 0*/
+	.box_product_top
+		lost-utility clearfix
+		margin-top 30px
+		.slider_product
+			lost-column 6/12
+			+mobile()
+				lost-column 12/12
+				margin-bottom 40px
+
+			#image
+				border 1px solid $lightGray
+				text-align center
+				.image-zoom 
+					+above(rupture.mobile-cutoff)
+						display block 
+						height 400px 
+				.sku-rich-image-main
+					+mobile()
+						width 100%
+						min-height 350px 
+			#show
+				display flex
+				+mobile()
+					display initial
+				#include
+					order 2
+					z-index 1 
+					.image-zoom
+						+mobile()
+							display block
+							text-align center
+							pointer-events none 
+					.zoomPad
+						float none
+						+mobile()
+							width 100%
+							cursor initial
+						.zoomPup, .zoomWindow
+							+mobile()
+								display none !important
+				.bx-viewport
+					+above(rupture.mobile-cutoff)
+						height 402px !important 
+						width 82px !important 
+								
+				.slick-prev, .slick-next, .bx-prev, .bx-next
+					&:before
+						content ''
+					+above(rupture.mobile-cutoff)
+						transform rotate(90deg)
+						left 0 
+						right 0 
+						margin auto 
+					+mobile() 
+						top 30px !important
+					
+				.slick-prev, .bx-prev
+					sprite($slider_arrow_left)
+					top 0				
+					+mobile()
+						left -5%
+
+				.slick-next, .bx-next
+					sprite($slider_arrow_right)
+					bottom 0 
+					top auto //initial 
+					+mobile() 
+						right -5%
+				.slick-list
+					+above(rupture.mobile-cutoff)
+						height 400px !important
+
+				.thumbs
+					order 1
+					margin 0
+					margin-right 20px
+					height 400px 
+					width 82px
+					position relative 
+					+mobile()
+						text-align center
+						height 62px 
+						width 100%
+						margin 20px auto 0
+						
+					li
+						border 1px solid $lightGray
+						margin-top 20px
+						+above(rupture.mobile-cutoff)
+							width 82px !important
+						+mobile()
+							display inline-block							
+							width 62px !important
+							margin-top 0
+							margin-right 20px 
+							
+							&:last-child
+								margin-right 0
+						
+						&:first-child
+							+above(rupture.mobile-cutoff)
+								margin-top 0
+						&:nth-child(n+5)
+							display none 
+						a
+							display block
+							img
+								width 80px
+								height 80px
+								+mobile()
+									width 60px
+									height 60px 
+
+		.product_details
+			lost-column 6/12
+			+mobile()
+				lost-column 12/12
+			.productName
+				font-size 20px
+				font-weight bold
+				text-transform uppercase
+				+mobile()
+					display none
+			.product_reference
+				font-size 12px
+				display inline-block
+				+mobile()
+					display none
+				.productReference
+					display inline-block
+					margin-right 10px
+
+			.brand_name
+				display inline-block
+				font-size 12px
+				+mobile()
+					display none
+				.brandName
+					display inline
+					font-weight bold
+					transition 0.3s all ease
+					&:hover
+						opacity 0.7
+						transition 0.3s all ease
+			.productDescription
+				margin-top 20px
+				margin-bottom 30px
+				font-size 14px
+				text-align justify 
+				.dotdotdot-keep
+					font-weight bold 
+					color $secondaryColor
+					transition all 0.3s ease
+					display block 
+					&:hover 
+						opacity 0.8
+						transition all 0.3s ease
+				+mobile()
+					display none
+			.product_options
+				display flex 
+				justify-content flex-start
+				+mobile() 
+					flex-wrap wrap 
+				.color 
+					margin-right 10px 
+					+mobile() 
+						flex none 
+						width 100%
+						margin-bottom 20px
+					h2 
+						display none 
+					ul 
+						margin 0
+						&:before 
+							content "COLOR"
+							font-weight bold 
+							display block 
+							margin-bottom 10px 
+						li 
+							margin-right 10px 
+							display inline-block
+							+mobile() 
+								margin-right 20px
+							&:last-child
+								margin-right 0
+								
+							.color_box 
+								border 1px solid $lightGray
+								display block 
+								height 45px
+								&.active 
+									border 1px solid lighten($primaryColor, 50%) // lighten($secondaryColor, 40%)
+								img 
+									width 43px 
+									height 43px 
+				.size
+					+mobile() 
+						width 45%
+						margin-right 8%
+					.sku-selector-container
+						margin-right 20px
+						+mobile()
+							margin-right 0
+						&:empty
+							display none
+						&:before
+							content "LISTA DE TALLAS"
+							font-weight bold
+							display block
+							margin-bottom -6px
+						.specification
+							display none
+						select
+							border 1px solid $lightGray
+							padding 6px  10px
+							outline none
+							width 160px
+							color #aaa
+							background none
+							+mobile()
+								width 100%
+								background url(http://i.imgur.com/YMhp5se.png) no-repeat right center
+								appearance none
+								border-radius 0
+				.quantity
+					+mobile() 
+						width 45%
+					label
+						font-weight bold
+						margin-bottom 10px
+						display block
+					.buy-in-page-quantity
+						border 1px solid $lightGray
+						padding 7px  10px
+						width 90px
+						outline none
+						color #aaa
+						display inline-block !important
+						+mobile()
+							width 100%
+							appearance none
+							border-radius 0
+							
+					.buy-in-page-button
+						display none !important
+
+			.price
+				border-top 1px solid $lightGray
+				border-bottom 1px solid $lightGray
+				padding 15px 0 44px 0
+				margin-top 20px
+				position relative
+				+mobile()
+					padding 15px 0
+					display flex 
+					flex-wrap wrap 
+					align-items center 
+				.text
+					font-weight bold
+					font-size 14px
+					display block
+					margin-bottom 6px
+					+mobile() 
+						flex 0 
+						display block 
+						align-self flex-start 
+				.plugin-preco
+					display inline
+					font-size 20px
+					+mobile()
+						margin 20px 0 10px 
+						flex 1
+					
+					p
+						margin 0
+					.descricao-preco, .preco-a-vista
+						float left
+						/*+mobile()
+							float none */
+						
+					.descricao-preco // ---
+						margin-right 20px
+					.preco-a-vista //---
+						color transparent
+						position relative
+						display inline-block !important
+						white-space nowrap
+						+mobile()
+							margin-right 20px 
+						strong
+							color $primaryColor
+							position absolute
+							left 0
+							top 0
+					.valor-por, .economia-de
+						display none !important
+					.valor-de
+						color transparent
+						position relative
+						strong
+							color $lightGray
+							text-decoration line-through
+							margin-left -35px
+							font-style normal
+					
+				.buy-button
+					background $secondaryColor
+					color white
+					text-transform uppercase
+					border-radius 4px
+					display inline-block !important
+					padding 10px 50px
+					font-weight bold
+					transition 0.3s all ease
+					position absolute
+					right 0
+					top 22px
+					+mobile()
+						position initial 
+						right initial 
+						top initial 
+						float left  
+						padding 10px 20px
+						
+					&:hover
+						transition 0.3s all ease
+						opacity 0.9
+
+			.notifyme 
+				display none !important 
+			.portal-notify-me-ref
+				margin-top -50px
+				position absolute
+				background white 
+				font-size 14px 
+				width 100%
+				+mobile() 
+					position relative 
+					margin-top -70px
+				.notifyme
+					display block !important 
+					margin-bottom 8px 
+				form 
+					margin 0
+				fieldset
+					border none 
+					padding 0
+					border-top 1px solid $lightGray
+				b 
+					display block 
+				p 
+					margin-top 10px 
+				input 
+					border 1px solid $lightGray
+					padding 6px  10px
+					outline none
+					width 160px
+					color #aaa
+					background none
+					margin-right 10px 
+					+mobile() 
+						width 100%
+						margin-bottom 10px 
+					
+				.notifyme-success
+					width 100% 
+					padding 30px 0 
+					display block
+				.notifyme-error
+					font-size 12px 
+					color $errorColor 
+
+				.btn-ok
+					border none 
+					background $secondaryColor 
+					color white 
+					border-radius 5px 
+					font-weight bold
+					padding 8px  
+				.notifyme-title-div
+					display none !important 
+			.social
+				+mobile()
+					display none 
+				p
+					font-weight bold
+					font-size 15px
+	.box_collapse
+		margin-top 30px
+		.site_title
+			cursor pointer
+			.ico_triangle
+				sprite($triangle_down)
+				display inline-block
+				vertical-align middle
+				margin-left 10px
+				transform rotate(180deg)
+				transition 0.3s all ease
+
+			&.collapsed
+				.ico_triangle
+					transform rotate(0deg)
+					transition 0.3s all ease
+		.container
+			padding 0
+
+	.box_description
+		.brand_image
+			lost-column 4/12
+			+mobile()
+				lost-column 12/12
+				display  none
+			img
+				width 100%
+		.text
+			lost-column 8/12
+			text-align justify
+			+mobile()
+				lost-column 12/12
+	.box_specifications
+		#caracteristicas
+			h4 
+				display none 
+			table 
+				width 50%
+				font-size 13px 
+				+mobile() 
+					width 100%
+					font-size 14px 
+					
+				tr 
+					&.even
+						background $lighterGray
+					td, th 
+						padding 5px  20px 
+						text-align left 
+				
+	.box_related
+		p:first-child 
+			margin-top 0 
+		.see_more
+			display block
+			color $secondaryColor
+			text-align right
+			font-weight bold
+			transition 0.3s all ease-in
+			&:hover
+				opacity 0.8
+				transition 0.3s all ease-out
+			+mobile()
+				text-align center 
+		.list_products
+			lost-utility clearfix
+			h2
+				display none
+
+			li
+				&:nth-child(odd)
+					lost-column 1/5 9 15px
+					+mobile()
+						lost-column 1/1
+				&:nth-child(n+10)
+					display none
+				.product_box
+					+mobile()
+						margin-bottom 20px
+						border 1px solid $lightGray 
+
+
+.Rediseno-Terminos-Condiciones
+	.container
+		.wallpEvent
+			.page
+				h3 
+					font-size 12px
+			h3 
+				margin-left 20px
+				font-size 12px
+				&:nth-child(1)
+					margin 0
+					font-size 18px
+			p 
+				font-size 12px
+				margin-left 20px
+				&:nth-child(1)
+					display none
+		.breadCrumb
+			&:nth-child(2)
+				display none
+			ul 
+				display inline-block
+				li 
+					display inline-block
+					font-size 14px
+					color $breackcrumbGrayLight
+				.last 
+					display inline-block
+					&:before
+						content "/ "
+					&:after 
+						content "Términos y condiciones"
+					a 
+						position absolute 
+						color transparent
+//contacto
+.Rediseno-Contacto
+	.box_product
+		margin-bottom 100px
+		.wallpEvent
+			.boxContact
+				.top 
+					font-size 18px 
+					font-weight bold
+				#contactForm
+					.content 
+						lost-column 4/12
+						//position relative
+						+mobile()
+							lost-column 12/12
+							position relative
+						.bts 
+							display inline-block
+							position absolute
+							bottom 20px
+							left 0
+							width 100%
+							+mobile()
+								bottom -40px
+								left 39%
+								transform translate(-50%)
+							.enviar
+								position absolute
+								right 30px
+								padding 9px 55px
+								background black
+								color white
+								border none
+								font-size 15px
+						.fComentario
+							position absolute
+							right 0
+							lost-column 8/12 !important
+							+mobile()
+								position initial
+								margin-top 17px !important
+								width 100% !important
+							textarea
+								width: 100% !important;
+								height: 320px;
+								border-radius: 0;
+						.grp 
+							display inline-block 
+							margin 0 
+							padding 0
+							margin-bottom 10px
+							text-align left
+							float left
+							width 90%
+							+mobile()
+								width 100%
+							label.error 
+								color: $secondaryColor;
+								margin-bottom: 0px;
+								position: relative
+							label 
+								display inline-block
+								width 100%
+								font-weight bold 
+								font-size 15px
+								margin-bottom: 5px;
+			
+							input
+								width 100%
+								display inline-block
+								background #fff none repeat scroll 0 0
+								border 1px solid #d5d5d5
+								color #7c7d7d
+								height 38px
+								line-height 27px
+								//margin 0 0 20px
+								padding 0 10px
+								border-radius: 0;
+							select 
+								width 100%
+								color $breackcrumbGrayLight
+								border-radius: 0;
+								height 38px
+
+		.bread-crumb
+			ul 
+				display inline-block
+				margin 20px 0 15px 0
+				li 
+					display inline-block
+					font-size 14px
+					color $breackcrumbGrayLight
+				.last 
+					display inline-block
+					&:before
+						content "/ "
+
+//animation
+
+.ng-hide         
+	animation:0.5s lightSpeedOut ease; 
+
+.ng-hide-remove    
+	animation:0.5s flipInX ease; 
+
+
+//pedidos
+.show 
+	display initial !important
+.move
+	transform rotate(-90deg)
+.rediseno-pedido 
+	.container
+		.pedidos-container
+			&-all
+			.pedidos-container-ordergroup
+				margin 0
+				article 
+					display none
+				&-order 
+					margin 0
+					border: 1px solid $lightGray
+					+mobile()
+						border none
+					&-top
+						margin 0
+						.medioEnvio
+							display inline-block
+							max-width 320px 
+							lost-column 4/12
+							margin 0 !important
+							+mobile()
+								width 100%
+							&-detail
+								border-right 1px solid $lightGray
+								margin 14px
+								+mobile()
+									border none
+									margin 0
+								h5 
+									margin 0
+						.statusEnvio
+							display inline-block
+							lost-column 8/12
+							+mobile()
+								width 100%
+							&-detail
+								margin 14px
+								+mobile()
+									margin 0
+								.facturado
+									color #30ab1c
+									text-transform: capitalize;
+								h5 
+									margin 0
+					&-down 
+						margin 0
+						display inline-block
+						width 100%
+						.order-detail-items
+							padding: 14px;
+							text-align: center;
+							display flex
+							border-top 1px solid $lightGray
+							&:nth-child(1)
+								.order-detail-items-producto
+									&-top
+										.thName
+											display block
+								.order-detail-items-envio
+									.thEnvio
+										display block
+								.order-detail-items-precio
+									.thPrecio
+										display block
+								.order-detail-items-cantidad
+									.thCantidad
+										display block
+								.order-detail-items-total
+									.thTotal
+										display block
+							+mobile()
+								display inline-block
+								border 1px solid $lightGray
+							&-producto
+								margin 0
+								lost-column 4.4/12
+								+mobile()
+									float: none;
+									display: block;
+									width: 100%;
+									//position: initial;
+								&-top 
+									margin-bottom: 10px;
+									.thName 
+										text-align: left;
+										font-weight: bold;
+										display none 
+										
+								&-down
+									&-left 
+										float: left;
+										display: inline-block;
+										.product-image
+											width 80px 
+											height 80px 
+											max-width 80px
+											img 
+												width 100% 
+												height 100%
+												max-width 80px
+												border 1px solid $lightGray
+									&-right 
+										display: inline-block;
+										width: 65%;
+										text-align: left;
+										.product-name 
+											a 
+												font-weight bold
+							&-envio
+								margin 0
+								lost-column 1.9/12
+								position relative
+								//margin-top: 10px;
+								+mobile()
+									float: none;
+									display: block;
+									position: initial;
+									width: 100%;
+									text-align: right;
+								.thEnvio 
+									//text-align: left;
+									font-weight: bold;
+									text-transform capitalize
+									display none 
+									+mobile()
+										width: 70%;
+										display: inline-block;
+										float: left;
+										text-transform lowercase
+										&:before
+											content "Costo de "
+											text-transform initial
+								.shipping-date
+									+mobile()
+										margin-bottom: 7px;
+									p 
+										position: absolute;
+										width: 100%;
+										top: 0;
+										bottom: 0;
+										margin: auto;
+										height: 20px;
+										+mobile()
+											position initial
+							&-precio 
+								margin 0
+								lost-column 1.9/12
+								position relative
+								+mobile()
+									float: none;
+									display: block;
+									width: 100%;
+									text-align: right;
+									position: initial;
+								.thPrecio 
+									font-weight bold 
+									display none 
+									+mobile()
+										width: 70%;
+										display: inline-block;
+										float: left;
+								.product-price 
+									+mobile()
+										margin-bottom: 7px;
+										display inline-block
+									.best-price 
+										display: inline-block;
+										width: 100%;
+										position: absolute;
+										left: 0;
+										top: 50%;
+										+mobile()
+											position initial
+						
+							&-cantidad
+								margin 0
+								lost-column 1.9/12
+								position relative
+								+mobile()
+									float: none;
+									display: block;
+									width: 100%;
+									text-align: right;
+									position: initial;
+								.thCantidad 
+									font-weight bold
+									display none 
+									+mobile()
+										width: 70%;
+										display: inline-block;
+										float: left;
+								.quantity 
+									+mobile()
+										display inline-block
+										margin-bottom: 7px;
+									span 
+										display: inline-block;
+										width: 100%;
+										position: absolute;
+										left: 0;
+										top: 50%;
+										+mobile()
+											position initial
+											display inline-block
+							&-total
+								lost-column 1.9/12
+								margin 0
+								position relative
+								+mobile()
+									float: none;
+									display: block;
+									width: 100%;
+									text-align: right;
+									position: initial;
+								.thTotal 
+									font-weight bold 
+									display none 
+									+mobile()
+										width: 70%;
+										display: inline-block;
+										float: left;
+								.quantity-price
+									margin: 0;
+									width: initial !important
+									+mobile()
+										display inline-block
+										margin-bottom: 7px;
+									.total-selling-price
+										display: inline-block;
+										width: 100%;
+										position: absolute;
+										left: 0;
+										top: 50%;
+										+mobile()
+											position initial
+											display inline-block
+								
+				&-comprafinal
+					margin: 10px 0;
+					text-align: center;
+					background: $lightGray;
+					color: $secondaryColor;
+					padding: 5px 0;
+					font-weight bold
+					p 
+						margin 0
+				&-info
+					margin 0
+					display inline-block
+					.mediodepago 
+						display inline-block
+						lost-column 2.2/12
+						+mobile()
+							width: 100%;
+							margin-left: 10px;
+						.payments
+							margin-top: 15px;
+							.payment-method-info
+								color black
+								margin 0
+								padding 0
+								span 
+									//font-size 14px
+									font-family Lato
+								.payment-value
+									background none 
+									padding 0
+									margin 0
+									//font-size 14px
+									font-family Lato
+								.payment-connector 
+									p 
+										font-size 14px
+										font-family Lato
+										margin 0 !important 
+										padding 0 
+										line-height 14px 
+										color black
+										
+						h4 
+							font-size 15px
+							font-family Lato
+							text-transform uppercase
+					.direccionEnvio
+						display inline-block
+						lost-column 2.3/12
+						+mobile()
+							width: 100%;
+							margin-left: 10px;
+						.shipping
+							margin-top: 15px;
+							.shipping-address
+								ul 
+									margin: 0;
+									font-size: 14px;
+									font-weight: 500;
+									text-transform: initial;
+									font-style: initial;
+									font-family: Lato;
+									line-height: 20px;
+						h4
+							font-size 15px
+							font-family Lato
+							text-transform uppercase
+					.datosPersonales
+						display inline-block
+						lost-column 2.2/12
+						font-size 14px
+						+mobile()
+							width: 100%;
+							margin-left: 10px;
+						h4
+							font-size 15px
+							font-family Lato
+							text-transform uppercase
+					.EstadoPedido
+						display inline-block
+						lost-column 2.3/12
+						+mobile()
+							width: 100%;
+							margin-left: 10px;
+						
+						h4
+							font-size 15px
+							font-family Lato
+							text-transform uppercase
+						p 
+							color #30ab1c
+							text-transform: capitalize;
+					.total
+						display inline-block
+						lost-column 3/12
+						text-align: center;
+						border: 1px solid $lighterGray;
+						padding: 15px;
+						+mobile()
+							width: 100%;
+							margin 0
+						.totals
+							+mobile()
+								display: inline-block;
+								width: 100%;
+								text-align: center;
+							table.table
+								+mobile()
+									width: 100%;
+								tbody 
+									tr 
+										border-bottom 1px solid $lighterGray
+										th 
+											border none
+											width 60%
+											float none !important
+											margin 0 !important
+											color black !important
+											padding: 5px;
+											text-align: left;
+											+mobile()
+												display: inline-block;
+												//margin: 6px 7px !important;
+												text-align: left;
+										td 
+											width 40%
+											margin 0 !important
+											text-align right
+											color black !important
+											float none !important
+								tfoot
+									th 
+										border none
+										width 60%
+										float none !important
+										margin 0 !important
+										color black !important
+										padding: 5px;
+										text-align: left;
+										+mobile()
+											display: inline-block;
+											margin: 6px 7px !important;
+											text-align: left;
+									td 
+										width 40%
+										margin 0 !important
+										text-align right
+										color black !important
+										float none !important
+										font-weight bold
+									
+						h4
+							font-size 15px
+							font-family Lato
+							text-transform uppercase
+				&-header
+					cursor pointer
+					border-top 1px solid $lightGray
+					border-bottom none
+					position relative
+					padding: 10px 0
+					z-index: 2;
+					.arrow2 
+						display: inline-block;
+						position: absolute;
+						display none
+						right: 5px;
+						top: 27px;
+						font-size: 30px;
+						sprite($ico_arrow2)
+						display inline-block
+					.arrow 
+						display: inline-block;
+						position: absolute;
+						right: 5px;
+						top: 27px;
+						font-size: 30px;
+						sprite($ico_arrow2)
+						display inline-block
+					.order-title
+						color black 
+						font-size 15px 
+						line-height 20px
+						pointer-events none
+						span 
+							display inline-block
+							color black
+							font-weight 500
+							&:nth-child(2)
+								//margin-right: 5px;
+								+mobile()
+									&:after
+										content " - "
+										margin-right: 2px;
+							&:nth-child(3)
+								margin-right: 5px;
+								+mobile()
+									display none
+								&:before
+									content " - "
+									margin-right: 2px;
+								&:after
+									content ": "
+						.fecha
+							display inline-block !important
+							margin  0 5px
+					
+						.nropedido
+							color $secondaryColor
+						
+			&-header
+				position: relative;
+				color black !important
+				margin: 30px 0;
+				z-index: 2;
+				h1 
+					display inline-block
+					font-size 18px
+					color black 
+					font-weight bold
+				.filtros-pedidos
+					display inline-block
+					position: absolute;
+					right: 0;
+					top: 15px;
+					+mobile()
+						position initial
+					label 
+						display inline-block
+						margin: 10px;
+						&:nth-child(1)
+							+mobile()
+								display block
+
+					.filterfecha
+						display inline-block
+						position relative
+						.ico_arrow
+							sprite($ico_arrow2)
+							display inline-block
+							position: absolute;
+							top: 17px;
+							width: 25px;
+							right: 3px;
+						.ico_calendar
+							sprite($ico_calendar)
+							display inline-block
+							position: absolute;
+							right: 32px;
+							top: 8px;
+
+						input 
+							display inline-block
+							background: $lightBackground;
+							border: none;
+							border-radius: 5px;
+							cursor: pointer;
+							color: #000;
+							width: 190px;
+							height: 40px;
+							padding-left: 10px;
+							&::-webkit-input-placeholder
+								color black !important
+
+					.filterstatus
+						display inline-block
+						position relative
+						select
+							display inline-block
+							background: $lightBackground;
+							border: none;
+							padding-left: 10px;
+							border-radius: 5px;
+							color: black;
+							height: 40px;
+							margin-top: 5px;
+							width: 190px;
+							-webkit-appearance: none;
+						span 
+							sprite($ico_arrow2)
+							display inline-block
+							position: absolute;
+							top: 22px;
+							width: 25px;
+							right: 3px;
+
+/*.containerPage
+	.myorders-list
+		.ordergroup
+			display flex
+			flex-direction column
+			flex-wrap wrap
+			.order-details
+				order 1
+				.row-fluid
+					.span3 
+						.order-status-info
+					.span9
+						h3 
+							display none
+						.showTrackingInfo
+							display none
+*/

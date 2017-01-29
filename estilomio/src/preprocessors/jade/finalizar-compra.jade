@@ -1,0 +1,1166 @@
+extends _layout/layoutCheckout.jade
+
+block content
+	.container.container-main.container-order-form
+		h1#orderform-title.hide(data-i18n='title', data-bind='fadeVisible: inOrderForm', style='display: block;') Finalizar la compra
+		h1#cart-title.hide(data-i18n='shoppingCart', data-bind='fadeVisible: inCart', style='display: none;') Carrito de compras
+		small.gift-list-alert.alert(style='display:none;', data-bind='visible: isUsingGiftRegistry')
+			i.icon-gift.icon-large
+			span.gift-list-alert-text(data-i18n='giftListAlert') Usted está haciendo compras para la lista
+			b.gift-list-alert-name(data-bind='text: giftRegistryDescription')
+			| .
+			a(href='javascript:void(0);', data-bind='click: removeGiftRegistry', data-i18n='giftListDismiss') No comprar en esta lista
+			| .
+		.loading.loading-bg(data-bind='visible: loading', style='display: none;')
+			.loading-img
+				i.icon-spinner.icon-spin.icon-3x
+					span(data-i18n='global.loading') Cargando...
+		.checkout-container.row-fluid.orderform-active
+			// CART
+			.cart-template.full-cart.span12.inactive.hide
+				#cartLoadedDiv.cart-template-holder(data-bind="template: 'cart-template'")
+					.empty-cart-content(data-bind='fadeVisible: !hasItems() && !loading()', style='display: none;')
+						h2.empty-cart-title(data-i18n='cart.emptyTitle') Su carrito está vacio
+						.empty-cart-message
+							p(data-i18n='cart.emptyMessage')
+								| Para seguir comprando, navegar por las categorías en el sitio, o busque su producto.
+						.clearfix.empty-cart-links
+							a#cart-choose-products.btn.btn-large.btn-success.link-choose-products(href='/', data-i18n='cart.chooseProducts') Elegir productos
+					.cart(data-bind='visible: hasItems() && !loading()')
+						table.table.cart-items
+							thead
+								tr
+									th.product(colspan='2', data-i18n='global.product') Producto
+									th.shipping-date(data-i18n='global.delivery') Envío
+									th.product-price(data-i18n='global.price') Precio
+									th.quantity(data-i18n='global.quantity') Cantidad
+									th.quantity-price(data-i18n='global.total') Total
+									th.item-remove
+							tbody
+								// ko template: { name: 'cart-item-template', foreach: items, afterRender: vtex.i18n.translateHtml }
+								tr.product-item(data-bind="attr: {'data-sku': id}, availableCSS: available()", rowspan='2', data-sku='650453')
+									td.product-image(data-bind="css: { 'product-image': imageUrl }")
+										a(href='http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p', data-bind="attr: {'href': ('http://' + location.host + detailUrl())}")
+											img#product-image-650453(height='45', width='45', data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'product-image-' + id()}", src='//estilomio.vteximg.com.br/arquivos/ids/177618-100-100/globe_650453_17.jpg', alt='Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú')
+									td.product-name
+										a#product-name650453(href='http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p', data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl()), 'id': 'product-name' + id() }") Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú
+										.brand
+											span.brand-label(data-i18n='cart.seller.brand') Marca
+											span.brand-name(data-bind='text: brand') Globe
+										small.seller.muted(data-bind='if: sellerName')
+											span(data-i18n='cart.soldBy') Suministrados y entregados por
+											span(data-bind='text: sellerName') EstiloMio
+										ul.item-discount-descriptions(data-bind='foreach: priceTags')
+										// ko if: router.inCart() == true  && availableOfferings()
+										// /ko
+									td.shipping-date.empty(data-bind="css: { 'empty': estimateLabel() == 'a calcular' }")
+										// ko if: available()
+										span.shipping-estimate-date(data-bind='text: estimateLabel') a calcular
+										span.shipping-estimate-date.shipping-estimate-detail(data-bind='text: estimateDetailLabel')
+										.sla-info.hide
+											.sla-price(data-bind='text: shippingPriceLabel')
+											.sla-name
+												small(data-bind='text: shippingName')
+										// /ko
+										// ko ifnot: available()
+										// /ko
+									td.product-price
+										// ko if: isPriceVisible
+										span.list-price(data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() && manualPrice() == null)")
+											span.old-product-price-label(data-i18n='cart.oldPrice') De
+											del.old-product-price.muted(data-bind='text: listPriceLabel') S/. 309.00
+										br(data-bind="css: { 'hide' : !isListPriceVisible() }")
+										span.best-price
+											span.new-product-price-label(data-i18n='cart.newPrice', data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() && manualPrice() == null)") Por
+											// ko ifnot: isManualPriceActive()
+											span.new-product-real-price.hide(data-bind='text: priceLabel') S/. 249.00
+											// ko if: $parent.allowManualPrice()
+											// /ko
+											// ko ifnot: $parent.allowManualPrice()
+											span.new-product-price(data-bind='text: sellingPriceLabel') S/. 249.00
+											// /ko
+											a.manualprice-link-remove(href='javascript:void(0);', data-bind='click: removeManualPrice, visible: manualPrice() != null', data-i18n='[title]global.remove', title='Retirar', style='display: none;')
+												i.icon.icon-remove.item-remove-ico
+												span.hide.manualprice-remove-text(data-i18n='global.remove') Retirar
+											// /ko
+											// ko if: isManualPriceActive()
+											// /ko
+											small.new-product-real-price-per-unit(data-bind='text: priceLabelPerUnit')
+											a.discount(href='javascript:void(0);', data-bind='fadeVisible: showDiscountButton', style='display: none;')
+												span.how-much-discount(data-bind="event: { 'mouseover': toggleDiscount, 'mouseout': toggleDiscount }")
+													i.icon-question-sign
+											span.field-help(data-bind='fadeVisible: showDiscount', style='display: none;')
+												span.help-arrow.top-arrow
+												span.fast-shopping-help-message.help-message
+													strong.fast-shopping-help-message-title.help-message-title
+														i.icon-info-sign
+														span(data-i18n='totalizers.Discounts') Descuentos
+													br
+													// ko if: price() > sellingPrice()
+													// /ko
+										// /ko
+									td.quantity(data-bind="css: {'cant-change-qty': !canChangeQty(), 'quantity-large': quantity() > 999},                   attr: { 'disabled': window.cart.loadingItem }")
+										// ko if: router.inCart
+										// /ko
+										// ko if: router.inOrderForm
+										span(data-bind='text: quantity') 2
+										// /ko
+										small.item-multiplier-label(data-bind='text: multiplierLabel')
+										small.item-unit-label(data-bind='text: unitLabel')
+									td.quantity-price
+										span.total-price.hide(data-bind='text: priceValueLabel, if: isPriceVisible') S/. 498.00
+										span.total-selling-price(data-bind='text: valueLabel, if: isPriceVisible') S/. 498.00
+									td.item-remove
+										a#item-remove-650453.item-link-remove(href='javascript:void(0);', data-bind="click: remove, fadeVisible: !window.cart.loadingItem(), attr: { 'id': 'item-remove-' + id() }", data-i18n='[title]global.remove', title='Retirar')
+											i.icon.icon-remove.item-remove-ico
+											span.hide.item-remove-text(data-i18n='global.remove') Retirar
+										i.loading-text.icon-spinner.icon-spin.hide(data-bind='fadeInlineVisible: window.cart.loadingItem', style='display: none; opacity: 0;')
+											span(data-i18n='cart.wait') Cargando datos...
+								// ko ifnot: available
+								// /ko
+								// ko if: itemAttachments() && itemAttachments().length > 0
+								// /ko
+								// ko if: bundleItems() && bundleItems().length > 0
+								// /ko
+								// ko if: components() && components().length > 0
+								// /ko
+								// /ko
+								// ko if: gifts().length > 0
+								// /ko
+				.cart-select-gift-placeholder
+				.summary-template-holder(data-bind="template: {name: 'summary-template', afterRender: vtex.i18n.translateHtml}")
+					.row-fluid.summary(data-bind='fadeVisible: window.cart.hasItems() && !loading()', style='display: block;')
+						.forms.coupon-column.summary-coupon-wrap.span7.pull-left(data-bind="css: { 'span7 pull-left': !window.checkout.hasSelectableGifts(), 'span4 pull-right': window.checkout.hasSelectableGifts() }")
+							.coupon.summary-coupon.pull-right(data-bind='with: coupon, visible: hasTotal')
+								form.coupon-form(action='', data-bind='submit: addCoupon')
+									fieldset.coupon-fieldset
+										div(data-bind='fadeVisible: isUsingCoupon()', style='display: none;')
+											p.coupon-label
+												label(for='cart-coupon', data-i18n='totalizers.couponCapitalize') Cupón de descuento
+											p.coupon-fields
+												span(data-bind='visible: !isCouponTyped()')
+													input#cart-coupon.coupon-value.input-small(type='text', data-bind="value: couponCode, valueUpdate:'afterkeydown', disable: loadingCoupon()", placeholder='Código', data-i18n='[placeholder]totalizers.couponCode;')
+													span.loading-inline.loading-coupon(data-bind='fadeInlineVisible: loadingCoupon', style='display: none; opacity: 0;')
+														span(data-i18n='cart.wait') Cargando datos...
+													button#cart-coupon-add.btn(type='submit', data-bind='disable: loadingCoupon', data-i18n='global.add') Sumar
+												span.info(data-bind='visible: isCouponTyped', style='display: none;')
+													span(data-bind='text: value')
+													small.delete
+														a#cart-coupon-remove(href='javascript:void(0);', data-bind='click: removeCoupon', data-i18n='global.delete') Borrar
+										p.coupon-data.pull-right(data-bind='fadeVisible: !isUsingCoupon()')
+											a#cart-link-coupon-add.link-coupon-add(href='javascript:void(0);', data-bind='click: isUsingCoupon')
+												span(data-i18n='global.add') Sumar
+												span(data-i18n='totalizers.coupon') cupón de descuento
+						.span5.totalizers.summary-totalizers.cart-totalizers.pull-right
+							.accordion-group(data-bind='fadeVisible: window.cart.hasItems() && !loading()', style='display: block;')
+								.accordion-heading
+									span.accordion-toggle.collapsed(data-i18n='totalizers.summary') Resumen de la compra
+								.accordion-body.collapse.in
+									.accordion-inner
+										.summary-discount-descriptions(data-bind='visible: discounts().length', style='display: none;')
+											h3.summary-discount-title(data-i18n='totalizers.Discounts') Descuentos
+											ul.all-discount-descriptions.unstyled(data-bind='foreach: discounts()')
+										table.table
+											tbody.totalizers-list(data-bind='foreach: { data: totalizers }')
+												tr.Items(data-bind="visible: visible, attr: { 'class': id }")
+													// ko if: id() == 'Shipping'
+													// /ko
+													// ko ifnot: id() == 'Shipping'
+													td.info(data-bind="attr: {'data-i18n': 'totalizers.' + id()}", data-i18n='totalizers.Items') Subtotal
+													td.space
+													td.monetary(data-bind='text: valueLabel') S/. 498.00
+													td.empty
+													// /ko
+											tbody.shipping-reset(data-bind='visible: isShippingKnown()                                                    && !window.checkout.isNotUsingPostalCode()                                                    && window.cart.items().length == window.cart.unavailableItems().length', style='display: none;')
+												tr
+													td.info
+														span.postal-code-for-sla
+															span.shipping-name(data-bind="attr: {'data-i18n': 'totalizers.Shipping'}", data-i18n='totalizers.Shipping') Costo del envío
+															span.shipping-name-to(data-i18n='global.to') para
+															span.postal-code-value(data-bind='html: window.summary.maskedPostalCode')
+															a#cart-reset-postal-code.cart-reset-postal-code(href='javascript:void(0);', data-bind='visible : window.checkout.canEditData, click: summary.resetShipping', data-i18n='[title]global.edit', title='Cambiar')
+																i.icon-remove-sign
+															br
+															a#cart-reset-postal-code.cart-reset-postal-code(href='javascript:void(0);', data-bind='visible : window.checkout.canEditData, click: window.summary.resetShipping', data-i18n='cart.resetShipping') Elegir otro código postal
+													td.space
+													td.monetary.shipping-unavailable(data-i18n='global.unavailable') No disponible
+											tbody.shipping-calculate(data-bind='visible: !isShippingKnown() && !window.checkout.isNotUsingPostalCode()', style='display: none;')
+												tr
+													td.info
+														span(data-i18n='cart.calculateShipping') Envío
+													td.space(data-bind='visible: !isUsingPostalCode()')
+													td.monetary(data-bind='visible: !isUsingPostalCode()')
+														a#shipping-calculate-link.shipping-calculate-link(href='javascript:void(0)', data-bind='click: usingPostalCode', data-i18n='cart.calculate') Calcular
+													td.monetary.form-postal-code.forms(data-bind='visible: isUsingPostalCode() && !isShippingKnown()', colspan='3', style='display: none;')
+														.shipping.summary-shipping
+															form.shipping-form-inline(action='', data-bind='submit: calculateShipping')
+																fieldset.shipping-fieldset
+																	.shipping-fields
+																		input#summary-postal-code.postal-code.input-mini(type='tel', data-bind="value: postalCode, valueUpdate:'afterkeydown',                                                               validate: 'postalCode', disable: loadingPostalCode,                                                               maskOnBlur: window.checkout.postalCodeMask,                                                               attr: {'placeholder': postalCodeLabel, 'maxlength': window.checkout.postalCodeMask() ? window.checkout.postalCodeMask().length : 9},                                                               css: {'loading-postal-code': loadingPostalCode}", placeholder='CPPER', maxlength='4')
+																		i.loading-inline.icon-spinner.icon-spin(data-bind='fadeInlineVisible: loadingPostalCode', style='display: none; opacity: 0;')
+																			span(data-i18n='cart.wait') Cargando datos...
+																		button#cart-shipping-calculate.btn(type='submit', data-bind='disable: loadingPostalCode', data-i18n='cart.calculate') Calcular
+																	small.postal-code-service.summary-postal-code-service
+																		a#cart-dont-know-postal-code(data-bind="attr: { 'href': window.checkout.postalCodeForgottenURL }", target='_blank', data-i18n='totalizers.dontKnowPostalCode', href='#') No conozco mi Código Postal (CP)
+													td.empty(data-bind='visible: !isUsingPostalCode()')
+											tfoot
+												tr(data-bind="css: {'muted': !hasTotal()}")
+													td.info(data-i18n='global.total') Total
+													td.space
+													td.monetary(data-bind='text: totalLabel') S/. 498.00
+													td.empty
+				.clearfix.pull-right.cart-links.cart-links-bottom.hide(style='display: none;')
+					span.link-choose-more-products-wrapper
+						a#cart-choose-more-products.more.link-choose-more-products(href='/', data-i18n='cart.chooseMoreProducts') Elegir más productos
+					span.link-print-cart-wrapper.hide(data-bind="fadeVisible: userType() == 'callCenterOperator'", style='display: none;')
+						a#cart-print.btn.btn-large.link-print-cart(onclick='window.print()', data-i18n='cart.print') Imprimir
+					span.btn-place-order-wrapper
+						a#cart-to-orderform.btn.btn-large.btn-success.pull-left-margin.btn-place-order(href='#/orderform', target='_self', data-event='cartToOrderform', data-i18n='cart.finalize', data-bind='visible: !disableCheckoutButton(), click: goToFirstInvalidStep') Finalizar compra
+						a#cart-to-orderform-disabled.btn.btn-large.btn-success.pull-left-margin.btn-place-order.disable(href='javascript:void(0);', target='_self', disabled='disabled', data-i18n='cart.finalize', data-bind='visible: disableCheckoutButton()', style='display: none;') Finalizar compra
+			// /END CART
+			// ORDERFORM
+			.row-fluid.orderform-template.span12.active
+				.orderform-template-holder.span8
+					.row-fluid
+						#client-profile-data.span6.client-profile-data(data-bind="template: {name: 'orderForm-clientProfileData-template', afterRender: afterRender}")
+							form.form-page.client-pre-email.anim-death.anim-current(data-bind="event: { 'submit' : submitFirstEmail }, fadeVisible: showEmailForm() && !checkout.loading()", autocomplete='on', style='display: none;')
+								p.link.link-cart.pull-right
+									small
+										a#orderform-to-cart(href='#/cart', target='_self', data-i18n='global.backToCart') Volver a carrito
+								fieldset.pre-email.row-fluid
+									h3.client-pre-email-h
+										label(for='client-pre-email')
+											span(data-i18n='clientProfileData.preemail') Ingresa tu mail para continuar la compra.
+											small(data-i18n='clientProfileData.preemail_') Rápido. Fácil. Seguro.
+									.client-email.input.text.required.span8.offset2
+										input#client-pre-email.input-block-level.success(type='email', data-i18n='[placeholder]clientProfileData.placeholderEmail', data-bind="value: firstEmail, valueUpdate:'afterkeydown', css: { 'not-ready': loadingEmail }, validate: 'email', required: true, disable: loading", autocomplete='on', name='email', placeholder='su@correo.com')
+										i.loading-inline.icon-spinner.icon-spin(data-bind='visible: loadingEmail', style='display: none;')
+											span(data-i18n='global.loading') Cargando...
+										button#btn-client-pre-email.btn.btn-success(type='submit')
+											span(data-i18n='global.continue_') Continuar
+								.emailInfo
+									h3(data-i18n='clientProfileData.whyPreEmail') Guardamos su correo electrónico de manera 100% segura para:
+									ul.unstyled
+										li
+											i.icon-ok
+											span(data-i18n='clientProfileData.bullet1WhyEmail') Identificar su perfil
+										li
+											i.icon-ok
+											span(data-i18n='clientProfileData.bullet2WhyEmail') Notificar sobre los estados de su compra
+										li
+											i.icon-ok
+											span(data-i18n='clientProfileData.bullet3WhyEmail') Guardar el historial de compras
+										li
+											i.icon-ok
+											span(data-i18n='clientProfileData.bullet4WhyEmail') Facilitar el proceso de compras
+									i.icon-lock
+							.step.accordion-group.client-profile-data.active(data-bind='css: {active: active, filled: visitedAndNotActive}')
+								.accordion-heading
+									span.accordion-toggle.collapsed.accordion-toggle-active(data-bind="css: {'accordion-toggle-active': active}")
+										i.icon-user
+										span(data-i18n='clientProfileData.identification') Identificación
+										// ko if: checkout.canEditData() == true
+										a#edit-profile-data.link-box-edit.btn.btn-small(href='#/profile', tabindex='-1', data-bind='visible: visitedAndNotActive', data-i18n='[title]global.edit', title='Cambiar', style='display: none;')
+											i.icon-edit
+										// /ko
+										// ko if: checkout.canEditData() == false
+										// /ko
+								.accordion-body.collapse.in
+									.accordion-inner
+										.box-step
+											// <div class="loading loading-bg" data-bind="fadeVisible: loading">                    <div class="loading-img">                        <i class="icon-spinner icon-spin icon-2x">                            <span data-i18n="global.loading"></span>                        </i>                    </div>                </div>
+											// INFORMAÇÕES PARA VISUALIZAÇÃO
+											.form-step.box-info(data-bind='fadeVisible: visitedAndNotActive', style='display: none;')
+												p.client-profile-email
+													span.email(data-bind='text: email') ec.frorrntend@gmail.com
+													span.link-logout-container(data-bind='visible: isUsingExistingAccount', style='display: none;')
+														| - 
+														a#is-not-me.link-logout(href='https://www.estilomio.com/checkout/changeToAnonymousUser/', data-bind=" attr: { 'href': anonymousURL }", data-i18n='clientProfileData.isNotMe') No soy yo, cerrar sesión
+												p.client-profile-summary
+													span.name-label(data-i18n='clientProfileData.name_', data-bind='visible: checkout.loggedIn() || (!checkout.loggedIn() && !checkout.canEditData())', style='display: none;') Nombre:
+													span.name(data-bind="text: firstName() + ' ' + lastName()") undefined undefined
+													// ko if: !checkout.loggedIn() && !checkout.canEditData()
+													// /ko
+													br
+													span.tel-label(data-i18n='clientProfileData.phone_', data-bind='visible: checkout.loggedIn() || (!checkout.loggedIn() && !checkout.canEditData())', style='display: none;') Teléfono / Móvil:
+													span.tel(data-bind='text: cleanPhone')
+											// FIM INFORMAÇÕES PARA VISUALIZAÇÃO
+											// INFORMAÇÕES PARA EDIÇÃO
+											form.form-step.box-edit(action='', data-bind='fadeVisible: active, submit: next', style='display: block;')
+												.box-client-info
+													.row-fluid
+														// INFORMAÇÕES PARA PESSOA FÍSICA
+														fieldset.box-client-info-pf
+															p.client-notice.notice(data-i18n='clientProfileData.notice')
+																| Solicitamos únicamente la información esencial para la finalización de la compra.
+															// ko if: templateOptions.toggleCorporate
+															// /ko
+															// ko if: checkout.loggedIn() == false
+															p.client-email.input.text.required
+																label(for='client-email', data-i18n='clientProfileData.email') Correo
+																input#client-email.input-xlarge.success(type='email', data-bind="value: email, valueUpdate:'afterkeydown', event: { 'blur' : blurEmail }, validate: 'email', required: true, disable: loading", name='email')
+															p(data-bind='fadeVisible: emailSuggestionDomain, click: acceptSuggestion', style='display: none;')
+																span(data-i18n='global.didYouMean') Quizás quisiste decir:
+																span  
+																a#email-suggestion-address(href='#')
+																	span(data-bind='text: emailSuggestionAddress')
+																	strong(data-bind='text: emailSuggestionDomain')
+															// /ko
+															// ko if: checkout.loggedIn() && email()
+															// /ko
+															p.client-first-name.input.pull-left.text.required
+																label(for='client-first-name', data-i18n='clientProfileData.firstName') Nombre
+																input#client-first-name.input-small.error(type='text', data-bind="value: firstName, validate: 'alphaNumericPunctuation', valueUpdate:'afterkeydown', required: true, disable: loading")
+																span.help.error Este campo es obligatorio.
+															p.client-last-name.input.pull-left.text.required
+																label(for='client-last-name', data-i18n='clientProfileData.lastName') Apellidos
+																input#client-last-name.input-small(type='text', data-bind="value: lastName, validate: 'alphaNumericPunctuation', valueUpdate:'afterkeydown', required: true, disable: loading")
+															// ko ifnot: showDocumentInCorporate
+															p.client-document.input.pull-left.text.required.mask(data-bind='visible: !hasDifferentDocument()')
+																label(for='client-document', data-bind="attr:{ 'data-i18n': documentKey }", data-i18n='clientProfileData.document-PER') Documento de Identidad
+																input#client-document.input-small(type='text', data-bind="hasfocus: documentFocus, value: document, valueUpdate:'afterkeydown', validate: validateDocument, required: isDocumentRequired, disable: loading, maskOnBlur: checkout.documentMask(), attr: documentAttributeBindings")
+															p.client-document.input.pull-left.text.required.mask(data-bind='visible: hasDifferentDocument()', style='display: none;')
+																label(for='client-document2', data-bind="attr:{ 'data-i18n': documentKey }", data-i18n='clientProfileData.document-PER') Documento de Identidad
+																input#client-document2.input-small(type='text', disabled='disabled')
+															// /ko
+															div(data-bind='template: {name: phoneTemplate(), afterRender: window.vtex.i18n.translateHtml }')
+																p.client-phone.input.pull-left.text.required.mask(data-bind='visible: !hasDifferentPhone()')
+																	label(for='client-phone', data-i18n='clientProfileData.phone') Teléfono / Móvil
+																	// ko ifnot: hasDifferentPhone
+																	input#client-phone.input-small(type='tel', data-bind="hasfocus: phoneFocus, value: phone, valueUpdate:'afterkeydown', validate: validatePhone, required: true, disable: loading, maskOnBlur: checkout.phoneMask, attr: {'placeholder': phonePlaceholder}")
+																	// /ko
+																p.client-phone.input.pull-left.text.required.mask(data-bind='if: hasDifferentPhone()')
+															.document-box.hide
+																h5(data-bind="css: { 'visible': hasDifferentDocument }", data-i18n='clientProfileData.documentTitle') Documento
+																ul.links.unstyled
+																	li.link.cpf(data-bind='visible: !hasDifferentDocument()')
+																		a#no-document-key(href='#', tabindex='16', data-bind="click: toggleDifferentDocument, attr:{ 'data-i18n': noDocumentKey }", data-i18n='clientProfileData.noDocument-PER') No tengo Documento de Identidad
+																	li.link.cpf(data-bind='visible: hasDifferentDocument()', style='display: none;')
+																		a#has-document-key(href='#', data-bind="click: toggleDifferentDocument, attr:{ 'data-i18n': hasDocumentKey }", data-i18n='clientProfileData.hasDocument-PER') Tengo Documento de Identidad
+																div
+																	p.client-document-type.input.pull-left.text.required.mask(data-bind='fadeVisible: hasDifferentDocument', style='display: none;')
+																		label(for='client-document-type', data-i18n='clientProfileData.documentType') Tipo del documento
+																		input#client-document-type.input-small.success(type='text', data-bind="value: documentType, valueUpdate:'afterkeydown',                                                    required: isNotCorporate, disable: loading")
+																	p.client-new-document.input.pull-left.text.required.mask(data-bind='fadeVisible: hasDifferentDocument', style='display: none;')
+																		label(for='client-new-document', data-i18n='clientProfileData.document') Documento
+																		// ko if: hasDifferentDocument
+																		// /ko
+															.phone-box(data-bind="css: {'visible': hasDifferentPhone() || differentPhoneFlag}")
+																ul.links.unstyled
+																	li.link(data-bind='visible: !hasDifferentPhone()')
+																		a#no-phone-key(href='#', tabindex='16', data-bind="click: toggleDifferentPhone, attr:{ 'data-i18n': noPhoneKey }", data-i18n='clientProfileData.noPhone-PER') No tengo teléfono de Perú
+																	li.link(data-bind='visible: hasDifferentPhone()', style='display: none;')
+																		a#has-phone-key(href='#', data-bind="click: toggleDifferentPhone, attr:{ 'data-i18n': hasPhoneKey }", data-i18n='clientProfileData.hasPhone-PER') Tengo teléfono de Perú
+																div
+																	p.client-new-phone.input.pull-left.text.required.mask(data-bind='fadeVisible: hasDifferentPhone', style='display: none;')
+																		label(for='client-new-phone', data-i18n='clientProfileData.phoneInternational') Teléfono Internacional
+																		// ko if: hasDifferentPhone
+																		// /ko
+														// FIM INFORMAÇÕES PARA PESSOA FÍSICA
+														// INFORMAÇÕES PARA PESSOA JURÍDICA
+														fieldset.box-client-info-pj
+															h5.corporate-title(data-bind="css: { 'visible': isCorporate }", data-i18n='clientProfileData.corporateTitle') Datos de empresa
+															ul.links.unstyled
+																li.link.pf-pj.corporate-hide-link
+																	a#is-corporate-client(href='#', data-bind='visible: !isCorporate(), click: toggleCorporate', tabindex='17', data-i18n='clientProfileData.includeCo') Sumar datos de empresa
+																	a#not-corporate-client(href='#', data-bind='visible: isCorporate, click: toggleCorporate', data-i18n='clientProfileData.excludeCo', style='display: none;') No sumar
+															.corporate-info-box(data-bind='fadeVisible: isCorporate', style='display: none;')
+																p.client-company-name.input.text.required
+																	label(for='client-company-name', data-i18n='clientProfileData.companyName') Razón Social
+																	input#client-company-name.input-xlarge(type='text', data-bind="value: corporateName, valueUpdate:'afterkeydown', required: true, disable: loading")
+																// ko if: showCorporateTradingName
+																p.client-company-nickname.input.text.required
+																	label(for='client-company-nickname', data-i18n='clientProfileData.tradingName') Nombre de la empresa
+																	input#client-company-nickname.input-xlarge(type='text', data-bind="value: tradeName, valueUpdate:'afterkeydown', required: requirementTradingName, disable: loading")
+																// /ko
+																// ko if: showCorporateStateInscription
+																// /ko
+																// ko if: showCorporateDocument
+																p.client-company-document.input.text.required.mask
+																	label(for='client-company-document', data-bind="attr:{ 'data-i18n': coDocumentKey }", data-i18n='clientProfileData.coDocument-PER') RUC
+																	input#client-company-document.input-small(type='text', data-bind="value: corporateDocument, valueUpdate:'afterkeydown',                                                    validate: validateCorporateDocument, required: true, disable: loading,                                                    maskOnBlur: checkout.corporateDocumentMask, attr: {'placeholder': companyDocumentPlaceholder}")
+																// /ko
+																// ko if: showDocumentInCorporate
+																// /ko
+																.clearfix
+																.state-inscription-box(data-bind='visible: showCorporateExempt()', style='display: none;')
+																	label.checkbox.exempt-si-label
+																		input#state-inscription(type='checkbox', data-bind='checked: exempt')
+																		span.exempt-si-text(data-bind="attr:{ 'data-i18n': noStateInscriptionKey }", data-i18n='clientProfileData.noStateInscription-PER') No tengo registro estatal
+														// FIM DE INFORMAÇÕES PARA PESSOA JURÍDICA
+													p.newsletter
+														label.checkbox.newsletter-label(data-bind='fadeVisible: checkout.canEditData')
+															input#opt-in-newsletter(type='checkbox', data-bind='checked: checkout.optinNewsLetter, enable: checkout.saveData')
+															span.newsletter-text(data-i18n='global.optinNewsLetter') Quiero recibir el newsletter con promociones.
+												p.submit.btn-submit-wrapper
+													button#go-to-shipping.submit.btn.btn-large.btn-success(type='submit', data-bind='visible: !router.view.shippingDataVisited(), disable: loadingEmail', data-i18n='global.goToShipping') Ir para la Entrega
+													button#go-to-payment.submit.btn.btn-large.btn-success(type='submit', data-bind='visible: router.view.shippingDataVisited(), disable: loadingEmail', data-i18n='global.goToPayment', style='display: none;') Ir para el Pago
+											// FIM INFORMAÇÕES PARA EDIÇÃO
+
+						#shipping-data.span6.pull-right.shipping-data
+							.step.accordion-group.shipping-data.active
+								// TITLE
+								.accordion-heading
+									span.accordion-toggle.collapsed.accordion-shipping-title.accordion-toggle-active
+										i.icon-home
+										span(data-i18n='shipping.title') Dirección de envío
+										a#edit-shipping-data.link-box-edit.btn.btn-small.hide(href='#/shipping', tabindex='-1', data-i18n='[title]global.edit', style='display: none;')
+											i.icon-edit
+								.accordion-inner
+									// MENSAGEM DE NÃO ATIVO E SEM ENDEREÇO
+									p.notification.address-not-filled-verification(data-i18n='global.waiting', style='display: none;') Aún falta llenar con los datos
+									// RESUMO DE SHIPPING DATA
+									.box-step.box-info.shipping-summary-placeholder
+									// FIM DO RESUMO DE SHIPPING DATA
+									.box-step
+										// CONTAINER DOS COMPONENTES FILHOS
+										.country-select-placeholder
+										.address-search-placeholder
+										.address-form-placeholder
+											// BACK TO LIST BUTTON
+											form.address-form-new.box-new.address-form-(data-parsley-bind='true', data-parsley-focus='first', novalidate='')
+												fieldset.address-data
+													// HIDDEN FIELDS
+													input(type='hidden', name='addressId', value='-1456506152443')
+													input(type='hidden', name='country', value='PER')
+													input.postal-code.postal-code-hidden(type='hidden', name='postalCode', value='180207')
+													// COUNTRY NAME
+													p.ship-international.input.one-delivery-country
+														span(data-i18n='shipping.addressForm.deliveryCountry') País de entrega
+														|  PER
+													.box-delivery
+														// LABEL SHIPING FIELDS FOR GEOLOCATION SEARCH
+														p.ship-street.required.input.text
+															label(for='ship-street')
+																span(data-i18n='shipping.addressForm.direction') Dirección
+																span.item-required *
+															input#ship-street.input-xlarge.success(type='text', value='lklkl', name='street', data-parsley-required='true', data-parsley-trigger='change blur', data-parsley-alphanumponc='true', data-parsley-id='6145')
+															span#parsley-id-6145.help.error.error-list
+														p.ship-number.required.input.text
+															label(for='ship-number')
+																span(data-i18n='shipping.addressForm.number') Número
+																span.item-required *
+															input#ship-number.input-mini.success(type='text', value='112345', name='number', data-parsley-required='true', data-parsley-trigger='change blur', data-parsley-alphanumponc='true', data-parsley-maxlength='50', data-parsley-id='1495')
+															span#parsley-id-1495.help.error.error-list
+														p.ship-more-info.input.text
+															label(for='ship-more-info')
+																span(data-i18n='shipping.addressForm.complement') Piso o Departamento (ej: 2A)
+															input#ship-more-info.input-medium(type='text', value='', name='complement', data-i18n='[placeholder]global.notRequired', data-parsley-trigger='change blur', data-parsley-alphanumponc='true', placeholder='Opcional', data-parsley-id='5410')
+															span#parsley-id-5410.help.error.error-list
+														p.ship-reference.input.text.hide
+															label(for='ship-reference')
+																span(data-i18n='shipping.addressForm.reference') Punto o calle acerca
+															input#ship-reference.input-xlarge(type='text', value='', name='reference', data-parsley-trigger='change blur', data-parsley-alphanumponc='true', data-parsley-id='4885')
+															span#parsley-id-4885.help.error.error-list
+														p.ship-state.required.input.text
+															label(for='ship-state')
+																span(data-i18n='shipping.addressForm.department') Departamento
+																span.item-required *
+															select#ship-state.input-xlarge.success(name='state', data-parsley-trigger='change blur', data-parsley-required='true', data-parsley-id='8179')
+																option
+																option(value='LIMA') Lima
+																option(value='AMAZONAS') Amazonas
+																option(value='APURÍMAC') Apurímac
+																option(value='AREQUIPA') Arequipa
+																option(value='AYACUCHO') Ayacucho
+																option(value='CAJAMARCA') Cajamarca
+																option(value='CUSCO') Cusco
+																option(value='HUANCAVELICA') Huancavelica
+																option(value='HUÁNUCO') Huánuco
+																option(value='ICA') Ica
+																option(value='JUNÍN') Junín
+																option(value='LA LIBERTAD') La Libertad
+																option(value='LAMBAYEQUE') Lambayeque
+																option(value='LORETO') Loreto
+																option(value='MADRE DE DIOS') Madre De Dios
+																option(value='MOQUEGUA', selected='true') Moquegua
+																option(value='PASCO') Pasco
+																option(value='PIURA') Piura
+																option(value='PUNO') Puno
+																option(value='SAN MARTÍN') San Martín
+																option(value='TACNA') Tacna
+																option(value='TUMBES') Tumbes
+																option(value='UCAYALI') Ucayali
+																option(value='ÁNCASH') Áncash
+															span#parsley-id-8179.help.error.error-list
+														p.ship-city.required.input.text
+															label(for='ship-city')
+																span(data-i18n='shipping.addressForm.province') Provincia
+																span.item-required *
+															select#ship-city.input-xlarge.success(name='city', data-parsley-trigger='change blur', data-parsley-required='true', data-based-state-change='true', data-parsley-id='2286')
+																option
+																option(value='General Sánchez Cerro', selected='true') General Sánchez Cerro
+																option(value='Ilo') Ilo
+																option(value='Mariscal Nieto') Mariscal Nieto
+															span#parsley-id-2286.help.error.error-list
+														p.ship-neighborhood.input.text
+															label(for='ship-neighborhood')
+																span(data-i18n='shipping.addressForm.district') Distrito
+																span.item-required *
+															select#ship-neighborhood.input-xlarge.success(name='neighborhood', data-parsley-trigger='change blur', data-parsley-required='true', data-based-city-change='true', data-parsley-id='3430')
+																option
+																option(value='Chojata') Chojata
+																option(value='Coalaque') Coalaque
+																option(value='Ichuña') Ichuña
+																option(value='La Capilla') La Capilla
+																option(value='Lloque') Lloque
+																option(value='Matalaque', selected='true') Matalaque
+																option(value='Omate') Omate
+																option(value='Puquina') Puquina
+																option(value='Quinistaquillas') Quinistaquillas
+																option(value='Ubinas') Ubinas
+																option(value='Yunga') Yunga
+															span#parsley-id-3430.help.error.error-list
+														p.ship-commercial.input.checkbox.hide
+															label(for='ship-commercial')
+																input#ship-commercial(type='checkbox', name='addressTypeCommercial', value='true', data-parsley-multiple='addressTypeCommercial', data-parsley-id='4073')
+																span(data-i18n='shipping.addressForm.commercial') Dirección de Trabajo
+															span#parsley-id-multiple-addressTypeCommercial.help.error.error-list
+														p.ship-name.required.input.text.separate
+															label(for='ship-name')
+																span(data-i18n='shipping.addressForm.receiver') Nombre de la persona que va a recibir
+																span.item-required *
+															input#ship-name.input-xlarge.success(type='text', name='receiverName', value='Ana Test', data-parsley-trigger='change blur', data-parsley-required='true', data-parsley-alphanumponc='true', data-parsley-maxlength='100', data-parsley-id='7748')
+															span#parsley-id-7748.help.error.error-list
+													p.submit.btn-submit-wrapper.pull-left.hide
+														button.submit.btn.btn-large.btn-success.address-save(type='submit', data-i18n='global.save') Guardar
+										.address-list-placeholder
+										.address-shipping-options
+											.delivery-shipping-options
+												h3.hide(data-i18n='shipping.shippingOptions.shippingOptions') Elija las opciones de envío
+												fieldset.shipping-options
+													h4.pull-left
+														span.pull-left.choose-shipping-option-container
+															span.choose-shipping-option(data-i18n='shipping.shippingOptions.chooseShippingOption') Elija el tipo de envío
+													.sla-items-list
+														.span.btn-group.btn-group-vertical
+															label.shipping-option-item.label-vertical-group.input.btn.active(for='seller-1-sla-EntregaaDomicilioEstiloMio7-10dias')
+																input#seller-1-sla-EntregaaDomicilioEstiloMio7-10dias(type='radio', name='seller-1', value='Entrega a Domicilio EstiloMio 7-10 días', checked='checked', data-shipping-option='0')
+																span.shipping-option-item-text-wrapper(title='Hasta 10 días hábiles')
+																	span.shipping-option-item-name Entrega a Domicilio EstiloMio 7-10 días
+																	span.shipping-option-item-sep  - 
+																	span.shipping-option-item-value S/. 46.00
+																	span.shipping-option-item-sep  - 
+																	span.shipping-option-item-time.delivery-estimate Hasta 10 días hábiles
+																i.icon-ok-circle
+										// FIM CONTAINER DOS COMPONENTES FILHOS
+										// NEXT STEP BUTTON
+										p.submit.btn-submit-wrapper.btn-go-to-payment-wrapper(style='display: block;')
+											button.submit.btn.btn-large.btn-success.btn-go-to-payment(type='submit', data-i18n='shipping.goToPayment') Ir para el Pago
+
+						#shipping-data.hide.1111111.span6.pull-right.shipping-data
+							.step.accordion-group.shipping-data
+								// TITLE
+								.accordion-heading
+									span.accordion-toggle.collapsed.accordion-shipping-title
+										i.icon-home
+										span(data-i18n='shipping.title') Dirección de envío
+										a#edit-shipping-data.link-box-edit.btn.btn-small.hide(href='#/shipping', tabindex='-1', data-i18n='[title]global.edit', title='Cambiar')
+											i.icon-edit
+								.accordion-inner
+									// MENSAGEM DE NÃO ATIVO E SEM ENDEREÇO
+									p.notification.address-not-filled-verification(data-i18n='global.waiting', style='display: block;') Aún falta llenar con los datos
+									// RESUMO DE SHIPPING DATA
+									.box-step.box-info.shipping-summary-placeholder
+									// FIM DO RESUMO DE SHIPPING DATA
+									.box-step
+										// CONTAINER DOS COMPONENTES FILHOS
+										.country-select-placeholder
+										.address-search-placeholder
+										.address-form-placeholder
+										.address-list-placeholder
+										.address-shipping-options
+										// FIM CONTAINER DOS COMPONENTES FILHOS
+										// NEXT STEP BUTTON
+										p.submit.btn-submit-wrapper.btn-go-to-payment-wrapper(style='display: none;')
+											button.submit.btn.btn-large.btn-success.btn-go-to-payment(type='submit', data-i18n='shipping.goToPayment') Ir para el Pago
+						#payment-data.pull-right.payment-data.span12(data-bind="template: {name: 'orderForm-paymentData-template', afterRender: afterRender}, css: { 'span6': !active(), 'span12': active }")
+							.step.accordion-group.active(data-bind='css: {active: active, filled: visitedAndNotActive}')
+								.accordion-heading
+									span.accordion-toggle.collapsed.accordion-toggle-active(data-bind="css: {'accordion-toggle-active': active}")
+										i.icon-credit-card
+										span(data-i18n='paymentData.payment') Pago
+										a.link-box-edit.btn.btn-small(href='#/payment', tabindex='-1', data-bind='visible: visitedAndNotActive', data-i18n='[title]global.edit', title='Cambiar', style='display: none;')
+											i.icon-edit
+								.accordion-body.collapse.in.payment-body
+									.accordion-inner
+										p.notification(data-bind='visible: !active()', data-i18n='global.waiting', style='display: none;') Aún falta llenar con los datos
+										// ko if: isArgentina
+										// /ko
+										.box-step
+											p(data-bind='visible: active() && totalIsFree()', data-i18n='paymentData.totalIsFree', style='display: none;') El costo total de su compra es gratis. Sólo tiene que completar la compra!
+											.alert.alert-block.payment-alert-error.fade.in(data-bind='fadeVisible: active() && validationError()', style='display: none;')
+												button.close(type='button', data-bind='click: clearValidationError') ×
+												p(data-i18n='global.validationErrorInThisForm') Hay un error de validación. Por favor, corrija los campos y vuelva a intentarlo.
+											.alert.alert-block.gift-card-message-container.fade.in(data-bind='fadeVisible: active() && giftCardMessages().length > 0', style='display: none;')
+												// ko foreach: giftCardMessages
+												// /ko
+											.loading.loading-bg(data-bind='fadeVisible: loading', style='display: none;')
+												.loading-img
+													i.icon-spinner.icon-spin.icon-2x
+														span(data-i18n='global.loading') Cargando...
+											.box-step-content(data-bind='fadeVisible: active() || visited()')
+												form.form-step.box-new.row-fluid(action='', data-event='finishPayment', data-bind='fadeVisible: active(), submit: submit')
+													// ko if: paymentGroups.giftCardPaymentGroup                                && paymentGroups.giftCardPaymentGroup.specialGiftCards().length > 0                                && !totalIsFree()
+													// /ko
+													// ko if: paymentGroups.giftCardPaymentGroup
+													// /ko
+													// ko if: paymentGroups.giftCardPaymentGroup && showGiftCard()
+													// /ko
+													fieldset.payment-group(data-bind='visible: showPaymentOptions')
+														h3.hide(data-i18n='paymentData.paymentMethod') Medio de pago
+														p.link.show-credits.hide
+															a(href='javascript:void(0);', data-i18n='paymentData.showCredits') Mostrar el crédito de la lista de matrimonio y del plan de fidelidad
+														// para ser usado COM radio button
+														.payment-group-list.required.button-list.inline-list.hide(data-bind='foreach: paymentGroupArray')
+															// ko if: showAsTab
+															p.radio.first.checked(data-bind='css: {first: $parent.paymentGroupArray()[0] === $data,                                         last: $parent.paymentGroupArray()[$parent.paymentGroupArray().length - 1] === $data,                                         checked: $parent.selectedPaymentGroupId() == id}')
+																input#paymentGroup-1457456821572ega8g820mq60qkt9(type='radio', data-bind="value: id, attr:{id:'paymentGroup' + id}, checked: $parent.selectedPaymentGroupId", name='paymentGroup', value='-1457456821572ega8g820mq60qkt9')
+																label.btn(data-bind="text: localizedLabel, attr:{'for':'paymentGroup' + id, htmlFor:'paymentGroup' + id}", for='paymentGroup-1457456821572ega8g820mq60qkt9', htmlfor='paymentGroup-1457456821572ega8g820mq60qkt9') PagoEfectivo
+															// /ko
+															// ko if: showAsTab
+															p.radio.last(data-bind='css: {first: $parent.paymentGroupArray()[0] === $data,                                         last: $parent.paymentGroupArray()[$parent.paymentGroupArray().length - 1] === $data,                                         checked: $parent.selectedPaymentGroupId() == id}')
+																input#paymentGroup-14574568215726cqy79pj5bjll3di(type='radio', data-bind="value: id, attr:{id:'paymentGroup' + id}, checked: $parent.selectedPaymentGroupId", name='paymentGroup', value='-14574568215726cqy79pj5bjll3di')
+																label.btn(data-bind="text: localizedLabel, attr:{'for':'paymentGroup' + id, htmlFor:'paymentGroup' + id}", for='paymentGroup-14574568215726cqy79pj5bjll3di', htmlfor='paymentGroup-14574568215726cqy79pj5bjll3di') Tarjeta de crédito
+															// /ko
+														// /para ser usado COM radio button
+														// para ser usado SEM radio button
+														.required.payment-group-list-btn(data-bind='foreach: paymentGroupArray')
+															// ko if: showAsTab
+															a#payment-group-PagoEfectivoPaymentGroup.payment-group-item.active(href='javascript:void(0);', data-bind="click: $parent.selectPaymentGroup, attr:{ 'id':'payment-group-' + groupName(), 'class': className + ' payment-group-item' }, css: { active: $parent.selectedPaymentGroupId() == id }")
+																span.payment-group-item-text(data-bind='text: localizedLabel') PagoEfectivo
+															// /ko
+															// ko if: showAsTab
+															a#payment-group-creditCardPaymentGroup.payment-group-item(href='javascript:void(0);', data-bind="click: $parent.selectPaymentGroup, attr:{ 'id':'payment-group-' + groupName(), 'class': className + ' payment-group-item' }, css: { active: $parent.selectedPaymentGroupId() == id }")
+																span.payment-group-item-text(data-bind='text: localizedLabel') Tarjeta de crédito
+															// /ko
+														// /para ser usado SEM radio button
+													.steps-view(data-bind='visible: showPaymentOptions')
+														// ko foreach: paymentGroupArray
+														// ko if: showAsTab
+														div(data-bind='template: { name: template() }')
+															fieldset.box-payment-group2.box-payment-option.PagoEfectivoPaymentGroup(data-bind='fadeVisible: $parent.selectedPaymentGroupId() == id, css: groupName()')
+																h3(data-bind='text: localizedLabel') PagoEfectivo
+																p.payment-description(data-bind='text: localizedDescription') PagoEfectivo
+																// ko if: installments()
+																.installments
+																	// ko if: installments().length > 1
+																	// /ko
+																	// ko if: installments().length == 1
+																	p.sight(data-bind='with: installments()[0]')
+																		span(data-bind='text: text') Total - S/. 1,772.00
+																	// /ko
+																// /ko
+														// /ko
+														// ko if: showAsTab
+														div(data-bind='template: { name: template() }')
+															fieldset.box-payment-option.one-card(data-bind="fadeVisible: $parent.selectedPaymentGroupId() == id, attr: {'class': className + ' box-payment-option'}, css: { 'one-card': cards().length == 1, 'two-cards': cards().length == 2, 'is-custom': isCustom() }", style='display: none;')
+																h3(data-bind="attr: { 'data-i18n': pgTitle }", data-i18n='paymentData.paymentGroup.creditCard.creditCard') Tarjeta de crédito
+																span.security.payment-security
+																	i.icon-lock
+																	span.payment-security-text(data-i18n='paymentData.secureEnvironment') Ambiente Seguro
+																// ko foreach: {data: cards, afterRender: afterRenderGroup}
+																#creditCardpayment-card-1457456821574.payment-card.payment-card-position-0(data-bind="attr: { id: $parent.identifier() + 'payment-card' + id }, css: 'payment-card payment-card-position-' + $index()")
+																	// ko if: $index() == 0
+																	h5(data-bind='fadeVisible: $parent.isUsingMoreThanOneCard', data-i18n='paymentData.paymentGroup.creditCard.firstCard', style='display: none;') Primera tarjeta
+																	// /ko
+																	// ko ifnot: $index() == 0
+																	// /ko
+																	// CARTOES SALVOS
+																	.saved-cards(data-bind='if: unusedAvailableAccounts().length, css: { active: unusedAvailableAccounts().length > 0 && isSavedCreditCardsVisible() == true }')
+																	// FIM CARTOES SALVOS
+																	.clearfix.card-data.active(data-bind="if: isUsingNewCard, css: { 'active': isUsingNewCard }")
+																		.clearfix
+																			p.link.link-box-new(data-bind='visible: unusedAvailableAccounts().length > 0', style='display: none;')
+																				a(href='javascript:void(0);', data-bind="click: $data.toggleSavedCardsVisibility, text: i18n.t('paymentData.backCreditCardList')") Volver para las opciones de tarjetas
+																			// is waiting for card scanner
+																			.card-scanner-waiting(data-bind="template: { name: 'cardScanner-template', 'if': isWaitingForCardScanner, afterRender: vtex.i18n.translateHtml }")
+																			// is not waiting for card scanner
+																			.card-ready-for-typing(data-bind="template: { name: 'cardFields-template', 'if': !isWaitingForCardScanner(), afterRender: vtex.i18n.translateHtml }")
+																				p.card-scanner-scan
+																					a.card-scanner-scan-link(href='javascript:void(0);', data-bind='visible: canUseCardScanner() && !labelCardFields(), click: toggleCardForm', data-i18n='paymentData.paymentGroup.creditCard.scanner.scanCard', style='display: none;') Escanear tarjeta
+																				.card-scanner-label-all-fields(data-bind='if: !labelCardFields()')
+																					p.payment-card-number.input.text.required.clearLeft
+																						label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Number', htmlFor: $parent.identifier()+'payment-card' + id + 'Number'}", for='creditCardpayment-card-1457456821574Number', htmlfor='creditCardpayment-card-1457456821574Number')
+																							span(data-i18n='paymentData.paymentGroup.creditCard.number') Número 
+																						// ko if: checkout.isTotem
+																						// /ko
+																						// ko ifnot: checkout.isTotem
+																						input#creditCardpayment-card-1457456821574Number.input-medium.autofocus.dont-track-input(type='tel', name='cardNumber', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Number'},                    value: cardNumber, valueUpdate: 'afterkeydown', validate: validateCreditCard, required: true,                    disable: checkout.disableInputs()")
+																						// /ko
+																						span.help.hide
+																							span.helpTitle(href='javascript:void(0);', data-i18n='global.help') Ayuda
+																							span.helpMessage.hide(data-i18n='paymentData.paymentGroup.creditCard.helpHiperCard')
+																								| Si su tarjeta Hipercard tiene una secuencia de 6 números, arriba de la secuencia principal de 13 números, es necesario escribir todos los números, comenzando desde los 6 pequeños, sumando un total de 19 números.
+																					.card-flags-container.clearfix.form-inline(data-bind="css: {'hide': isCreditCardCustom}")
+																						p.card-flags.active(data-bind="css: { 'active': selectedCardFlag() }")
+																							// ko foreach: parent.availableFlags
+																							label.radio.card-flag-label(data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}", for='creditCardselectedCard0cc-1457456821574', htmlfor='creditCardselectedCard0cc-1457456821574', title='American Express')
+																								input#creditCardselectedCard0cc-1457456821574.card-flag-radio(type='radio', tabindex='-1', data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()", name='creditCardselectedCardFlag-1457456821574', value='1')
+																								span.card-flag.American.Express.card-selected(data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}") American Express
+																							label.radio.card-flag-label(data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}", for='creditCardselectedCard1cc-1457456821574', htmlfor='creditCardselectedCard1cc-1457456821574', title='Mastercard')
+																								input#creditCardselectedCard1cc-1457456821574.card-flag-radio(type='radio', tabindex='-1', data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()", name='creditCardselectedCardFlag-1457456821574', value='4')
+																								span.card-flag.Mastercard(data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}") Mastercard
+																							label.radio.card-flag-label(data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}", for='creditCardselectedCard2cc-1457456821574', htmlfor='creditCardselectedCard2cc-1457456821574', title='Visa')
+																								input#creditCardselectedCard2cc-1457456821574.card-flag-radio(type='radio', tabindex='-1', data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()", name='creditCardselectedCardFlag-1457456821574', value='2')
+																								span.card-flag.Visa(data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}") Visa
+																							label.radio.card-flag-label(data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}", for='creditCardselectedCard3cc-1457456821574', htmlfor='creditCardselectedCard3cc-1457456821574', title='Diners')
+																								input#creditCardselectedCard3cc-1457456821574.card-flag-radio(type='radio', tabindex='-1', data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()", name='creditCardselectedCardFlag-1457456821574', value='3')
+																								span.card-flag.Diners(data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}") Diners
+																							// /ko
+																					.alert.payment-installment-alert-error(data-bind='fadeVisible: noInstallmentsAvailable', style='display: none;')
+																						p(data-i18n='paymentData.cardNotAccepted') El emisor bancaria de esta tarjeta no es aceptada.
+																					.box-installments.box-default(data-bind='if: showInstallmentOptions')
+																						p.select.required
+																							label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Brand', htmlFor: $parent.identifier()+'payment-card' + id + 'Brand'}", for='creditCardpayment-card-1457456821574Brand', htmlfor='creditCardpayment-card-1457456821574Brand') Parcelamento
+																							select#creditCardpayment-card-1457456821574Brand.input-xlarge(data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Brand'},                    options: installments, value: selectedInstallmentNumber, required: true,                    optionsText: 'text', optionsValue: 'number', optionsCaption: installmentsCaption, optionsAfterRender: setOptionDisable")
+																								option(value='') En cuantas cuotas deseas pagar?
+																					p.payment-card-name.input.text.required(data-bind="css: {'required': cardOwnerNameRequired, 'hide': !cardOwnerNameRequired()}")
+																						label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Name', htmlFor: $parent.identifier()+'payment-card' + id + 'Name'}", for='creditCardpayment-card-1457456821574Name', htmlfor='creditCardpayment-card-1457456821574Name')
+																							span(data-i18n='paymentData.paymentGroup.creditCard.holderName') Nombre como figura en la tarjeta 
+																						input#creditCardpayment-card-1457456821574Name.input-medium(type='text', name='ccName', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Name'},                   value: cardOwnerName, valueUpdate:'afterkeydown',                   validate: 'alpha', required: cardOwnerNameRequired, disable: checkout.disableInputs()")
+																					.payment-card-due(data-bind="css: {'hide': !cardExpirationDateRequired()}")
+																						label.label-text.pull-left(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Month'}", for='creditCardpayment-card-1457456821574Month')
+																							span(data-i18n='paymentData.paymentGroup.creditCard.dueDate') Fecha de Vencimiento
+																						p.payment-card-due-month.input.text.required(data-bind="css: {'required': cardExpirationDateRequired}")
+																							select#creditCardpayment-card-1457456821574Month.input-mini(name='cardExpirationMonth', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Month'},             options: months, optionsCaption: localizedMonth(), value: cardDueMonth, validate: validateDueMonth, required: cardExpirationDateRequired, disable: checkout.disableInputs()")
+																								option(value='') MM
+																								option(value='01') 01
+																								option(value='02') 02
+																								option(value='03') 03
+																								option(value='04') 04
+																								option(value='05') 05
+																								option(value='06') 06
+																								option(value='07') 07
+																								option(value='08') 08
+																								option(value='09') 09
+																								option(value='10') 10
+																								option(value='11') 11
+																								option(value='12') 12
+																						p.payment-card-lash /
+																						p.payment-card-due-year.input.text.required(data-bind="css: {'required': cardExpirationDateRequired}")
+																							select#creditCardpayment-card-1457456821574Year.input-mini(name='cardExpirationYear', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Year'}, options: years,  optionsCaption: localizedYear(), value: cardDueYear, validate: validateDueYear, required: cardExpirationDateRequired, disable: checkout.disableInputs()")
+																								option(value='') AA
+																								option(value='16') 16
+																								option(value='17') 17
+																								option(value='18') 18
+																								option(value='19') 19
+																								option(value='20') 20
+																								option(value='21') 21
+																								option(value='22') 22
+																								option(value='23') 23
+																								option(value='24') 24
+																								option(value='25') 25
+																								option(value='26') 26
+																				// !labelCardFields
+																				.card-scanner-resume(data-bind='if: labelCardFields')
+																				// labelCardFields
+																				p.payment-card-cvv.input.text.required(data-bind="css: {'required': cardSafetyCodeRequired, 'hide': !cardSafetyCodeRequired()}")
+																					label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Code', htmlFor: $parent.identifier()+'payment-card' + id + 'Code'}", for='creditCardpayment-card-1457456821574Code', htmlfor='creditCardpayment-card-1457456821574Code')
+																						span(data-i18n='paymentData.paymentGroup.creditCard.ccv') Código de Seguridad
+																					// ko if: checkout.isTotem
+																					// /ko
+																					// ko ifnot: checkout.isTotem
+																					input#creditCardpayment-card-1457456821574Code.card-cvv.input-mini.dont-track-input.cvv-wide(type='tel', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Code',                              'maxlength': cardCodeMask().length},                        css: { 'cvv-wide': cardCodeMask().length > 3 },                        value: cardSafetyCode,                        valueUpdate:'afterkeydown',                        validate: validateCardCode,                        required: cardSafetyCodeRequired,                        maskOnBlur: cardCodeMask,                        hasfocus: cardSafetyCodeHasFocus,                        disable: checkout.disableInputs()", maxlength='4')
+																					// /ko
+																					span.cvv-help.not-saved-cvv-help.field-help.cvv-four-digits(data-bind="css: { 'cvv-four-digits': cardCodeMask().length > 3 }, fadeVisible: cardSafetyCodeHasFocus() && !cardSafetyCode.lastValidationResult()", style='display: none;')
+																						span.cvv-help-arrow.help-arrow.left-arrow
+																						span.cvv-help-message.cvv-help-message-3-numbers.help-message(data-i18n='paymentData.paymentGroup.creditCard.help', data-bind='visible: cardCodeMask().length == 3', style='display: none;') Los 3 números de la parte de atrás de su tarjeta.
+																						span.cvv-help-message.cvv-help-message-4-numbers.help-message(data-i18n='paymentData.paymentGroup.creditCard.helpAmex', data-bind='visible: cardCodeMask().length > 3') Los 4 números de la parte de frente de su tarjeta.
+																				p.payment-value(data-bind='fadeVisible: !showInstallmentOptions()', style='display: none;')
+																					span.payment-value-label(data-i18n='paymentData.paymentGroup.creditCard.value') Monto 
+																					span.payment-value-value(data-bind='text: paidValueLabel') S/. 1,699.00
+																				p.holder-document.input.text.required.mask.hide(data-bind="css: {'holder-document-required':holderDocumentRequired, 'hide': !holderDocumentRequired()}")
+																					label(for='holder-document', data-bind='text: documentOwner') Documento de Identidad del la personal
+																					input#holder-document.input-small(type='text', data-bind="value: document, valueUpdate:'afterkeydown',                validate: validateDocument, required: holderDocumentRequired,                maskOnBlur: checkout.documentMask(), attr: documentAttributeBindings, disable: checkout.disableInputs()")
+																		// isUsingNewCard
+																		div(data-bind='if: cardFormVisible()')
+																			p.payment-card-value.input.text.required(data-bind='fadeVisible: $parent.isUsingMoreThanOneCard', style='display: none;')
+																				label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Value', htmlFor: $parent.identifier()+'payment-card' + id + 'Value'}, visible: !isPaidValueNull()", for='creditCardpayment-card-1457456821574Value', htmlfor='creditCardpayment-card-1457456821574Value')
+																					span(data-i18n='paymentData.paymentGroup.creditCard.value') Monto 
+																				span.input-prepend
+																					span.add-on(data-bind='text: vtex.i18n.getCurrency()') S/. 
+																					input#creditCardpayment-card-1457456821574Value.input-mini.card-value(type='text', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Value'},                                            value: paidValue, valueUpdate:'afterkeydown',                                            validate: validatePaidValue, disable: checkout.disableInputs() || checkout.backgroundLoading()")
+																			// ko if: billingAddressRequired() && $data.isUsingNewCard()
+																			p.same-address.checkbox(data-bind='visible: !checkout.isUsingGiftRegistryAddress()')
+																				input#same-address0(type='checkbox', data-bind="checked: sameBillingAddress,                        attr:{'id':'same-address'+$index()}, disable: checkout.disableInputs()")
+																				label(data-i18n='paymentData.sameBillingAddress', data-bind="attr:{'for':'same-address'+$index(), 'htmlFor':'same-address'+$index()}", for='same-address0', htmlfor='same-address0') Mi dirección de facturación es la misma de la entrega
+																			// ko if: !sameBillingAddress()
+																			// /ko
+																			// /ko
+																	// isUsingNewCard
+																// end foreach cards
+																// /ko
+																div(data-bind='visible: showUseMoreCards')
+																	p.link.link-two-cards.clearfix(data-bind='visible: maxNumberOfCards() > 1')
+																		a#use-one-more-card(href='javascript:void(0);', data-bind='click: useOneMoreCard, visible: !isUsingMoreThanOneCard()', data-i18n='paymentData.paymentGroup.creditCard.payWithTwo') Pagar con 2 tarjetas
+																		a#use-one-less-card(href='javascript:void(0);', data-bind='click: useOneLessCard, visible: isUsingMoreThanOneCard()', data-i18n='paymentData.paymentGroup.creditCard.payWithOne', style='display: none;') Pagar con 1 tarjeta
+														// /ko
+														// /ko
+														p.button.submit.payment-submit-hide
+															button.submit.btn.btn-success.btn-large(type='submit', data-bind='click: submit, disable: checkout.disablePaymentButton')
+																i.icon-lock
+																span(data-i18n='paymentData.confirm') Comprar ahora
+												form#sendPayments(data-event='sendPayments', method='post', name='sendPayments', action='')
+													input#paymentsArray(name='paymentsArray', type='hidden')
+													input#callbackURL(name='callbackUrl', type='hidden', data-bind='value: gatewayCallbackURL', value='https://www.estilomio.com/checkout/gatewayCallback/{0}/{1}/{2}')
+										.clearfix
+									p.link.back.hide
+										a(href='#/shipping')
+											span(data-i18n='global.backTo') Volver para 
+											span(data-i18n='shippingData.shippingAddressTitle') Dirección de envío
+
+						#payment-data11.mt20.pull-right.payment-data.span12(data-bind="template: {name: 'orderForm-paymentData-template', afterRender: afterRender}, css: { 'span6': !active(), 'span12': active }")
+							.step.accordion-group.active(data-bind='css: {active: active, filled: visitedAndNotActive}')
+								.accordion-heading
+									span.accordion-toggle.collapsed.accordion-toggle-active(data-bind="css: {'accordion-toggle-active': active}")
+										i.icon-credit-card
+										span(data-i18n='paymentData.payment') Pago
+										a.link-box-edit.btn.btn-small(href='#/payment', tabindex='-1', data-bind='visible: visitedAndNotActive', data-i18n='[title]global.edit', style='display: none;', title='Cambiar')
+											i.icon-edit
+								.accordion-body.collapse.in.payment-body
+									.accordion-inner
+										p.notification(data-bind='visible: !active()', data-i18n='global.waiting', style='display: none;') Aún falta llenar con los datos
+										// ko if: isArgentina
+										// /ko
+										.box-step
+											p(data-bind='visible: active() && totalIsFree()', data-i18n='paymentData.totalIsFree', style='display: none;') El costo total de su compra es gratis. Sólo tiene que completar la compra!
+											.alert.alert-block.payment-alert-error.fade.in(data-bind='fadeVisible: active() && validationError()', style='display: none;')
+												button.close(type='button', data-bind='click: clearValidationError') ×
+												p(data-i18n='global.validationErrorInThisForm') Hay un error de validación. Por favor, corrija los campos y vuelva a intentarlo.
+											.alert.alert-block.gift-card-message-container.fade.in(data-bind='fadeVisible: active() && giftCardMessages().length > 0', style='display: none;')
+												// ko foreach: giftCardMessages
+												// /ko
+											.loading.loading-bg(data-bind='fadeVisible: loading', style='display: none;')
+												.loading-img
+													i.icon-spinner.icon-spin.icon-2x
+														span(data-i18n='global.loading') Cargando...
+											.box-step-content(data-bind='fadeVisible: active() || visited()')
+												form.form-step.box-new.row-fluid(action='', data-event='finishPayment', data-bind='fadeVisible: active(), submit: submit')
+													// ko if: paymentGroups.giftCardPaymentGroup                                && paymentGroups.giftCardPaymentGroup.specialGiftCards().length > 0                                && !totalIsFree()
+													// /ko
+													// ko if: paymentGroups.giftCardPaymentGroup
+													// /ko
+													// ko if: paymentGroups.giftCardPaymentGroup && showGiftCard()
+													// /ko
+													fieldset.payment-group(data-bind='visible: showPaymentOptions')
+														h3.hide(data-i18n='paymentData.paymentMethod') Medio de pago
+														p.link.show-credits.hide
+															a(href='javascript:void(0);', data-i18n='paymentData.showCredits') Mostrar el crédito de la lista de matrimonio y del plan de fidelidad
+														// para ser usado COM radio button
+														.payment-group-list.required.button-list.inline-list.hide(data-bind='foreach: paymentGroupArray')
+															// ko if: showAsTab
+															p.radio.first(data-bind='css: {first: $parent.paymentGroupArray()[0] === $data,                                         last: $parent.paymentGroupArray()[$parent.paymentGroupArray().length - 1] === $data,                                         checked: $parent.selectedPaymentGroupId() == id}')
+																input#paymentGroup-1456778447074usvj679hjtnjyvi(type='radio', data-bind="value: id, attr:{id:'paymentGroup' + id}, checked: $parent.selectedPaymentGroupId", name='paymentGroup', value='-1456778447074usvj679hjtnjyvi')
+																label.btn(data-bind="text: localizedLabel, attr:{'for':'paymentGroup' + id, htmlFor:'paymentGroup' + id}", for='paymentGroup-1456778447074usvj679hjtnjyvi', htmlfor='paymentGroup-1456778447074usvj679hjtnjyvi') PagoEfectivo
+															// /ko
+															// ko if: showAsTab
+															p.radio.last.checked(data-bind='css: {first: $parent.paymentGroupArray()[0] === $data,                                         last: $parent.paymentGroupArray()[$parent.paymentGroupArray().length - 1] === $data,                                         checked: $parent.selectedPaymentGroupId() == id}')
+																input#paymentGroup-1456778447075kv40x0nsedf8byb9(type='radio', data-bind="value: id, attr:{id:'paymentGroup' + id}, checked: $parent.selectedPaymentGroupId", name='paymentGroup', value='-1456778447075kv40x0nsedf8byb9')
+																label.btn(data-bind="text: localizedLabel, attr:{'for':'paymentGroup' + id, htmlFor:'paymentGroup' + id}", for='paymentGroup-1456778447075kv40x0nsedf8byb9', htmlfor='paymentGroup-1456778447075kv40x0nsedf8byb9') Tarjeta de crédito
+															// /ko
+														// /para ser usado COM radio button
+														// para ser usado SEM radio button
+														.required.payment-group-list-btn(data-bind='foreach: paymentGroupArray')
+															// ko if: showAsTab
+															a#payment-group-PagoEfectivoPaymentGroup.payment-group-item(href='javascript:void(0);', data-bind="click: $parent.selectPaymentGroup, attr:{ 'id':'payment-group-' + groupName(), 'class': className + ' payment-group-item' }, css: { active: $parent.selectedPaymentGroupId() == id }")
+																span.payment-group-item-text(data-bind='text: localizedLabel') PagoEfectivo
+															// /ko
+															// ko if: showAsTab
+															a#payment-group-creditCardPaymentGroup.payment-group-item.active(href='javascript:void(0);', data-bind="click: $parent.selectPaymentGroup, attr:{ 'id':'payment-group-' + groupName(), 'class': className + ' payment-group-item' }, css: { active: $parent.selectedPaymentGroupId() == id }")
+																span.payment-group-item-text(data-bind='text: localizedLabel') Tarjeta de crédito
+															// /ko
+														// /para ser usado SEM radio button
+													.steps-view(data-bind='visible: showPaymentOptions')
+														// ko foreach: paymentGroupArray
+														// ko if: showAsTab
+														div(data-bind='template: { name: template() }')
+															fieldset.box-payment-group2.box-payment-option.PagoEfectivoPaymentGroup(data-bind='fadeVisible: $parent.selectedPaymentGroupId() == id, css: groupName()', style='display: none;')
+																h3(data-bind='text: localizedLabel') PagoEfectivo
+																p.payment-description(data-bind='text: localizedDescription') PagoEfectivo
+																// ko if: installments()
+																.installments
+																	// ko if: installments().length > 1
+																	// /ko
+																	// ko if: installments().length == 1
+																	p.sight(data-bind='with: installments()[0]')
+																		span(data-bind='text: text') Total - S/. 118.00
+																	// /ko
+																// /ko
+														// /ko
+														// ko if: showAsTab
+														div(data-bind='template: { name: template() }')
+															fieldset.box-payment-option.one-card(data-bind="fadeVisible: $parent.selectedPaymentGroupId() == id, attr: {'class': className + ' box-payment-option'}, css: { 'one-card': cards().length == 1, 'two-cards': cards().length == 2, 'is-custom': isCustom() }", style='display: block;')
+																h3(data-bind="attr: { 'data-i18n': pgTitle }", data-i18n='paymentData.paymentGroup.creditCard.creditCard') Tarjeta de crédito
+																span.security.payment-security
+																	i.icon-lock
+																	span.payment-security-text(data-i18n='paymentData.secureEnvironment') Ambiente Seguro
+																// ko foreach: {data: cards, afterRender: afterRenderGroup}
+																#creditCardpayment-card-1456778447077.payment-card.payment-card-position-0(data-bind="attr: { id: $parent.identifier() + 'payment-card' + id }, css: 'payment-card payment-card-position-' + $index()")
+																	// ko if: $index() == 0
+																	h5(data-bind='fadeVisible: $parent.isUsingMoreThanOneCard', data-i18n='paymentData.paymentGroup.creditCard.firstCard', style='display: none;') Primera tarjeta
+																	// /ko
+																	// ko ifnot: $index() == 0
+																	// /ko
+																	// CARTOES SALVOS
+																	.saved-cards(data-bind='if: unusedAvailableAccounts().length, css: { active: unusedAvailableAccounts().length > 0 && isSavedCreditCardsVisible() == true }')
+																	// FIM CARTOES SALVOS
+																	.clearfix.card-data.active(data-bind="if: isUsingNewCard, css: { 'active': isUsingNewCard }")
+																		.clearfix
+																			p.link.link-box-new(data-bind='visible: unusedAvailableAccounts().length > 0', style='display: none;')
+																				a(href='javascript:void(0);', data-bind="click: $data.toggleSavedCardsVisibility, text: i18n.t('paymentData.backCreditCardList')") Volver para las opciones de tarjetas
+																			// is waiting for card scanner
+																			.card-scanner-waiting(data-bind="template: { name: 'cardScanner-template', 'if': isWaitingForCardScanner, afterRender: vtex.i18n.translateHtml }")
+																			// is not waiting for card scanner
+																			.card-ready-for-typing(data-bind="template: { name: 'cardFields-template', 'if': !isWaitingForCardScanner(), afterRender: vtex.i18n.translateHtml }")
+																				p.card-scanner-scan
+																					a.card-scanner-scan-link(href='javascript:void(0);', data-bind='visible: canUseCardScanner() && !labelCardFields(), click: toggleCardForm', data-i18n='paymentData.paymentGroup.creditCard.scanner.scanCard', style='display: none;') Escanear tarjeta
+																				.card-scanner-label-all-fields(data-bind='if: !labelCardFields()')
+																					p.payment-card-number.input.text.required.clearLeft
+																						label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Number', htmlFor: $parent.identifier()+'payment-card' + id + 'Number'}", for='creditCardpayment-card-1456778447077Number', htmlfor='creditCardpayment-card-1456778447077Number')
+																							span(data-i18n='paymentData.paymentGroup.creditCard.number') Número 
+																						// ko if: checkout.isTotem
+																						// /ko
+																						// ko ifnot: checkout.isTotem
+																						input#creditCardpayment-card-1456778447077Number.input-medium.autofocus.dont-track-input.error(type='tel', name='cardNumber', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Number'},                    value: cardNumber, valueUpdate: 'afterkeydown', validate: validateCreditCard, required: true,                    disable: checkout.disableInputs()")
+																						// /ko
+																						span.help.hide
+																							span.helpTitle(href='javascript:void(0);', data-i18n='global.help') Ayuda
+																							span.helpMessage.hide(data-i18n='paymentData.paymentGroup.creditCard.helpHiperCard')
+																								| Si su tarjeta Hipercard tiene una secuencia de 6 números, arriba de la secuencia principal de 13 números, es necesario escribir todos los números, comenzando desde los 6 pequeños, sumando un total de 19 números.
+																						span.help.error Este campo es obligatorio.
+																					.card-flags-container.clearfix.form-inline(data-bind="css: {'hide': isCreditCardCustom}")
+																						p.card-flags.active(data-bind="css: { 'active': selectedCardFlag() }")
+																							// ko foreach: parent.availableFlags
+																							label.radio.card-flag-label(data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}", for='creditCardselectedCard0cc-1456778447077', htmlfor='creditCardselectedCard0cc-1456778447077')
+																								input#creditCardselectedCard0cc-1456778447077.card-flag-radio(type='radio', tabindex='-1', data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()", name='creditCardselectedCardFlag-1456778447077', value='1')
+																								span.card-flag.American.Express(data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}") American Express
+																							label.radio.card-flag-label(data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}", for='creditCardselectedCard1cc-1456778447077', htmlfor='creditCardselectedCard1cc-1456778447077')
+																								input#creditCardselectedCard1cc-1456778447077.card-flag-radio(type='radio', tabindex='-1', data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()", name='creditCardselectedCardFlag-1456778447077', value='4')
+																								span.card-flag.Mastercard(data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}") Mastercard
+																							label.radio.card-flag-label(data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}", for='creditCardselectedCard2cc-1456778447077', htmlfor='creditCardselectedCard2cc-1456778447077')
+																								input#creditCardselectedCard2cc-1456778447077.card-flag-radio(type='radio', tabindex='-1', data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()", name='creditCardselectedCardFlag-1456778447077', value='2')
+																								span.card-flag.Visa.card-selected(data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}") Visa
+																							label.radio.card-flag-label(data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}", for='creditCardselectedCard3cc-1456778447077', htmlfor='creditCardselectedCard3cc-1456778447077')
+																								input#creditCardselectedCard3cc-1456778447077.card-flag-radio(type='radio', tabindex='-1', data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()", name='creditCardselectedCardFlag-1456778447077', value='3')
+																								span.card-flag.Diners(data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}") Diners
+																							// /ko
+																					.alert.payment-installment-alert-error(data-bind='fadeVisible: noInstallmentsAvailable', style='display: none;')
+																						p(data-i18n='paymentData.cardNotAccepted') El emisor bancaria de esta tarjeta no es aceptada.
+																					.box-installments.box-default(data-bind='if: showInstallmentOptions')
+																						p.select.required
+																							label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Brand', htmlFor: $parent.identifier()+'payment-card' + id + 'Brand'}", for='creditCardpayment-card-1456778447077Brand', htmlfor='creditCardpayment-card-1456778447077Brand') Parcelamento
+																							select#creditCardpayment-card-1456778447077Brand.input-xlarge.success(data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Brand'},                    options: installments, value: selectedInstallmentNumber, required: true,                    optionsText: 'text', optionsValue: 'number', optionsCaption: installmentsCaption, optionsAfterRender: setOptionDisable")
+																								option(value='', disabled='') En cuantas cuotas deseas pagar?
+																								option(value='1') Total - S/. 118.00
+																					p.payment-card-name.input.text.required(data-bind="css: {'required': cardOwnerNameRequired, 'hide': !cardOwnerNameRequired()}")
+																						label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Name', htmlFor: $parent.identifier()+'payment-card' + id + 'Name'}", for='creditCardpayment-card-1456778447077Name', htmlfor='creditCardpayment-card-1456778447077Name')
+																							span(data-i18n='paymentData.paymentGroup.creditCard.holderName') Nombre como figura en la tarjeta 
+																						input#creditCardpayment-card-1456778447077Name.input-medium(type='text', name='ccName', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Name'},                   value: cardOwnerName, valueUpdate:'afterkeydown',                   validate: 'alpha', required: cardOwnerNameRequired, disable: checkout.disableInputs()")
+																					.payment-card-due(data-bind="css: {'hide': !cardExpirationDateRequired()}")
+																						label.label-text.pull-left(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Month'}", for='creditCardpayment-card-1456778447077Month')
+																							span(data-i18n='paymentData.paymentGroup.creditCard.dueDate') Fecha de Vencimiento
+																						p.payment-card-due-month.input.text.required(data-bind="css: {'required': cardExpirationDateRequired}")
+																							select#creditCardpayment-card-1456778447077Month.input-mini(name='cardExpirationMonth', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Month'},             options: months, optionsCaption: localizedMonth(), value: cardDueMonth, validate: validateDueMonth, required: cardExpirationDateRequired, disable: checkout.disableInputs()")
+																								option(value='') MM
+																								option(value='01') 01
+																								option(value='02') 02
+																								option(value='03') 03
+																								option(value='04') 04
+																								option(value='05') 05
+																								option(value='06') 06
+																								option(value='07') 07
+																								option(value='08') 08
+																								option(value='09') 09
+																								option(value='10') 10
+																								option(value='11') 11
+																								option(value='12') 12
+																						p.payment-card-lash /
+																						p.payment-card-due-year.input.text.required(data-bind="css: {'required': cardExpirationDateRequired}")
+																							select#creditCardpayment-card-1456778447077Year.input-mini(name='cardExpirationYear', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Year'}, options: years,  optionsCaption: localizedYear(), value: cardDueYear, validate: validateDueYear, required: cardExpirationDateRequired, disable: checkout.disableInputs()")
+																								option(value='') AA
+																								option(value='16') 16
+																								option(value='17') 17
+																								option(value='18') 18
+																								option(value='19') 19
+																								option(value='20') 20
+																								option(value='21') 21
+																								option(value='22') 22
+																								option(value='23') 23
+																								option(value='24') 24
+																								option(value='25') 25
+																								option(value='26') 26
+																				// !labelCardFields
+																				.card-scanner-resume(data-bind='if: labelCardFields')
+																				// labelCardFields
+																				p.payment-card-cvv.input.text.required(data-bind="css: {'required': cardSafetyCodeRequired, 'hide': !cardSafetyCodeRequired()}")
+																					label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Code', htmlFor: $parent.identifier()+'payment-card' + id + 'Code'}", for='creditCardpayment-card-1456778447077Code', htmlfor='creditCardpayment-card-1456778447077Code')
+																						span(data-i18n='paymentData.paymentGroup.creditCard.ccv') Código de Seguridad
+																					// ko if: checkout.isTotem
+																					// /ko
+																					// ko ifnot: checkout.isTotem
+																					input#creditCardpayment-card-1456778447077Code.card-cvv.input-mini.dont-track-input(type='tel', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Code',                              'maxlength': cardCodeMask().length},                        css: { 'cvv-wide': cardCodeMask().length > 3 },                        value: cardSafetyCode,                        valueUpdate:'afterkeydown',                        validate: validateCardCode,                        required: cardSafetyCodeRequired,                        maskOnBlur: cardCodeMask,                        hasfocus: cardSafetyCodeHasFocus,                        disable: checkout.disableInputs()", maxlength='3')
+																					// /ko
+																					span.cvv-help.not-saved-cvv-help.field-help(data-bind="css: { 'cvv-four-digits': cardCodeMask().length > 3 }, fadeVisible: cardSafetyCodeHasFocus() && !cardSafetyCode.lastValidationResult()", style='display: none;')
+																						span.cvv-help-arrow.help-arrow.left-arrow
+																						span.cvv-help-message.cvv-help-message-3-numbers.help-message(data-i18n='paymentData.paymentGroup.creditCard.help', data-bind='visible: cardCodeMask().length == 3', style='') Los 3 números de la parte de atrás de su tarjeta.
+																						span.cvv-help-message.cvv-help-message-4-numbers.help-message(data-i18n='paymentData.paymentGroup.creditCard.helpAmex', data-bind='visible: cardCodeMask().length > 3', style='display: none;') Los 4 números de la parte de frente de su tarjeta.
+																				p.payment-value(data-bind='fadeVisible: !showInstallmentOptions()', style='display: none;')
+																					span.payment-value-label(data-i18n='paymentData.paymentGroup.creditCard.value') Monto 
+																					span.payment-value-value(data-bind='text: paidValueLabel') S/. 118.00
+																				p.holder-document.input.text.required.mask.hide(data-bind="css: {'holder-document-required':holderDocumentRequired, 'hide': !holderDocumentRequired()}")
+																					label(for='holder-document', data-bind='text: documentOwner') Documento de Identidad del la personal
+																					input#holder-document.input-small.success(type='text', data-bind="value: document, valueUpdate:'afterkeydown',                validate: validateDocument, required: holderDocumentRequired,                maskOnBlur: checkout.documentMask(), attr: documentAttributeBindings, disable: checkout.disableInputs()")
+																		// isUsingNewCard
+																		div(data-bind='if: cardFormVisible()')
+																			p.payment-card-value.input.text.required(data-bind='fadeVisible: $parent.isUsingMoreThanOneCard', style='display: none;')
+																				label(data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Value', htmlFor: $parent.identifier()+'payment-card' + id + 'Value'}, visible: !isPaidValueNull()", for='creditCardpayment-card-1456778447077Value', htmlfor='creditCardpayment-card-1456778447077Value')
+																					span(data-i18n='paymentData.paymentGroup.creditCard.value') Monto 
+																				span.input-prepend
+																					span.add-on(data-bind='text: vtex.i18n.getCurrency()') S/. 
+																					input#creditCardpayment-card-1456778447077Value.input-mini.card-value(type='text', data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Value'},                                            value: paidValue, valueUpdate:'afterkeydown',                                            validate: validatePaidValue, disable: checkout.disableInputs() || checkout.backgroundLoading()")
+																			// ko if: billingAddressRequired() && $data.isUsingNewCard()
+																			p.same-address.checkbox(data-bind='visible: !checkout.isUsingGiftRegistryAddress()')
+																				input#same-address0(type='checkbox', data-bind="checked: sameBillingAddress,                        attr:{'id':'same-address'+$index()}, disable: checkout.disableInputs()")
+																				label(data-i18n='paymentData.sameBillingAddress', data-bind="attr:{'for':'same-address'+$index(), 'htmlFor':'same-address'+$index()}", for='same-address0', htmlfor='same-address0') Mi dirección de facturación es la misma de la entrega
+																			// ko if: !sameBillingAddress()
+																			// /ko
+																			// /ko
+																	// isUsingNewCard
+																// end foreach cards
+																// /ko
+																div(data-bind='visible: showUseMoreCards')
+																	p.link.link-two-cards.clearfix(data-bind='visible: maxNumberOfCards() > 1')
+																		a#use-one-more-card(href='javascript:void(0);', data-bind='click: useOneMoreCard, visible: !isUsingMoreThanOneCard()', data-i18n='paymentData.paymentGroup.creditCard.payWithTwo') Pagar con 2 tarjetas
+																		a#use-one-less-card(href='javascript:void(0);', data-bind='click: useOneLessCard, visible: isUsingMoreThanOneCard()', data-i18n='paymentData.paymentGroup.creditCard.payWithOne', style='display: none;') Pagar con 1 tarjeta
+														// /ko
+														// /ko
+														p.button.submit.payment-submit-hide
+															button.submit.btn.btn-success.btn-large(type='submit', data-bind='click: submit, disable: checkout.disablePaymentButton')
+																i.icon-lock
+																span(data-i18n='paymentData.confirm') Comprar ahora
+												form#sendPayments(data-event='sendPayments', method='post', name='sendPayments', action='')
+													input#paymentsArray(name='paymentsArray', type='hidden')
+													input#callbackURL(name='callbackUrl', type='hidden', data-bind='value: gatewayCallbackURL', value='https://www.estilomio.com/checkout/gatewayCallback/{0}/{1}/{2}')
+										.clearfix
+									p.link.back.hide
+										a(href='#/shipping')
+											span(data-i18n='global.backTo') Volver para 
+											span(data-i18n='shippingData.shippingAddressTitle') Dirección de envío
+
+				.cart-template.mini-cart.span4
+					.cart-fixed.cart-fixed-transition.affix-top(style='height: 423px;')
+						h2(data-i18n='totalizers.summary') Resumen de la compra
+						// TODO remove window.router
+						.summary-cart-template-holder(data-bind="fadeVisible: window.router.inOrderForm, template: { name: 'orderForm-summary-cart-template', afterRender: vtex.i18n.translateHtml }", style='display: block; height: auto;')
+							.cart
+								ul.cart-items.unstyled.clearfix
+									- for (var x = 0; x<3 ; x++)
+										li.hproduct.item.muted(data-bind="attr: {'data-sku': id}", data-sku='650453')
+											a.url(href='http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p', data-bind="attr: {'href': ('http://' + location.host + detailUrl())}")
+												img#hproduct-item-650453.photo(height='45', width='45', data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'hproduct-item-' + id()}", src='//estilomio.vteximg.com.br/arquivos/ids/177618-100-100/globe_650453_17.jpg', alt='Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú')
+											span.fn.product-name(data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl())}", href='http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p') Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú
+											span.quantity.badge(data-bind='text: quantity') 2
+											.description
+												span.shipping-date.pull-left.empty(data-bind="text: estimateLabel, css: { 'empty': estimateLabel() == 'a calcular' }") a calcular
+												strong.item-price.pull-right.hide(data-bind='text: priceLabel') S/. 249.00
+												strong.price.pull-right(data-bind='text: sellingPriceLabel') S/. 249.00
+						p.link.link-cart.pull-right
+							small
+								a#orderform-minicart-to-cart(href='#/cart', target='_self', data-event='orderformToCart', data-i18n='global.backToCart') Volver a carrito
+						.summary-template-holder(data-bind="template: 'summary-template'")
+							.row-fluid.summary(data-bind='fadeVisible: window.cart.hasItems() && !loading()', style='display: block;')
+								.forms.coupon-column.summary-coupon-wrap.span7.pull-left(data-bind="css: { 'span7 pull-left': !window.checkout.hasSelectableGifts(), 'span4 pull-right': window.checkout.hasSelectableGifts() }")
+									.coupon.summary-coupon.pull-right(data-bind='with: coupon, visible: hasTotal')
+										form.coupon-form(action='', data-bind='submit: addCoupon')
+											fieldset.coupon-fieldset
+												div(data-bind='fadeVisible: isUsingCoupon()', style='display: none;')
+													p.coupon-label
+														label(for='cart-coupon', data-i18n='totalizers.couponCapitalize') Cupón de descuento
+													p.coupon-fields
+														span(data-bind='visible: !isCouponTyped()')
+															input#cart-coupon.coupon-value.input-small(type='text', data-bind="value: couponCode, valueUpdate:'afterkeydown', disable: loadingCoupon()", placeholder='Código', data-i18n='[placeholder]totalizers.couponCode;')
+															span.loading-inline.loading-coupon(data-bind='fadeInlineVisible: loadingCoupon', style='display: none; opacity: 0;')
+																span(data-i18n='cart.wait') Cargando datos...
+															button#cart-coupon-add.btn(type='submit', data-bind='disable: loadingCoupon', data-i18n='global.add') Sumar
+														span.info(data-bind='visible: isCouponTyped', style='display: none;')
+															span(data-bind='text: value')
+															small.delete
+																a#cart-coupon-remove(href='javascript:void(0);', data-bind='click: removeCoupon', data-i18n='global.delete') Borrar
+												p.coupon-data.pull-right(data-bind='fadeVisible: !isUsingCoupon()')
+													a#cart-link-coupon-add.link-coupon-add(href='javascript:void(0);', data-bind='click: isUsingCoupon')
+														span(data-i18n='global.add') Sumar
+														span(data-i18n='totalizers.coupon') cupón de descuento
+								.span5.totalizers.summary-totalizers.cart-totalizers.pull-right
+									.accordion-group(data-bind='fadeVisible: window.cart.hasItems() && !loading()', style='display: block;')
+										.accordion-heading
+											span.accordion-toggle.collapsed(data-i18n='totalizers.summary') Resumen de la compra
+										.accordion-body.collapse.in
+											.accordion-inner
+												.summary-discount-descriptions(data-bind='visible: discounts().length', style='display: none;')
+													h3.summary-discount-title(data-i18n='totalizers.Discounts') Descuentos
+													ul.all-discount-descriptions.unstyled(data-bind='foreach: discounts()')
+												table.table
+													tbody.totalizers-list(data-bind='foreach: { data: totalizers }')
+														tr.Items(data-bind="visible: visible, attr: { 'class': id }")
+															// ko if: id() == 'Shipping'
+															// /ko
+															// ko ifnot: id() == 'Shipping'
+															td.info(data-bind="attr: {'data-i18n': 'totalizers.' + id()}", data-i18n='totalizers.Items') Subtotal
+															td.space
+															td.monetary(data-bind='text: valueLabel') S/. 498.00
+															td.empty
+															// /ko
+													tbody.shipping-reset(data-bind='visible: isShippingKnown()                                                    && !window.checkout.isNotUsingPostalCode()                                                    && window.cart.items().length == window.cart.unavailableItems().length', style='display: none;')
+														tr
+															td.info
+																span.postal-code-for-sla
+																	span.shipping-name(data-bind="attr: {'data-i18n': 'totalizers.Shipping'}", data-i18n='totalizers.Shipping') Costo del envío
+																	span.shipping-name-to(data-i18n='global.to') para
+																	span.postal-code-value(data-bind='html: window.summary.maskedPostalCode')
+																	a#cart-reset-postal-code.cart-reset-postal-code(href='javascript:void(0);', data-bind='visible : window.checkout.canEditData, click: summary.resetShipping', data-i18n='[title]global.edit', title='Cambiar')
+																		i.icon-remove-sign
+																	br
+																	a#cart-reset-postal-code.cart-reset-postal-code(href='javascript:void(0);', data-bind='visible : window.checkout.canEditData, click: window.summary.resetShipping', data-i18n='cart.resetShipping') Elegir otro código postal
+															td.space
+															td.monetary.shipping-unavailable(data-i18n='global.unavailable') No disponible
+													tbody.shipping-calculate(data-bind='visible: !isShippingKnown() && !window.checkout.isNotUsingPostalCode()', style='display: none;')
+														tr
+															td.info
+																span(data-i18n='cart.calculateShipping') Envío
+															td.space(data-bind='visible: !isUsingPostalCode()')
+															td.monetary(data-bind='visible: !isUsingPostalCode()')
+																a#shipping-calculate-link.shipping-calculate-link(href='javascript:void(0)', data-bind='click: usingPostalCode', data-i18n='cart.calculate') Calcular
+															td.monetary.form-postal-code.forms(data-bind='visible: isUsingPostalCode() && !isShippingKnown()', colspan='3', style='display: none;')
+																.shipping.summary-shipping
+																	form.shipping-form-inline(action='', data-bind='submit: calculateShipping')
+																		fieldset.shipping-fieldset
+																			.shipping-fields
+																				input#summary-postal-code.postal-code.input-mini(type='tel', data-bind="value: postalCode, valueUpdate:'afterkeydown',                                                               validate: 'postalCode', disable: loadingPostalCode,                                                               maskOnBlur: window.checkout.postalCodeMask,                                                               attr: {'placeholder': postalCodeLabel, 'maxlength': window.checkout.postalCodeMask() ? window.checkout.postalCodeMask().length : 9},                                                               css: {'loading-postal-code': loadingPostalCode}", placeholder='CPPER', maxlength='4')
+																				i.loading-inline.icon-spinner.icon-spin(data-bind='fadeInlineVisible: loadingPostalCode', style='display: none; opacity: 0;')
+																					span(data-i18n='cart.wait') Cargando datos...
+																				button#cart-shipping-calculate.btn(type='submit', data-bind='disable: loadingPostalCode', data-i18n='cart.calculate') Calcular
+																			small.postal-code-service.summary-postal-code-service
+																				a#cart-dont-know-postal-code(data-bind="attr: { 'href': window.checkout.postalCodeForgottenURL }", target='_blank', data-i18n='totalizers.dontKnowPostalCode', href='#') No conozco mi Código Postal (CP)
+															td.empty(data-bind='visible: !isUsingPostalCode()')
+													tfoot
+														tr(data-bind="css: {'muted': !hasTotal()}")
+															td.info(data-i18n='global.total') Total
+															td.space
+															td.monetary(data-bind='text: totalLabel') S/. 498.00
+															td.empty
+						.payment-confirmation-wrap
+							.note.summary-note.hide(data-bind="template: 'note-template', css: { hide: !window.cart.allowManualPrice() }")
+								p.note-data(data-bind='fadeVisible: !isUsingNote()')
+									a#cart-link-note-add.link-note-add(href='javascript:void(0);', data-bind='click: setUsingNote')
+										span(data-i18n='global.addNote') Sumar observacíon
+								div(data-bind='fadeVisible: isUsingNote()', style='display: none;')
+									p.note-label
+										label(for='cart-note', data-i18n='global.note') Observacíon
+									textarea#cart-note.note-textarea(row='3', data-bind="value: note, valueUpdate:'blur'", maxlength='1000')
+							p.payment-submit-wrap
+								button#payment-data-submit.submit.btn.btn-success.btn-large.btn-block(data-bind='click: submit, disable: window.checkout.disablePaymentButton', tabindex='200')
+									i.icon-lock(data-bind='visible: !window.checkout.disablePaymentButton()')
+									i.icon-spinner.icon-spin(data-bind='visible: window.checkout.disablePaymentButton()', style='display: none;')
+									span(data-i18n='paymentData.confirm') Comprar ahora
+			// /END ORDERFORM

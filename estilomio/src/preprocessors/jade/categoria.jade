@@ -1,0 +1,39 @@
+extends _layout/layout.jade
+
+block content
+	.container.box_category
+		.box_top_category 
+			.sticker 
+				img.ico(src="http://i.imgur.com/UUK1yeK.png")
+				p.title NIÑOS Y BEBÉS 
+				p.description Los mejores productos para tus hijos
+			.carousel_container
+				.category_carousel 
+					- for (var i = 0; i<8; i++)
+						.collection
+							p Juguetes
+		.breadcrumb 
+			.bread-crumb
+				ul 
+					li
+						a(title='EstiloMio', href='/') EstiloMio
+					li
+						a(title='Moda', href='http://www.estilomio.com/moda') Moda
+					li
+						a(title='Calzado', href='http://www.estilomio.com/moda/calzado?PS=16') Calzado
+					li
+						a(title='Adidas', href='http://www.estilomio.com/moda/calzado/adidas?PS=16') Adidas
+					li.last
+						strong
+							a(title='Casual', href='http://www.estilomio.com/moda/calzado/adidas/Casual?PS=16&map=c,c,b,specificationFilter_17') Casual
+
+		//-a.btn.btn_filter(href="javascript:;") FILTRAR
+		.filter_sidebar
+			include _partials/filter_sidebar.jade
+		.product_grid.search_result_layout
+			include _partials/list_products.jade
+	
+	.container 
+		include _partials/como_comprar_mobile.jade	
+	
+

@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="//io.vtex.com.br/front-libs/bootstrap/2.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/front-libs/bootstrap/2.3.2/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/front-libs/font-awesome/3.2.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/checkout-ui/3.54.1/lib/front-messages-ui/vtex-message.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/checkout-ui/3.54.1/style/style.css">
+    <link href="/demos/estilomio/dist/arquivos//layout_checkout.css" media="all" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <div class="seguro"></div><a href="/" title="Ir para a página inicial" class="logo"></a>
+      </div>
+    </div>
+    <!-- end header-->
+    <div class="container container-main container-order-form">
+      <h1 id="orderform-title" data-i18n="title" data-bind="fadeVisible: inOrderForm" style="display: block;" class="hide">Finalizar la compra</h1>
+      <h1 id="cart-title" data-i18n="shoppingCart" data-bind="fadeVisible: inCart" style="display: none;" class="hide">Carrito de compras</h1><small style="display:none;" data-bind="visible: isUsingGiftRegistry" class="gift-list-alert alert"><i class="icon-gift icon-large"></i><span data-i18n="giftListAlert" class="gift-list-alert-text">Usted está haciendo compras para la lista</span><b data-bind="text: giftRegistryDescription" class="gift-list-alert-name"></b>.<a href="javascript:void(0);" data-bind="click: removeGiftRegistry" data-i18n="giftListDismiss">No comprar en esta lista</a>.</small>
+      <div data-bind="visible: loading" style="display: none;" class="loading loading-bg">
+        <div class="loading-img"><i class="icon-spinner icon-spin icon-3x"><span data-i18n="global.loading">Cargando...</span></i></div>
+      </div>
+      <div class="checkout-container row-fluid orderform-active">
+        <!-- CART-->
+        <div class="cart-template full-cart span12 inactive hide">
+          <div id="cartLoadedDiv" data-bind="template: 'cart-template'" class="cart-template-holder">
+            <div data-bind="fadeVisible: !hasItems() &amp;&amp; !loading()" style="display: none;" class="empty-cart-content">
+              <h2 data-i18n="cart.emptyTitle" class="empty-cart-title">Su carrito está vacio</h2>
+              <div class="empty-cart-message">
+                <p data-i18n="cart.emptyMessage">Para seguir comprando, navegar por las categorías en el sitio, o busque su producto.</p>
+              </div>
+              <div class="clearfix empty-cart-links"><a id="cart-choose-products" href="/" data-i18n="cart.chooseProducts" class="btn btn-large btn-success link-choose-products">Elegir productos</a></div>
+            </div>
+            <div data-bind="visible: hasItems() &amp;&amp; !loading()" class="cart">
+              <table class="table cart-items">
+                <thead>
+                  <tr>
+                    <th colspan="2" data-i18n="global.product" class="product">Producto</th>
+                    <th data-i18n="global.delivery" class="shipping-date">Envío</th>
+                    <th data-i18n="global.price" class="product-price">Precio</th>
+                    <th data-i18n="global.quantity" class="quantity">Cantidad</th>
+                    <th data-i18n="global.total" class="quantity-price">Total</th>
+                    <th class="item-remove"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- ko template: { name: 'cart-item-template', foreach: items, afterRender: vtex.i18n.translateHtml }-->
+                  <tr data-bind="attr: {'data-sku': id}, availableCSS: available()" rowspan="2" data-sku="650453" class="product-item">
+                    <td data-bind="css: { 'product-image': imageUrl }" class="product-image"><a href="http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p" data-bind="attr: {'href': ('http://' + location.host + detailUrl())}"><img id="product-image-650453" height="45" width="45" data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'product-image-' + id()}" src="//estilomio.vteximg.com.br/arquivos/ids/177618-100-100/globe_650453_17.jpg" alt="Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú"></a></td>
+                    <td class="product-name"><a id="product-name650453" href="http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p" data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl()), 'id': 'product-name' + id() }">Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú</a>
+                      <div class="brand"><span data-i18n="cart.seller.brand" class="brand-label">Marca</span><span data-bind="text: brand" class="brand-name">Globe</span></div><small data-bind="if: sellerName" class="seller muted"><span data-i18n="cart.soldBy">Suministrados y entregados por</span><span data-bind="text: sellerName">EstiloMio</span></small>
+                      <ul data-bind="foreach: priceTags" class="item-discount-descriptions"></ul>
+                      <!-- ko if: router.inCart() == true  && availableOfferings()-->
+                      <!-- /ko-->
+                    </td>
+                    <td data-bind="css: { 'empty': estimateLabel() == 'a calcular' }" class="shipping-date empty">
+                      <!-- ko if: available()--><span data-bind="text: estimateLabel" class="shipping-estimate-date">a calcular</span><span data-bind="text: estimateDetailLabel" class="shipping-estimate-date shipping-estimate-detail"></span>
+                      <div class="sla-info hide">
+                        <div data-bind="text: shippingPriceLabel" class="sla-price"></div>
+                        <div class="sla-name"><small data-bind="text: shippingName"></small></div>
+                      </div>
+                      <!-- /ko-->
+                      <!-- ko ifnot: available()-->
+                      <!-- /ko-->
+                    </td>
+                    <td class="product-price">
+                      <!-- ko if: isPriceVisible--><span data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() &amp;&amp; manualPrice() == null)" class="list-price"><span data-i18n="cart.oldPrice" class="old-product-price-label">De</span>
+                        <del data-bind="text: listPriceLabel" class="old-product-price muted">S/. 309.00</del></span><br data-bind="css: { 'hide' : !isListPriceVisible() }"><span class="best-price"><span data-i18n="cart.newPrice" data-bind="css: { 'hide' : !isListPriceVisible() }, visible: manualPrice() == null || (isManualPriceActive() &amp;&amp; manualPrice() == null)" class="new-product-price-label">Por</span>
+                        <!-- ko ifnot: isManualPriceActive()--><span data-bind="text: priceLabel" class="new-product-real-price hide">S/. 249.00</span>
+                        <!-- ko if: $parent.allowManualPrice()-->
+                        <!-- /ko-->
+                        <!-- ko ifnot: $parent.allowManualPrice()--><span data-bind="text: sellingPriceLabel" class="new-product-price">S/. 249.00</span>
+                        <!-- /ko--><a href="javascript:void(0);" data-bind="click: removeManualPrice, visible: manualPrice() != null" data-i18n="[title]global.remove" title="Retirar" style="display: none;" class="manualprice-link-remove"><i class="icon icon-remove item-remove-ico"></i><span data-i18n="global.remove" class="hide manualprice-remove-text">Retirar</span></a>
+                        <!-- /ko-->
+                        <!-- ko if: isManualPriceActive()-->
+                        <!-- /ko--><small data-bind="text: priceLabelPerUnit" class="new-product-real-price-per-unit"></small><a href="javascript:void(0);" data-bind="fadeVisible: showDiscountButton" style="display: none;" class="discount"><span data-bind="event: { 'mouseover': toggleDiscount, 'mouseout': toggleDiscount }" class="how-much-discount"><i class="icon-question-sign"></i></span></a><span data-bind="fadeVisible: showDiscount" style="display: none;" class="field-help"><span class="help-arrow top-arrow"></span><span class="fast-shopping-help-message help-message"><strong class="fast-shopping-help-message-title help-message-title"><i class="icon-info-sign"></i><span data-i18n="totalizers.Discounts">Descuentos</span></strong><br>
+                            <!-- ko if: price() > sellingPrice()-->
+                            <!-- /ko--></span></span></span>
+                      <!-- /ko-->
+                    </td>
+                    <td data-bind="css: {'cant-change-qty': !canChangeQty(), 'quantity-large': quantity() &gt; 999},                   attr: { 'disabled': window.cart.loadingItem }" class="quantity">
+                      <!-- ko if: router.inCart-->
+                      <!-- /ko-->
+                      <!-- ko if: router.inOrderForm--><span data-bind="text: quantity">2</span>
+                      <!-- /ko--><small data-bind="text: multiplierLabel" class="item-multiplier-label"></small><small data-bind="text: unitLabel" class="item-unit-label"></small>
+                    </td>
+                    <td class="quantity-price"><span data-bind="text: priceValueLabel, if: isPriceVisible" class="total-price hide">S/. 498.00</span><span data-bind="text: valueLabel, if: isPriceVisible" class="total-selling-price">S/. 498.00</span></td>
+                    <td class="item-remove"><a id="item-remove-650453" href="javascript:void(0);" data-bind="click: remove, fadeVisible: !window.cart.loadingItem(), attr: { 'id': 'item-remove-' + id() }" data-i18n="[title]global.remove" title="Retirar" class="item-link-remove"><i class="icon icon-remove item-remove-ico"></i><span data-i18n="global.remove" class="hide item-remove-text">Retirar</span></a><i data-bind="fadeInlineVisible: window.cart.loadingItem" style="display: none; opacity: 0;" class="loading-text icon-spinner icon-spin hide"><span data-i18n="cart.wait">Cargando datos...</span></i></td>
+                  </tr>
+                  <!-- ko ifnot: available-->
+                  <!-- /ko-->
+                  <!-- ko if: itemAttachments() && itemAttachments().length > 0-->
+                  <!-- /ko-->
+                  <!-- ko if: bundleItems() && bundleItems().length > 0-->
+                  <!-- /ko-->
+                  <!-- ko if: components() && components().length > 0-->
+                  <!-- /ko-->
+                  <!-- /ko-->
+                  <!-- ko if: gifts().length > 0-->
+                  <!-- /ko-->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="cart-select-gift-placeholder"></div>
+          <div data-bind="template: {name: 'summary-template', afterRender: vtex.i18n.translateHtml}" class="summary-template-holder">
+            <div data-bind="fadeVisible: window.cart.hasItems() &amp;&amp; !loading()" style="display: block;" class="row-fluid summary">
+              <div data-bind="css: { 'span7 pull-left': !window.checkout.hasSelectableGifts(), 'span4 pull-right': window.checkout.hasSelectableGifts() }" class="forms coupon-column summary-coupon-wrap span7 pull-left">
+                <div data-bind="with: coupon, visible: hasTotal" class="coupon summary-coupon pull-right">
+                  <form action="" data-bind="submit: addCoupon" class="coupon-form">
+                    <fieldset class="coupon-fieldset">
+                      <div data-bind="fadeVisible: isUsingCoupon()" style="display: none;">
+                        <p class="coupon-label">
+                          <label for="cart-coupon" data-i18n="totalizers.couponCapitalize">Cupón de descuento</label>
+                        </p>
+                        <p class="coupon-fields"><span data-bind="visible: !isCouponTyped()">
+                            <input id="cart-coupon" type="text" data-bind="value: couponCode, valueUpdate:'afterkeydown', disable: loadingCoupon()" placeholder="Código" data-i18n="[placeholder]totalizers.couponCode;" class="coupon-value input-small"><span data-bind="fadeInlineVisible: loadingCoupon" style="display: none; opacity: 0;" class="loading-inline loading-coupon"><span data-i18n="cart.wait">Cargando datos...</span></span>
+                            <button id="cart-coupon-add" type="submit" data-bind="disable: loadingCoupon" data-i18n="global.add" class="btn">Sumar</button></span><span data-bind="visible: isCouponTyped" style="display: none;" class="info"><span data-bind="text: value"></span><small class="delete"><a id="cart-coupon-remove" href="javascript:void(0);" data-bind="click: removeCoupon" data-i18n="global.delete">Borrar</a></small></span></p>
+                      </div>
+                      <p data-bind="fadeVisible: !isUsingCoupon()" class="coupon-data pull-right"><a id="cart-link-coupon-add" href="javascript:void(0);" data-bind="click: isUsingCoupon" class="link-coupon-add"><span data-i18n="global.add">Sumar</span><span data-i18n="totalizers.coupon">cupón de descuento</span></a></p>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+              <div class="span5 totalizers summary-totalizers cart-totalizers pull-right">
+                <div data-bind="fadeVisible: window.cart.hasItems() &amp;&amp; !loading()" style="display: block;" class="accordion-group">
+                  <div class="accordion-heading"><span data-i18n="totalizers.summary" class="accordion-toggle collapsed">Resumen de la compra</span></div>
+                  <div class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                      <div data-bind="visible: discounts().length" style="display: none;" class="summary-discount-descriptions">
+                        <h3 data-i18n="totalizers.Discounts" class="summary-discount-title">Descuentos</h3>
+                        <ul data-bind="foreach: discounts()" class="all-discount-descriptions unstyled"></ul>
+                      </div>
+                      <table class="table">
+                        <tbody data-bind="foreach: { data: totalizers }" class="totalizers-list">
+                          <tr data-bind="visible: visible, attr: { 'class': id }" class="Items">
+                            <!-- ko if: id() == 'Shipping'-->
+                            <!-- /ko-->
+                            <!-- ko ifnot: id() == 'Shipping'-->
+                            <td data-bind="attr: {'data-i18n': 'totalizers.' + id()}" data-i18n="totalizers.Items" class="info">Subtotal</td>
+                            <td class="space"></td>
+                            <td data-bind="text: valueLabel" class="monetary">S/. 498.00</td>
+                            <td class="empty"></td>
+                            <!-- /ko-->
+                          </tr>
+                        </tbody>
+                        <tbody data-bind="visible: isShippingKnown()                                                    &amp;&amp; !window.checkout.isNotUsingPostalCode()                                                    &amp;&amp; window.cart.items().length == window.cart.unavailableItems().length" style="display: none;" class="shipping-reset">
+                          <tr>
+                            <td class="info"><span class="postal-code-for-sla"><span data-bind="attr: {'data-i18n': 'totalizers.Shipping'}" data-i18n="totalizers.Shipping" class="shipping-name">Costo del envío</span><span data-i18n="global.to" class="shipping-name-to">para</span><span data-bind="html: window.summary.maskedPostalCode" class="postal-code-value"></span><a id="cart-reset-postal-code" href="javascript:void(0);" data-bind="visible : window.checkout.canEditData, click: summary.resetShipping" data-i18n="[title]global.edit" title="Cambiar" class="cart-reset-postal-code"><i class="icon-remove-sign"></i></a><br><a id="cart-reset-postal-code" href="javascript:void(0);" data-bind="visible : window.checkout.canEditData, click: window.summary.resetShipping" data-i18n="cart.resetShipping" class="cart-reset-postal-code">Elegir otro código postal</a></span></td>
+                            <td class="space"></td>
+                            <td data-i18n="global.unavailable" class="monetary shipping-unavailable">No disponible</td>
+                          </tr>
+                        </tbody>
+                        <tbody data-bind="visible: !isShippingKnown() &amp;&amp; !window.checkout.isNotUsingPostalCode()" style="display: none;" class="shipping-calculate">
+                          <tr>
+                            <td class="info"><span data-i18n="cart.calculateShipping">Envío</span></td>
+                            <td data-bind="visible: !isUsingPostalCode()" class="space"></td>
+                            <td data-bind="visible: !isUsingPostalCode()" class="monetary"><a id="shipping-calculate-link" href="javascript:void(0)" data-bind="click: usingPostalCode" data-i18n="cart.calculate" class="shipping-calculate-link">Calcular</a></td>
+                            <td data-bind="visible: isUsingPostalCode() &amp;&amp; !isShippingKnown()" colspan="3" style="display: none;" class="monetary form-postal-code forms">
+                              <div class="shipping summary-shipping">
+                                <form action="" data-bind="submit: calculateShipping" class="shipping-form-inline">
+                                  <fieldset class="shipping-fieldset">
+                                    <div class="shipping-fields">
+                                      <input id="summary-postal-code" type="tel" data-bind="value: postalCode, valueUpdate:'afterkeydown',                                                               validate: 'postalCode', disable: loadingPostalCode,                                                               maskOnBlur: window.checkout.postalCodeMask,                                                               attr: {'placeholder': postalCodeLabel, 'maxlength': window.checkout.postalCodeMask() ? window.checkout.postalCodeMask().length : 9},                                                               css: {'loading-postal-code': loadingPostalCode}" placeholder="CPPER" maxlength="4" class="postal-code input-mini"><i data-bind="fadeInlineVisible: loadingPostalCode" style="display: none; opacity: 0;" class="loading-inline icon-spinner icon-spin"><span data-i18n="cart.wait">Cargando datos...</span></i>
+                                      <button id="cart-shipping-calculate" type="submit" data-bind="disable: loadingPostalCode" data-i18n="cart.calculate" class="btn">Calcular</button>
+                                    </div><small class="postal-code-service summary-postal-code-service"><a id="cart-dont-know-postal-code" data-bind="attr: { 'href': window.checkout.postalCodeForgottenURL }" target="_blank" data-i18n="totalizers.dontKnowPostalCode" href="#">No conozco mi Código Postal (CP)</a></small>
+                                  </fieldset>
+                                </form>
+                              </div>
+                            </td>
+                            <td data-bind="visible: !isUsingPostalCode()" class="empty"></td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr data-bind="css: {'muted': !hasTotal()}">
+                            <td data-i18n="global.total" class="info">Total</td>
+                            <td class="space"></td>
+                            <td data-bind="text: totalLabel" class="monetary">S/. 498.00</td>
+                            <td class="empty"></td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display: none;" class="clearfix pull-right cart-links cart-links-bottom hide"><span class="link-choose-more-products-wrapper"><a id="cart-choose-more-products" href="/" data-i18n="cart.chooseMoreProducts" class="more link-choose-more-products">Elegir más productos</a></span><span data-bind="fadeVisible: userType() == 'callCenterOperator'" style="display: none;" class="link-print-cart-wrapper hide"><a id="cart-print" onclick="window.print()" data-i18n="cart.print" class="btn btn-large link-print-cart">Imprimir</a></span><span class="btn-place-order-wrapper"><a id="cart-to-orderform" href="#/orderform" target="_self" data-event="cartToOrderform" data-i18n="cart.finalize" data-bind="visible: !disableCheckoutButton(), click: goToFirstInvalidStep" class="btn btn-large btn-success pull-left-margin btn-place-order">Finalizar compra</a><a id="cart-to-orderform-disabled" href="javascript:void(0);" target="_self" disabled="disabled" data-i18n="cart.finalize" data-bind="visible: disableCheckoutButton()" style="display: none;" class="btn btn-large btn-success pull-left-margin btn-place-order disable">Finalizar compra</a></span></div>
+        </div>
+        <!-- /END CART-->
+        <!-- ORDERFORM-->
+        <div class="row-fluid orderform-template span12 active">
+          <div class="orderform-template-holder span8">
+            <div class="row-fluid">
+              <div id="client-profile-data" data-bind="template: {name: 'orderForm-clientProfileData-template', afterRender: afterRender}" class="span6 client-profile-data">
+                <form data-bind="event: { 'submit' : submitFirstEmail }, fadeVisible: showEmailForm() &amp;&amp; !checkout.loading()" autocomplete="on" style="display: none;" class="form-page client-pre-email anim-death anim-current">
+                  <p class="link link-cart pull-right"><small><a id="orderform-to-cart" href="#/cart" target="_self" data-i18n="global.backToCart">Volver a carrito</a></small></p>
+                  <fieldset class="pre-email row-fluid">
+                    <h3 class="client-pre-email-h">
+                      <label for="client-pre-email"><span data-i18n="clientProfileData.preemail">Ingresa tu mail para continuar la compra.</span><small data-i18n="clientProfileData.preemail_">Rápido. Fácil. Seguro.</small></label>
+                    </h3>
+                    <div class="client-email input text required span8 offset2">
+                      <input id="client-pre-email" type="email" data-i18n="[placeholder]clientProfileData.placeholderEmail" data-bind="value: firstEmail, valueUpdate:'afterkeydown', css: { 'not-ready': loadingEmail }, validate: 'email', required: true, disable: loading" autocomplete="on" name="email" placeholder="su@correo.com" class="input-block-level success"><i data-bind="visible: loadingEmail" style="display: none;" class="loading-inline icon-spinner icon-spin"><span data-i18n="global.loading">Cargando...</span></i>
+                      <button id="btn-client-pre-email" type="submit" class="btn btn-success"><span data-i18n="global.continue_">Continuar</span></button>
+                    </div>
+                  </fieldset>
+                  <div class="emailInfo">
+                    <h3 data-i18n="clientProfileData.whyPreEmail">Guardamos su correo electrónico de manera 100% segura para:</h3>
+                    <ul class="unstyled">
+                      <li><i class="icon-ok"></i><span data-i18n="clientProfileData.bullet1WhyEmail">Identificar su perfil</span></li>
+                      <li><i class="icon-ok"></i><span data-i18n="clientProfileData.bullet2WhyEmail">Notificar sobre los estados de su compra</span></li>
+                      <li><i class="icon-ok"></i><span data-i18n="clientProfileData.bullet3WhyEmail">Guardar el historial de compras</span></li>
+                      <li><i class="icon-ok"></i><span data-i18n="clientProfileData.bullet4WhyEmail">Facilitar el proceso de compras</span></li>
+                    </ul><i class="icon-lock"></i>
+                  </div>
+                </form>
+                <div data-bind="css: {active: active, filled: visitedAndNotActive}" class="step accordion-group client-profile-data active">
+                  <div class="accordion-heading"><span data-bind="css: {'accordion-toggle-active': active}" class="accordion-toggle collapsed accordion-toggle-active"><i class="icon-user"></i><span data-i18n="clientProfileData.identification">Identificación</span>
+                      <!-- ko if: checkout.canEditData() == true--><a id="edit-profile-data" href="#/profile" tabindex="-1" data-bind="visible: visitedAndNotActive" data-i18n="[title]global.edit" title="Cambiar" style="display: none;" class="link-box-edit btn btn-small"><i class="icon-edit"></i></a>
+                      <!-- /ko-->
+                      <!-- ko if: checkout.canEditData() == false-->
+                      <!-- /ko--></span></div>
+                  <div class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                      <div class="box-step">
+                        <!-- <div class="loading loading-bg" data-bind="fadeVisible: loading">                    <div class="loading-img">                        <i class="icon-spinner icon-spin icon-2x">                            <span data-i18n="global.loading"></span>                        </i>                    </div>                </div>-->
+                        <!-- INFORMAÇÕES PARA VISUALIZAÇÃO-->
+                        <div data-bind="fadeVisible: visitedAndNotActive" style="display: none;" class="form-step box-info">
+                          <p class="client-profile-email"><span data-bind="text: email" class="email">ec.frorrntend@gmail.com</span><span data-bind="visible: isUsingExistingAccount" style="display: none;" class="link-logout-container">- <a id="is-not-me" href="https://www.estilomio.com/checkout/changeToAnonymousUser/" data-bind=" attr: { 'href': anonymousURL }" data-i18n="clientProfileData.isNotMe" class="link-logout">No soy yo, cerrar sesión</a></span></p>
+                          <p class="client-profile-summary"><span data-i18n="clientProfileData.name_" data-bind="visible: checkout.loggedIn() || (!checkout.loggedIn() &amp;&amp; !checkout.canEditData())" style="display: none;" class="name-label">Nombre:</span><span data-bind="text: firstName() + ' ' + lastName()" class="name">undefined undefined</span>
+                            <!-- ko if: !checkout.loggedIn() && !checkout.canEditData()-->
+                            <!-- /ko--><br><span data-i18n="clientProfileData.phone_" data-bind="visible: checkout.loggedIn() || (!checkout.loggedIn() &amp;&amp; !checkout.canEditData())" style="display: none;" class="tel-label">Teléfono / Móvil:</span><span data-bind="text: cleanPhone" class="tel"></span>
+                          </p>
+                        </div>
+                        <!-- FIM INFORMAÇÕES PARA VISUALIZAÇÃO-->
+                        <!-- INFORMAÇÕES PARA EDIÇÃO-->
+                        <form action="" data-bind="fadeVisible: active, submit: next" style="display: block;" class="form-step box-edit">
+                          <div class="box-client-info">
+                            <div class="row-fluid">
+                              <!-- INFORMAÇÕES PARA PESSOA FÍSICA-->
+                              <fieldset class="box-client-info-pf">
+                                <p data-i18n="clientProfileData.notice" class="client-notice notice">Solicitamos únicamente la información esencial para la finalización de la compra.</p>
+                                <!-- ko if: templateOptions.toggleCorporate-->
+                                <!-- /ko-->
+                                <!-- ko if: checkout.loggedIn() == false-->
+                                <p class="client-email input text required">
+                                  <label for="client-email" data-i18n="clientProfileData.email">Correo</label>
+                                  <input id="client-email" type="email" data-bind="value: email, valueUpdate:'afterkeydown', event: { 'blur' : blurEmail }, validate: 'email', required: true, disable: loading" name="email" class="input-xlarge success">
+                                </p>
+                                <p data-bind="fadeVisible: emailSuggestionDomain, click: acceptSuggestion" style="display: none;"><span data-i18n="global.didYouMean">Quizás quisiste decir:</span><span> </span><a id="email-suggestion-address" href="#"><span data-bind="text: emailSuggestionAddress"></span><strong data-bind="text: emailSuggestionDomain"></strong></a></p>
+                                <!-- /ko-->
+                                <!-- ko if: checkout.loggedIn() && email()-->
+                                <!-- /ko-->
+                                <p class="client-first-name input pull-left text required">
+                                  <label for="client-first-name" data-i18n="clientProfileData.firstName">Nombre</label>
+                                  <input id="client-first-name" type="text" data-bind="value: firstName, validate: 'alphaNumericPunctuation', valueUpdate:'afterkeydown', required: true, disable: loading" class="input-small error"><span class="help error">Este campo es obligatorio.</span>
+                                </p>
+                                <p class="client-last-name input pull-left text required">
+                                  <label for="client-last-name" data-i18n="clientProfileData.lastName">Apellidos</label>
+                                  <input id="client-last-name" type="text" data-bind="value: lastName, validate: 'alphaNumericPunctuation', valueUpdate:'afterkeydown', required: true, disable: loading" class="input-small">
+                                </p>
+                                <!-- ko ifnot: showDocumentInCorporate-->
+                                <p data-bind="visible: !hasDifferentDocument()" class="client-document input pull-left text required mask">
+                                  <label for="client-document" data-bind="attr:{ 'data-i18n': documentKey }" data-i18n="clientProfileData.document-PER">Documento de Identidad</label>
+                                  <input id="client-document" type="text" data-bind="hasfocus: documentFocus, value: document, valueUpdate:'afterkeydown', validate: validateDocument, required: isDocumentRequired, disable: loading, maskOnBlur: checkout.documentMask(), attr: documentAttributeBindings" class="input-small">
+                                </p>
+                                <p data-bind="visible: hasDifferentDocument()" style="display: none;" class="client-document input pull-left text required mask">
+                                  <label for="client-document2" data-bind="attr:{ 'data-i18n': documentKey }" data-i18n="clientProfileData.document-PER">Documento de Identidad</label>
+                                  <input id="client-document2" type="text" disabled="disabled" class="input-small">
+                                </p>
+                                <!-- /ko-->
+                                <div data-bind="template: {name: phoneTemplate(), afterRender: window.vtex.i18n.translateHtml }">
+                                  <p data-bind="visible: !hasDifferentPhone()" class="client-phone input pull-left text required mask">
+                                    <label for="client-phone" data-i18n="clientProfileData.phone">Teléfono / Móvil</label>
+                                    <!-- ko ifnot: hasDifferentPhone-->
+                                    <input id="client-phone" type="tel" data-bind="hasfocus: phoneFocus, value: phone, valueUpdate:'afterkeydown', validate: validatePhone, required: true, disable: loading, maskOnBlur: checkout.phoneMask, attr: {'placeholder': phonePlaceholder}" class="input-small">
+                                    <!-- /ko-->
+                                  </p>
+                                  <p data-bind="if: hasDifferentPhone()" class="client-phone input pull-left text required mask"></p>
+                                </div>
+                                <div class="document-box hide">
+                                  <h5 data-bind="css: { 'visible': hasDifferentDocument }" data-i18n="clientProfileData.documentTitle">Documento</h5>
+                                  <ul class="links unstyled">
+                                    <li data-bind="visible: !hasDifferentDocument()" class="link cpf"><a id="no-document-key" href="#" tabindex="16" data-bind="click: toggleDifferentDocument, attr:{ 'data-i18n': noDocumentKey }" data-i18n="clientProfileData.noDocument-PER">No tengo Documento de Identidad</a></li>
+                                    <li data-bind="visible: hasDifferentDocument()" style="display: none;" class="link cpf"><a id="has-document-key" href="#" data-bind="click: toggleDifferentDocument, attr:{ 'data-i18n': hasDocumentKey }" data-i18n="clientProfileData.hasDocument-PER">Tengo Documento de Identidad</a></li>
+                                  </ul>
+                                  <div>
+                                    <p data-bind="fadeVisible: hasDifferentDocument" style="display: none;" class="client-document-type input pull-left text required mask">
+                                      <label for="client-document-type" data-i18n="clientProfileData.documentType">Tipo del documento</label>
+                                      <input id="client-document-type" type="text" data-bind="value: documentType, valueUpdate:'afterkeydown',                                                    required: isNotCorporate, disable: loading" class="input-small success">
+                                    </p>
+                                    <p data-bind="fadeVisible: hasDifferentDocument" style="display: none;" class="client-new-document input pull-left text required mask">
+                                      <label for="client-new-document" data-i18n="clientProfileData.document">Documento</label>
+                                      <!-- ko if: hasDifferentDocument-->
+                                      <!-- /ko-->
+                                    </p>
+                                  </div>
+                                </div>
+                                <div data-bind="css: {'visible': hasDifferentPhone() || differentPhoneFlag}" class="phone-box">
+                                  <ul class="links unstyled">
+                                    <li data-bind="visible: !hasDifferentPhone()" class="link"><a id="no-phone-key" href="#" tabindex="16" data-bind="click: toggleDifferentPhone, attr:{ 'data-i18n': noPhoneKey }" data-i18n="clientProfileData.noPhone-PER">No tengo teléfono de Perú</a></li>
+                                    <li data-bind="visible: hasDifferentPhone()" style="display: none;" class="link"><a id="has-phone-key" href="#" data-bind="click: toggleDifferentPhone, attr:{ 'data-i18n': hasPhoneKey }" data-i18n="clientProfileData.hasPhone-PER">Tengo teléfono de Perú</a></li>
+                                  </ul>
+                                  <div>
+                                    <p data-bind="fadeVisible: hasDifferentPhone" style="display: none;" class="client-new-phone input pull-left text required mask">
+                                      <label for="client-new-phone" data-i18n="clientProfileData.phoneInternational">Teléfono Internacional</label>
+                                      <!-- ko if: hasDifferentPhone-->
+                                      <!-- /ko-->
+                                    </p>
+                                  </div>
+                                </div>
+                              </fieldset>
+                              <!-- FIM INFORMAÇÕES PARA PESSOA FÍSICA-->
+                              <!-- INFORMAÇÕES PARA PESSOA JURÍDICA-->
+                              <fieldset class="box-client-info-pj">
+                                <h5 data-bind="css: { 'visible': isCorporate }" data-i18n="clientProfileData.corporateTitle" class="corporate-title">Datos de empresa</h5>
+                                <ul class="links unstyled">
+                                  <li class="link pf-pj corporate-hide-link"><a id="is-corporate-client" href="#" data-bind="visible: !isCorporate(), click: toggleCorporate" tabindex="17" data-i18n="clientProfileData.includeCo">Sumar datos de empresa</a><a id="not-corporate-client" href="#" data-bind="visible: isCorporate, click: toggleCorporate" data-i18n="clientProfileData.excludeCo" style="display: none;">No sumar</a></li>
+                                </ul>
+                                <div data-bind="fadeVisible: isCorporate" style="display: none;" class="corporate-info-box">
+                                  <p class="client-company-name input text required">
+                                    <label for="client-company-name" data-i18n="clientProfileData.companyName">Razón Social</label>
+                                    <input id="client-company-name" type="text" data-bind="value: corporateName, valueUpdate:'afterkeydown', required: true, disable: loading" class="input-xlarge">
+                                  </p>
+                                  <!-- ko if: showCorporateTradingName-->
+                                  <p class="client-company-nickname input text required">
+                                    <label for="client-company-nickname" data-i18n="clientProfileData.tradingName">Nombre de la empresa</label>
+                                    <input id="client-company-nickname" type="text" data-bind="value: tradeName, valueUpdate:'afterkeydown', required: requirementTradingName, disable: loading" class="input-xlarge">
+                                  </p>
+                                  <!-- /ko-->
+                                  <!-- ko if: showCorporateStateInscription-->
+                                  <!-- /ko-->
+                                  <!-- ko if: showCorporateDocument-->
+                                  <p class="client-company-document input text required mask">
+                                    <label for="client-company-document" data-bind="attr:{ 'data-i18n': coDocumentKey }" data-i18n="clientProfileData.coDocument-PER">RUC</label>
+                                    <input id="client-company-document" type="text" data-bind="value: corporateDocument, valueUpdate:'afterkeydown',                                                    validate: validateCorporateDocument, required: true, disable: loading,                                                    maskOnBlur: checkout.corporateDocumentMask, attr: {'placeholder': companyDocumentPlaceholder}" class="input-small">
+                                  </p>
+                                  <!-- /ko-->
+                                  <!-- ko if: showDocumentInCorporate-->
+                                  <!-- /ko-->
+                                  <div class="clearfix"></div>
+                                  <div data-bind="visible: showCorporateExempt()" style="display: none;" class="state-inscription-box">
+                                    <label class="checkbox exempt-si-label">
+                                      <input id="state-inscription" type="checkbox" data-bind="checked: exempt"><span data-bind="attr:{ 'data-i18n': noStateInscriptionKey }" data-i18n="clientProfileData.noStateInscription-PER" class="exempt-si-text">No tengo registro estatal</span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </fieldset>
+                              <!-- FIM DE INFORMAÇÕES PARA PESSOA JURÍDICA-->
+                            </div>
+                            <p class="newsletter">
+                              <label data-bind="fadeVisible: checkout.canEditData" class="checkbox newsletter-label">
+                                <input id="opt-in-newsletter" type="checkbox" data-bind="checked: checkout.optinNewsLetter, enable: checkout.saveData"><span data-i18n="global.optinNewsLetter" class="newsletter-text">Quiero recibir el newsletter con promociones.</span>
+                              </label>
+                            </p>
+                          </div>
+                          <p class="submit btn-submit-wrapper">
+                            <button id="go-to-shipping" type="submit" data-bind="visible: !router.view.shippingDataVisited(), disable: loadingEmail" data-i18n="global.goToShipping" class="submit btn btn-large btn-success">Ir para la Entrega</button>
+                            <button id="go-to-payment" type="submit" data-bind="visible: router.view.shippingDataVisited(), disable: loadingEmail" data-i18n="global.goToPayment" style="display: none;" class="submit btn btn-large btn-success">Ir para el Pago</button>
+                          </p>
+                        </form>
+                        <!-- FIM INFORMAÇÕES PARA EDIÇÃO-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="shipping-data" class="span6 pull-right shipping-data">
+                <div class="step accordion-group shipping-data active">
+                  <!-- TITLE-->
+                  <div class="accordion-heading"><span class="accordion-toggle collapsed accordion-shipping-title accordion-toggle-active"><i class="icon-home"></i><span data-i18n="shipping.title">Dirección de envío</span><a id="edit-shipping-data" href="#/shipping" tabindex="-1" data-i18n="[title]global.edit" style="display: none;" class="link-box-edit btn btn-small hide"><i class="icon-edit"></i></a></span></div>
+                  <div class="accordion-inner">
+                    <!-- MENSAGEM DE NÃO ATIVO E SEM ENDEREÇO-->
+                    <p data-i18n="global.waiting" style="display: none;" class="notification address-not-filled-verification">Aún falta llenar con los datos</p>
+                    <!-- RESUMO DE SHIPPING DATA-->
+                    <div class="box-step box-info shipping-summary-placeholder"></div>
+                    <!-- FIM DO RESUMO DE SHIPPING DATA-->
+                    <div class="box-step">
+                      <!-- CONTAINER DOS COMPONENTES FILHOS-->
+                      <div class="country-select-placeholder"></div>
+                      <div class="address-search-placeholder"></div>
+                      <div class="address-form-placeholder">
+                        <!-- BACK TO LIST BUTTON-->
+                        <form data-parsley-bind="true" data-parsley-focus="first" novalidate="" class="address-form-new box-new address-form-">
+                          <fieldset class="address-data">
+                            <!-- HIDDEN FIELDS-->
+                            <input type="hidden" name="addressId" value="-1456506152443">
+                            <input type="hidden" name="country" value="PER">
+                            <input type="hidden" name="postalCode" value="180207" class="postal-code postal-code-hidden">
+                            <!-- COUNTRY NAME-->
+                            <p class="ship-international input one-delivery-country"><span data-i18n="shipping.addressForm.deliveryCountry">País de entrega</span> PER</p>
+                            <div class="box-delivery">
+                              <!-- LABEL SHIPING FIELDS FOR GEOLOCATION SEARCH-->
+                              <p class="ship-street required input text">
+                                <label for="ship-street"><span data-i18n="shipping.addressForm.direction">Dirección</span><span class="item-required">*</span></label>
+                                <input id="ship-street" type="text" value="lklkl" name="street" data-parsley-required="true" data-parsley-trigger="change blur" data-parsley-alphanumponc="true" data-parsley-id="6145" class="input-xlarge success"><span id="parsley-id-6145" class="help error error-list"></span>
+                              </p>
+                              <p class="ship-number required input text">
+                                <label for="ship-number"><span data-i18n="shipping.addressForm.number">Número</span><span class="item-required">*</span></label>
+                                <input id="ship-number" type="text" value="112345" name="number" data-parsley-required="true" data-parsley-trigger="change blur" data-parsley-alphanumponc="true" data-parsley-maxlength="50" data-parsley-id="1495" class="input-mini success"><span id="parsley-id-1495" class="help error error-list"></span>
+                              </p>
+                              <p class="ship-more-info input text">
+                                <label for="ship-more-info"><span data-i18n="shipping.addressForm.complement">Piso o Departamento (ej: 2A)</span></label>
+                                <input id="ship-more-info" type="text" value="" name="complement" data-i18n="[placeholder]global.notRequired" data-parsley-trigger="change blur" data-parsley-alphanumponc="true" placeholder="Opcional" data-parsley-id="5410" class="input-medium"><span id="parsley-id-5410" class="help error error-list"></span>
+                              </p>
+                              <p class="ship-reference input text hide">
+                                <label for="ship-reference"><span data-i18n="shipping.addressForm.reference">Punto o calle acerca</span></label>
+                                <input id="ship-reference" type="text" value="" name="reference" data-parsley-trigger="change blur" data-parsley-alphanumponc="true" data-parsley-id="4885" class="input-xlarge"><span id="parsley-id-4885" class="help error error-list"></span>
+                              </p>
+                              <p class="ship-state required input text">
+                                <label for="ship-state"><span data-i18n="shipping.addressForm.department">Departamento</span><span class="item-required">*</span></label>
+                                <select id="ship-state" name="state" data-parsley-trigger="change blur" data-parsley-required="true" data-parsley-id="8179" class="input-xlarge success">
+                                  <option></option>
+                                  <option value="LIMA">Lima</option>
+                                  <option value="AMAZONAS">Amazonas</option>
+                                  <option value="APURÍMAC">Apurímac</option>
+                                  <option value="AREQUIPA">Arequipa</option>
+                                  <option value="AYACUCHO">Ayacucho</option>
+                                  <option value="CAJAMARCA">Cajamarca</option>
+                                  <option value="CUSCO">Cusco</option>
+                                  <option value="HUANCAVELICA">Huancavelica</option>
+                                  <option value="HUÁNUCO">Huánuco</option>
+                                  <option value="ICA">Ica</option>
+                                  <option value="JUNÍN">Junín</option>
+                                  <option value="LA LIBERTAD">La Libertad</option>
+                                  <option value="LAMBAYEQUE">Lambayeque</option>
+                                  <option value="LORETO">Loreto</option>
+                                  <option value="MADRE DE DIOS">Madre De Dios</option>
+                                  <option value="MOQUEGUA" selected="true">Moquegua</option>
+                                  <option value="PASCO">Pasco</option>
+                                  <option value="PIURA">Piura</option>
+                                  <option value="PUNO">Puno</option>
+                                  <option value="SAN MARTÍN">San Martín</option>
+                                  <option value="TACNA">Tacna</option>
+                                  <option value="TUMBES">Tumbes</option>
+                                  <option value="UCAYALI">Ucayali</option>
+                                  <option value="ÁNCASH">Áncash</option>
+                                </select><span id="parsley-id-8179" class="help error error-list"></span>
+                              </p>
+                              <p class="ship-city required input text">
+                                <label for="ship-city"><span data-i18n="shipping.addressForm.province">Provincia</span><span class="item-required">*</span></label>
+                                <select id="ship-city" name="city" data-parsley-trigger="change blur" data-parsley-required="true" data-based-state-change="true" data-parsley-id="2286" class="input-xlarge success">
+                                  <option></option>
+                                  <option value="General Sánchez Cerro" selected="true">General Sánchez Cerro</option>
+                                  <option value="Ilo">Ilo</option>
+                                  <option value="Mariscal Nieto">Mariscal Nieto</option>
+                                </select><span id="parsley-id-2286" class="help error error-list"></span>
+                              </p>
+                              <p class="ship-neighborhood input text">
+                                <label for="ship-neighborhood"><span data-i18n="shipping.addressForm.district">Distrito</span><span class="item-required">*</span></label>
+                                <select id="ship-neighborhood" name="neighborhood" data-parsley-trigger="change blur" data-parsley-required="true" data-based-city-change="true" data-parsley-id="3430" class="input-xlarge success">
+                                  <option></option>
+                                  <option value="Chojata">Chojata</option>
+                                  <option value="Coalaque">Coalaque</option>
+                                  <option value="Ichuña">Ichuña</option>
+                                  <option value="La Capilla">La Capilla</option>
+                                  <option value="Lloque">Lloque</option>
+                                  <option value="Matalaque" selected="true">Matalaque</option>
+                                  <option value="Omate">Omate</option>
+                                  <option value="Puquina">Puquina</option>
+                                  <option value="Quinistaquillas">Quinistaquillas</option>
+                                  <option value="Ubinas">Ubinas</option>
+                                  <option value="Yunga">Yunga</option>
+                                </select><span id="parsley-id-3430" class="help error error-list"></span>
+                              </p>
+                              <p class="ship-commercial input checkbox hide">
+                                <label for="ship-commercial">
+                                  <input id="ship-commercial" type="checkbox" name="addressTypeCommercial" value="true" data-parsley-multiple="addressTypeCommercial" data-parsley-id="4073"><span data-i18n="shipping.addressForm.commercial">Dirección de Trabajo</span>
+                                </label><span id="parsley-id-multiple-addressTypeCommercial" class="help error error-list"></span>
+                              </p>
+                              <p class="ship-name required input text separate">
+                                <label for="ship-name"><span data-i18n="shipping.addressForm.receiver">Nombre de la persona que va a recibir</span><span class="item-required">*</span></label>
+                                <input id="ship-name" type="text" name="receiverName" value="Ana Test" data-parsley-trigger="change blur" data-parsley-required="true" data-parsley-alphanumponc="true" data-parsley-maxlength="100" data-parsley-id="7748" class="input-xlarge success"><span id="parsley-id-7748" class="help error error-list"></span>
+                              </p>
+                            </div>
+                            <p class="submit btn-submit-wrapper pull-left hide">
+                              <button type="submit" data-i18n="global.save" class="submit btn btn-large btn-success address-save">Guardar</button>
+                            </p>
+                          </fieldset>
+                        </form>
+                      </div>
+                      <div class="address-list-placeholder"></div>
+                      <div class="address-shipping-options">
+                        <div class="delivery-shipping-options">
+                          <h3 data-i18n="shipping.shippingOptions.shippingOptions" class="hide">Elija las opciones de envío</h3>
+                          <fieldset class="shipping-options">
+                            <h4 class="pull-left"><span class="pull-left choose-shipping-option-container"><span data-i18n="shipping.shippingOptions.chooseShippingOption" class="choose-shipping-option">Elija el tipo de envío</span></span></h4>
+                            <div class="sla-items-list">
+                              <div class="span btn-group btn-group-vertical">
+                                <label for="seller-1-sla-EntregaaDomicilioEstiloMio7-10dias" class="shipping-option-item label-vertical-group input btn active">
+                                  <input id="seller-1-sla-EntregaaDomicilioEstiloMio7-10dias" type="radio" name="seller-1" value="Entrega a Domicilio EstiloMio 7-10 días" checked="checked" data-shipping-option="0"><span title="Hasta 10 días hábiles" class="shipping-option-item-text-wrapper"><span class="shipping-option-item-name">Entrega a Domicilio EstiloMio 7-10 días</span><span class="shipping-option-item-sep"> - </span><span class="shipping-option-item-value">S/. 46.00</span><span class="shipping-option-item-sep"> - </span><span class="shipping-option-item-time delivery-estimate">Hasta 10 días hábiles</span></span><i class="icon-ok-circle"></i>
+                                </label>
+                              </div>
+                            </div>
+                          </fieldset>
+                        </div>
+                      </div>
+                      <!-- FIM CONTAINER DOS COMPONENTES FILHOS-->
+                      <!-- NEXT STEP BUTTON-->
+                      <p style="display: block;" class="submit btn-submit-wrapper btn-go-to-payment-wrapper">
+                        <button type="submit" data-i18n="shipping.goToPayment" class="submit btn btn-large btn-success btn-go-to-payment">Ir para el Pago</button>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="shipping-data" class="hide 1111111 span6 pull-right shipping-data">
+                <div class="step accordion-group shipping-data">
+                  <!-- TITLE-->
+                  <div class="accordion-heading"><span class="accordion-toggle collapsed accordion-shipping-title"><i class="icon-home"></i><span data-i18n="shipping.title">Dirección de envío</span><a id="edit-shipping-data" href="#/shipping" tabindex="-1" data-i18n="[title]global.edit" title="Cambiar" class="link-box-edit btn btn-small hide"><i class="icon-edit"></i></a></span></div>
+                  <div class="accordion-inner">
+                    <!-- MENSAGEM DE NÃO ATIVO E SEM ENDEREÇO-->
+                    <p data-i18n="global.waiting" style="display: block;" class="notification address-not-filled-verification">Aún falta llenar con los datos</p>
+                    <!-- RESUMO DE SHIPPING DATA-->
+                    <div class="box-step box-info shipping-summary-placeholder"></div>
+                    <!-- FIM DO RESUMO DE SHIPPING DATA-->
+                    <div class="box-step">
+                      <!-- CONTAINER DOS COMPONENTES FILHOS-->
+                      <div class="country-select-placeholder"></div>
+                      <div class="address-search-placeholder"></div>
+                      <div class="address-form-placeholder"></div>
+                      <div class="address-list-placeholder"></div>
+                      <div class="address-shipping-options"></div>
+                      <!-- FIM CONTAINER DOS COMPONENTES FILHOS-->
+                      <!-- NEXT STEP BUTTON-->
+                      <p style="display: none;" class="submit btn-submit-wrapper btn-go-to-payment-wrapper">
+                        <button type="submit" data-i18n="shipping.goToPayment" class="submit btn btn-large btn-success btn-go-to-payment">Ir para el Pago</button>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="payment-data" data-bind="template: {name: 'orderForm-paymentData-template', afterRender: afterRender}, css: { 'span6': !active(), 'span12': active }" class="pull-right payment-data span12">
+                <div data-bind="css: {active: active, filled: visitedAndNotActive}" class="step accordion-group active">
+                  <div class="accordion-heading"><span data-bind="css: {'accordion-toggle-active': active}" class="accordion-toggle collapsed accordion-toggle-active"><i class="icon-credit-card"></i><span data-i18n="paymentData.payment">Pago</span><a href="#/payment" tabindex="-1" data-bind="visible: visitedAndNotActive" data-i18n="[title]global.edit" title="Cambiar" style="display: none;" class="link-box-edit btn btn-small"><i class="icon-edit"></i></a></span></div>
+                  <div class="accordion-body collapse in payment-body">
+                    <div class="accordion-inner">
+                      <p data-bind="visible: !active()" data-i18n="global.waiting" style="display: none;" class="notification">Aún falta llenar con los datos</p>
+                      <!-- ko if: isArgentina-->
+                      <!-- /ko-->
+                      <div class="box-step">
+                        <p data-bind="visible: active() &amp;&amp; totalIsFree()" data-i18n="paymentData.totalIsFree" style="display: none;">El costo total de su compra es gratis. Sólo tiene que completar la compra!</p>
+                        <div data-bind="fadeVisible: active() &amp;&amp; validationError()" style="display: none;" class="alert alert-block payment-alert-error fade in">
+                          <button type="button" data-bind="click: clearValidationError" class="close">×</button>
+                          <p data-i18n="global.validationErrorInThisForm">Hay un error de validación. Por favor, corrija los campos y vuelva a intentarlo.</p>
+                        </div>
+                        <div data-bind="fadeVisible: active() &amp;&amp; giftCardMessages().length &gt; 0" style="display: none;" class="alert alert-block gift-card-message-container fade in">
+                          <!-- ko foreach: giftCardMessages-->
+                          <!-- /ko-->
+                        </div>
+                        <div data-bind="fadeVisible: loading" style="display: none;" class="loading loading-bg">
+                          <div class="loading-img"><i class="icon-spinner icon-spin icon-2x"><span data-i18n="global.loading">Cargando...</span></i></div>
+                        </div>
+                        <div data-bind="fadeVisible: active() || visited()" class="box-step-content">
+                          <form action="" data-event="finishPayment" data-bind="fadeVisible: active(), submit: submit" class="form-step box-new row-fluid">
+                            <!-- ko if: paymentGroups.giftCardPaymentGroup                                && paymentGroups.giftCardPaymentGroup.specialGiftCards().length > 0                                && !totalIsFree()-->
+                            <!-- /ko-->
+                            <!-- ko if: paymentGroups.giftCardPaymentGroup-->
+                            <!-- /ko-->
+                            <!-- ko if: paymentGroups.giftCardPaymentGroup && showGiftCard()-->
+                            <!-- /ko-->
+                            <fieldset data-bind="visible: showPaymentOptions" class="payment-group">
+                              <h3 data-i18n="paymentData.paymentMethod" class="hide">Medio de pago</h3>
+                              <p class="link show-credits hide"><a href="javascript:void(0);" data-i18n="paymentData.showCredits">Mostrar el crédito de la lista de matrimonio y del plan de fidelidad</a></p>
+                              <!-- para ser usado COM radio button-->
+                              <div data-bind="foreach: paymentGroupArray" class="payment-group-list required button-list inline-list hide">
+                                <!-- ko if: showAsTab-->
+                                <p data-bind="css: {first: $parent.paymentGroupArray()[0] === $data,                                         last: $parent.paymentGroupArray()[$parent.paymentGroupArray().length - 1] === $data,                                         checked: $parent.selectedPaymentGroupId() == id}" class="radio first checked">
+                                  <input id="paymentGroup-1457456821572ega8g820mq60qkt9" type="radio" data-bind="value: id, attr:{id:'paymentGroup' + id}, checked: $parent.selectedPaymentGroupId" name="paymentGroup" value="-1457456821572ega8g820mq60qkt9">
+                                  <label data-bind="text: localizedLabel, attr:{'for':'paymentGroup' + id, htmlFor:'paymentGroup' + id}" for="paymentGroup-1457456821572ega8g820mq60qkt9" htmlfor="paymentGroup-1457456821572ega8g820mq60qkt9" class="btn">PagoEfectivo</label>
+                                </p>
+                                <!-- /ko-->
+                                <!-- ko if: showAsTab-->
+                                <p data-bind="css: {first: $parent.paymentGroupArray()[0] === $data,                                         last: $parent.paymentGroupArray()[$parent.paymentGroupArray().length - 1] === $data,                                         checked: $parent.selectedPaymentGroupId() == id}" class="radio last">
+                                  <input id="paymentGroup-14574568215726cqy79pj5bjll3di" type="radio" data-bind="value: id, attr:{id:'paymentGroup' + id}, checked: $parent.selectedPaymentGroupId" name="paymentGroup" value="-14574568215726cqy79pj5bjll3di">
+                                  <label data-bind="text: localizedLabel, attr:{'for':'paymentGroup' + id, htmlFor:'paymentGroup' + id}" for="paymentGroup-14574568215726cqy79pj5bjll3di" htmlfor="paymentGroup-14574568215726cqy79pj5bjll3di" class="btn">Tarjeta de crédito</label>
+                                </p>
+                                <!-- /ko-->
+                              </div>
+                              <!-- /para ser usado COM radio button-->
+                              <!-- para ser usado SEM radio button-->
+                              <div data-bind="foreach: paymentGroupArray" class="required payment-group-list-btn">
+                                <!-- ko if: showAsTab--><a id="payment-group-PagoEfectivoPaymentGroup" href="javascript:void(0);" data-bind="click: $parent.selectPaymentGroup, attr:{ 'id':'payment-group-' + groupName(), 'class': className + ' payment-group-item' }, css: { active: $parent.selectedPaymentGroupId() == id }" class="payment-group-item active"><span data-bind="text: localizedLabel" class="payment-group-item-text">PagoEfectivo</span></a>
+                                <!-- /ko-->
+                                <!-- ko if: showAsTab--><a id="payment-group-creditCardPaymentGroup" href="javascript:void(0);" data-bind="click: $parent.selectPaymentGroup, attr:{ 'id':'payment-group-' + groupName(), 'class': className + ' payment-group-item' }, css: { active: $parent.selectedPaymentGroupId() == id }" class="payment-group-item"><span data-bind="text: localizedLabel" class="payment-group-item-text">Tarjeta de crédito</span></a>
+                                <!-- /ko-->
+                              </div>
+                              <!-- /para ser usado SEM radio button-->
+                            </fieldset>
+                            <div data-bind="visible: showPaymentOptions" class="steps-view">
+                              <!-- ko foreach: paymentGroupArray-->
+                              <!-- ko if: showAsTab-->
+                              <div data-bind="template: { name: template() }">
+                                <fieldset data-bind="fadeVisible: $parent.selectedPaymentGroupId() == id, css: groupName()" class="box-payment-group2 box-payment-option PagoEfectivoPaymentGroup">
+                                  <h3 data-bind="text: localizedLabel">PagoEfectivo</h3>
+                                  <p data-bind="text: localizedDescription" class="payment-description">PagoEfectivo</p>
+                                  <!-- ko if: installments()-->
+                                  <div class="installments">
+                                    <!-- ko if: installments().length > 1-->
+                                    <!-- /ko-->
+                                    <!-- ko if: installments().length == 1-->
+                                    <p data-bind="with: installments()[0]" class="sight"><span data-bind="text: text">Total - S/. 1,772.00</span></p>
+                                    <!-- /ko-->
+                                  </div>
+                                  <!-- /ko-->
+                                </fieldset>
+                              </div>
+                              <!-- /ko-->
+                              <!-- ko if: showAsTab-->
+                              <div data-bind="template: { name: template() }">
+                                <fieldset data-bind="fadeVisible: $parent.selectedPaymentGroupId() == id, attr: {'class': className + ' box-payment-option'}, css: { 'one-card': cards().length == 1, 'two-cards': cards().length == 2, 'is-custom': isCustom() }" style="display: none;" class="box-payment-option one-card">
+                                  <h3 data-bind="attr: { 'data-i18n': pgTitle }" data-i18n="paymentData.paymentGroup.creditCard.creditCard">Tarjeta de crédito</h3><span class="security payment-security"><i class="icon-lock"></i><span data-i18n="paymentData.secureEnvironment" class="payment-security-text">Ambiente Seguro</span></span>
+                                  <!-- ko foreach: {data: cards, afterRender: afterRenderGroup}-->
+                                  <div id="creditCardpayment-card-1457456821574" data-bind="attr: { id: $parent.identifier() + 'payment-card' + id }, css: 'payment-card payment-card-position-' + $index()" class="payment-card payment-card-position-0">
+                                    <!-- ko if: $index() == 0-->
+                                    <h5 data-bind="fadeVisible: $parent.isUsingMoreThanOneCard" data-i18n="paymentData.paymentGroup.creditCard.firstCard" style="display: none;">Primera tarjeta</h5>
+                                    <!-- /ko-->
+                                    <!-- ko ifnot: $index() == 0-->
+                                    <!-- /ko-->
+                                    <!-- CARTOES SALVOS-->
+                                    <div data-bind="if: unusedAvailableAccounts().length, css: { active: unusedAvailableAccounts().length &gt; 0 &amp;&amp; isSavedCreditCardsVisible() == true }" class="saved-cards"></div>
+                                    <!-- FIM CARTOES SALVOS-->
+                                    <div data-bind="if: isUsingNewCard, css: { 'active': isUsingNewCard }" class="clearfix card-data active">
+                                      <div class="clearfix">
+                                        <p data-bind="visible: unusedAvailableAccounts().length &gt; 0" style="display: none;" class="link link-box-new"><a href="javascript:void(0);" data-bind="click: $data.toggleSavedCardsVisibility, text: i18n.t('paymentData.backCreditCardList')">Volver para las opciones de tarjetas</a></p>
+                                        <!-- is waiting for card scanner-->
+                                        <div data-bind="template: { name: 'cardScanner-template', 'if': isWaitingForCardScanner, afterRender: vtex.i18n.translateHtml }" class="card-scanner-waiting"></div>
+                                        <!-- is not waiting for card scanner-->
+                                        <div data-bind="template: { name: 'cardFields-template', 'if': !isWaitingForCardScanner(), afterRender: vtex.i18n.translateHtml }" class="card-ready-for-typing">
+                                          <p class="card-scanner-scan"><a href="javascript:void(0);" data-bind="visible: canUseCardScanner() &amp;&amp; !labelCardFields(), click: toggleCardForm" data-i18n="paymentData.paymentGroup.creditCard.scanner.scanCard" style="display: none;" class="card-scanner-scan-link">Escanear tarjeta</a></p>
+                                          <div data-bind="if: !labelCardFields()" class="card-scanner-label-all-fields">
+                                            <p class="payment-card-number input text required clearLeft">
+                                              <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Number', htmlFor: $parent.identifier()+'payment-card' + id + 'Number'}" for="creditCardpayment-card-1457456821574Number" htmlfor="creditCardpayment-card-1457456821574Number"><span data-i18n="paymentData.paymentGroup.creditCard.number">Número </span></label>
+                                              <!-- ko if: checkout.isTotem-->
+                                              <!-- /ko-->
+                                              <!-- ko ifnot: checkout.isTotem-->
+                                              <input id="creditCardpayment-card-1457456821574Number" type="tel" name="cardNumber" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Number'},                    value: cardNumber, valueUpdate: 'afterkeydown', validate: validateCreditCard, required: true,                    disable: checkout.disableInputs()" class="input-medium autofocus dont-track-input">
+                                              <!-- /ko--><span class="help hide"><span href="javascript:void(0);" data-i18n="global.help" class="helpTitle">Ayuda</span><span data-i18n="paymentData.paymentGroup.creditCard.helpHiperCard" class="helpMessage hide">Si su tarjeta Hipercard tiene una secuencia de 6 números, arriba de la secuencia principal de 13 números, es necesario escribir todos los números, comenzando desde los 6 pequeños, sumando un total de 19 números.</span></span>
+                                            </p>
+                                            <div data-bind="css: {'hide': isCreditCardCustom}" class="card-flags-container clearfix form-inline">
+                                              <p data-bind="css: { 'active': selectedCardFlag() }" class="card-flags active">
+                                                <!-- ko foreach: parent.availableFlags-->
+                                                <label data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}" for="creditCardselectedCard0cc-1457456821574" htmlfor="creditCardselectedCard0cc-1457456821574" title="American Express" class="radio card-flag-label">
+                                                  <input id="creditCardselectedCard0cc-1457456821574" type="radio" tabindex="-1" data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()" name="creditCardselectedCardFlag-1457456821574" value="1" class="card-flag-radio"><span data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}" class="card-flag American Express card-selected">American Express</span>
+                                                </label>
+                                                <label data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}" for="creditCardselectedCard1cc-1457456821574" htmlfor="creditCardselectedCard1cc-1457456821574" title="Mastercard" class="radio card-flag-label">
+                                                  <input id="creditCardselectedCard1cc-1457456821574" type="radio" tabindex="-1" data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()" name="creditCardselectedCardFlag-1457456821574" value="4" class="card-flag-radio"><span data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}" class="card-flag Mastercard">Mastercard</span>
+                                                </label>
+                                                <label data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}" for="creditCardselectedCard2cc-1457456821574" htmlfor="creditCardselectedCard2cc-1457456821574" title="Visa" class="radio card-flag-label">
+                                                  <input id="creditCardselectedCard2cc-1457456821574" type="radio" tabindex="-1" data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()" name="creditCardselectedCardFlag-1457456821574" value="2" class="card-flag-radio"><span data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}" class="card-flag Visa">Visa</span>
+                                                </label>
+                                                <label data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}" for="creditCardselectedCard3cc-1457456821574" htmlfor="creditCardselectedCard3cc-1457456821574" title="Diners" class="radio card-flag-label">
+                                                  <input id="creditCardselectedCard3cc-1457456821574" type="radio" tabindex="-1" data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()" name="creditCardselectedCardFlag-1457456821574" value="3" class="card-flag-radio"><span data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}" class="card-flag Diners">Diners</span>
+                                                </label>
+                                                <!-- /ko-->
+                                              </p>
+                                            </div>
+                                            <div data-bind="fadeVisible: noInstallmentsAvailable" style="display: none;" class="alert payment-installment-alert-error">
+                                              <p data-i18n="paymentData.cardNotAccepted">El emisor bancaria de esta tarjeta no es aceptada.</p>
+                                            </div>
+                                            <div data-bind="if: showInstallmentOptions" class="box-installments box-default">
+                                              <p class="select required">
+                                                <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Brand', htmlFor: $parent.identifier()+'payment-card' + id + 'Brand'}" for="creditCardpayment-card-1457456821574Brand" htmlfor="creditCardpayment-card-1457456821574Brand">Parcelamento</label>
+                                                <select id="creditCardpayment-card-1457456821574Brand" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Brand'},                    options: installments, value: selectedInstallmentNumber, required: true,                    optionsText: 'text', optionsValue: 'number', optionsCaption: installmentsCaption, optionsAfterRender: setOptionDisable" class="input-xlarge">
+                                                  <option value="">En cuantas cuotas deseas pagar?</option>
+                                                </select>
+                                              </p>
+                                            </div>
+                                            <p data-bind="css: {'required': cardOwnerNameRequired, 'hide': !cardOwnerNameRequired()}" class="payment-card-name input text required">
+                                              <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Name', htmlFor: $parent.identifier()+'payment-card' + id + 'Name'}" for="creditCardpayment-card-1457456821574Name" htmlfor="creditCardpayment-card-1457456821574Name"><span data-i18n="paymentData.paymentGroup.creditCard.holderName">Nombre como figura en la tarjeta </span></label>
+                                              <input id="creditCardpayment-card-1457456821574Name" type="text" name="ccName" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Name'},                   value: cardOwnerName, valueUpdate:'afterkeydown',                   validate: 'alpha', required: cardOwnerNameRequired, disable: checkout.disableInputs()" class="input-medium">
+                                            </p>
+                                            <div data-bind="css: {'hide': !cardExpirationDateRequired()}" class="payment-card-due">
+                                              <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Month'}" for="creditCardpayment-card-1457456821574Month" class="label-text pull-left"><span data-i18n="paymentData.paymentGroup.creditCard.dueDate">Fecha de Vencimiento</span></label>
+                                              <p data-bind="css: {'required': cardExpirationDateRequired}" class="payment-card-due-month input text required">
+                                                <select id="creditCardpayment-card-1457456821574Month" name="cardExpirationMonth" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Month'},             options: months, optionsCaption: localizedMonth(), value: cardDueMonth, validate: validateDueMonth, required: cardExpirationDateRequired, disable: checkout.disableInputs()" class="input-mini">
+                                                  <option value="">MM</option>
+                                                  <option value="01">01</option>
+                                                  <option value="02">02</option>
+                                                  <option value="03">03</option>
+                                                  <option value="04">04</option>
+                                                  <option value="05">05</option>
+                                                  <option value="06">06</option>
+                                                  <option value="07">07</option>
+                                                  <option value="08">08</option>
+                                                  <option value="09">09</option>
+                                                  <option value="10">10</option>
+                                                  <option value="11">11</option>
+                                                  <option value="12">12</option>
+                                                </select>
+                                              </p>
+                                              <p class="payment-card-lash">/</p>
+                                              <p data-bind="css: {'required': cardExpirationDateRequired}" class="payment-card-due-year input text required">
+                                                <select id="creditCardpayment-card-1457456821574Year" name="cardExpirationYear" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Year'}, options: years,  optionsCaption: localizedYear(), value: cardDueYear, validate: validateDueYear, required: cardExpirationDateRequired, disable: checkout.disableInputs()" class="input-mini">
+                                                  <option value="">AA</option>
+                                                  <option value="16">16</option>
+                                                  <option value="17">17</option>
+                                                  <option value="18">18</option>
+                                                  <option value="19">19</option>
+                                                  <option value="20">20</option>
+                                                  <option value="21">21</option>
+                                                  <option value="22">22</option>
+                                                  <option value="23">23</option>
+                                                  <option value="24">24</option>
+                                                  <option value="25">25</option>
+                                                  <option value="26">26</option>
+                                                </select>
+                                              </p>
+                                            </div>
+                                          </div>
+                                          <!-- !labelCardFields-->
+                                          <div data-bind="if: labelCardFields" class="card-scanner-resume"></div>
+                                          <!-- labelCardFields-->
+                                          <p data-bind="css: {'required': cardSafetyCodeRequired, 'hide': !cardSafetyCodeRequired()}" class="payment-card-cvv input text required">
+                                            <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Code', htmlFor: $parent.identifier()+'payment-card' + id + 'Code'}" for="creditCardpayment-card-1457456821574Code" htmlfor="creditCardpayment-card-1457456821574Code"><span data-i18n="paymentData.paymentGroup.creditCard.ccv">Código de Seguridad</span></label>
+                                            <!-- ko if: checkout.isTotem-->
+                                            <!-- /ko-->
+                                            <!-- ko ifnot: checkout.isTotem-->
+                                            <input id="creditCardpayment-card-1457456821574Code" type="tel" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Code',                              'maxlength': cardCodeMask().length},                        css: { 'cvv-wide': cardCodeMask().length &gt; 3 },                        value: cardSafetyCode,                        valueUpdate:'afterkeydown',                        validate: validateCardCode,                        required: cardSafetyCodeRequired,                        maskOnBlur: cardCodeMask,                        hasfocus: cardSafetyCodeHasFocus,                        disable: checkout.disableInputs()" maxlength="4" class="card-cvv input-mini dont-track-input cvv-wide">
+                                            <!-- /ko--><span data-bind="css: { 'cvv-four-digits': cardCodeMask().length &gt; 3 }, fadeVisible: cardSafetyCodeHasFocus() &amp;&amp; !cardSafetyCode.lastValidationResult()" style="display: none;" class="cvv-help not-saved-cvv-help field-help cvv-four-digits"><span class="cvv-help-arrow help-arrow left-arrow"></span><span data-i18n="paymentData.paymentGroup.creditCard.help" data-bind="visible: cardCodeMask().length == 3" style="display: none;" class="cvv-help-message cvv-help-message-3-numbers help-message">Los 3 números de la parte de atrás de su tarjeta.</span><span data-i18n="paymentData.paymentGroup.creditCard.helpAmex" data-bind="visible: cardCodeMask().length &gt; 3" class="cvv-help-message cvv-help-message-4-numbers help-message">Los 4 números de la parte de frente de su tarjeta.</span></span>
+                                          </p>
+                                          <p data-bind="fadeVisible: !showInstallmentOptions()" style="display: none;" class="payment-value"><span data-i18n="paymentData.paymentGroup.creditCard.value" class="payment-value-label">Monto </span><span data-bind="text: paidValueLabel" class="payment-value-value">S/. 1,699.00</span></p>
+                                          <p data-bind="css: {'holder-document-required':holderDocumentRequired, 'hide': !holderDocumentRequired()}" class="holder-document input text required mask hide">
+                                            <label for="holder-document" data-bind="text: documentOwner">Documento de Identidad del la personal</label>
+                                            <input id="holder-document" type="text" data-bind="value: document, valueUpdate:'afterkeydown',                validate: validateDocument, required: holderDocumentRequired,                maskOnBlur: checkout.documentMask(), attr: documentAttributeBindings, disable: checkout.disableInputs()" class="input-small">
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <!-- isUsingNewCard-->
+                                      <div data-bind="if: cardFormVisible()">
+                                        <p data-bind="fadeVisible: $parent.isUsingMoreThanOneCard" style="display: none;" class="payment-card-value input text required">
+                                          <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Value', htmlFor: $parent.identifier()+'payment-card' + id + 'Value'}, visible: !isPaidValueNull()" for="creditCardpayment-card-1457456821574Value" htmlfor="creditCardpayment-card-1457456821574Value"><span data-i18n="paymentData.paymentGroup.creditCard.value">Monto </span></label><span class="input-prepend"><span data-bind="text: vtex.i18n.getCurrency()" class="add-on">S/. </span>
+                                            <input id="creditCardpayment-card-1457456821574Value" type="text" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Value'},                                            value: paidValue, valueUpdate:'afterkeydown',                                            validate: validatePaidValue, disable: checkout.disableInputs() || checkout.backgroundLoading()" class="input-mini card-value"></span>
+                                        </p>
+                                        <!-- ko if: billingAddressRequired() && $data.isUsingNewCard()-->
+                                        <p data-bind="visible: !checkout.isUsingGiftRegistryAddress()" class="same-address checkbox">
+                                          <input id="same-address0" type="checkbox" data-bind="checked: sameBillingAddress,                        attr:{'id':'same-address'+$index()}, disable: checkout.disableInputs()">
+                                          <label data-i18n="paymentData.sameBillingAddress" data-bind="attr:{'for':'same-address'+$index(), 'htmlFor':'same-address'+$index()}" for="same-address0" htmlfor="same-address0">Mi dirección de facturación es la misma de la entrega</label>
+                                        </p>
+                                        <!-- ko if: !sameBillingAddress()-->
+                                        <!-- /ko-->
+                                        <!-- /ko-->
+                                      </div>
+                                    </div>
+                                    <!-- isUsingNewCard-->
+                                  </div>
+                                  <!-- end foreach cards-->
+                                  <!-- /ko-->
+                                  <div data-bind="visible: showUseMoreCards">
+                                    <p data-bind="visible: maxNumberOfCards() &gt; 1" class="link link-two-cards clearfix"><a id="use-one-more-card" href="javascript:void(0);" data-bind="click: useOneMoreCard, visible: !isUsingMoreThanOneCard()" data-i18n="paymentData.paymentGroup.creditCard.payWithTwo">Pagar con 2 tarjetas</a><a id="use-one-less-card" href="javascript:void(0);" data-bind="click: useOneLessCard, visible: isUsingMoreThanOneCard()" data-i18n="paymentData.paymentGroup.creditCard.payWithOne" style="display: none;">Pagar con 1 tarjeta</a></p>
+                                  </div>
+                                </fieldset>
+                              </div>
+                              <!-- /ko-->
+                              <!-- /ko-->
+                              <p class="button submit payment-submit-hide">
+                                <button type="submit" data-bind="click: submit, disable: checkout.disablePaymentButton" class="submit btn btn-success btn-large"><i class="icon-lock"></i><span data-i18n="paymentData.confirm">Comprar ahora</span></button>
+                              </p>
+                            </div>
+                          </form>
+                          <form id="sendPayments" data-event="sendPayments" method="post" name="sendPayments" action="">
+                            <input id="paymentsArray" name="paymentsArray" type="hidden">
+                            <input id="callbackURL" name="callbackUrl" type="hidden" data-bind="value: gatewayCallbackURL" value="https://www.estilomio.com/checkout/gatewayCallback/{0}/{1}/{2}">
+                          </form>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <p class="link back hide"><a href="#/shipping"><span data-i18n="global.backTo">Volver para </span><span data-i18n="shippingData.shippingAddressTitle">Dirección de envío</span></a></p>
+                  </div>
+                </div>
+              </div>
+              <div id="payment-data11" data-bind="template: {name: 'orderForm-paymentData-template', afterRender: afterRender}, css: { 'span6': !active(), 'span12': active }" class="mt20 pull-right payment-data span12">
+                <div data-bind="css: {active: active, filled: visitedAndNotActive}" class="step accordion-group active">
+                  <div class="accordion-heading"><span data-bind="css: {'accordion-toggle-active': active}" class="accordion-toggle collapsed accordion-toggle-active"><i class="icon-credit-card"></i><span data-i18n="paymentData.payment">Pago</span><a href="#/payment" tabindex="-1" data-bind="visible: visitedAndNotActive" data-i18n="[title]global.edit" style="display: none;" title="Cambiar" class="link-box-edit btn btn-small"><i class="icon-edit"></i></a></span></div>
+                  <div class="accordion-body collapse in payment-body">
+                    <div class="accordion-inner">
+                      <p data-bind="visible: !active()" data-i18n="global.waiting" style="display: none;" class="notification">Aún falta llenar con los datos</p>
+                      <!-- ko if: isArgentina-->
+                      <!-- /ko-->
+                      <div class="box-step">
+                        <p data-bind="visible: active() &amp;&amp; totalIsFree()" data-i18n="paymentData.totalIsFree" style="display: none;">El costo total de su compra es gratis. Sólo tiene que completar la compra!</p>
+                        <div data-bind="fadeVisible: active() &amp;&amp; validationError()" style="display: none;" class="alert alert-block payment-alert-error fade in">
+                          <button type="button" data-bind="click: clearValidationError" class="close">×</button>
+                          <p data-i18n="global.validationErrorInThisForm">Hay un error de validación. Por favor, corrija los campos y vuelva a intentarlo.</p>
+                        </div>
+                        <div data-bind="fadeVisible: active() &amp;&amp; giftCardMessages().length &gt; 0" style="display: none;" class="alert alert-block gift-card-message-container fade in">
+                          <!-- ko foreach: giftCardMessages-->
+                          <!-- /ko-->
+                        </div>
+                        <div data-bind="fadeVisible: loading" style="display: none;" class="loading loading-bg">
+                          <div class="loading-img"><i class="icon-spinner icon-spin icon-2x"><span data-i18n="global.loading">Cargando...</span></i></div>
+                        </div>
+                        <div data-bind="fadeVisible: active() || visited()" class="box-step-content">
+                          <form action="" data-event="finishPayment" data-bind="fadeVisible: active(), submit: submit" class="form-step box-new row-fluid">
+                            <!-- ko if: paymentGroups.giftCardPaymentGroup                                && paymentGroups.giftCardPaymentGroup.specialGiftCards().length > 0                                && !totalIsFree()-->
+                            <!-- /ko-->
+                            <!-- ko if: paymentGroups.giftCardPaymentGroup-->
+                            <!-- /ko-->
+                            <!-- ko if: paymentGroups.giftCardPaymentGroup && showGiftCard()-->
+                            <!-- /ko-->
+                            <fieldset data-bind="visible: showPaymentOptions" class="payment-group">
+                              <h3 data-i18n="paymentData.paymentMethod" class="hide">Medio de pago</h3>
+                              <p class="link show-credits hide"><a href="javascript:void(0);" data-i18n="paymentData.showCredits">Mostrar el crédito de la lista de matrimonio y del plan de fidelidad</a></p>
+                              <!-- para ser usado COM radio button-->
+                              <div data-bind="foreach: paymentGroupArray" class="payment-group-list required button-list inline-list hide">
+                                <!-- ko if: showAsTab-->
+                                <p data-bind="css: {first: $parent.paymentGroupArray()[0] === $data,                                         last: $parent.paymentGroupArray()[$parent.paymentGroupArray().length - 1] === $data,                                         checked: $parent.selectedPaymentGroupId() == id}" class="radio first">
+                                  <input id="paymentGroup-1456778447074usvj679hjtnjyvi" type="radio" data-bind="value: id, attr:{id:'paymentGroup' + id}, checked: $parent.selectedPaymentGroupId" name="paymentGroup" value="-1456778447074usvj679hjtnjyvi">
+                                  <label data-bind="text: localizedLabel, attr:{'for':'paymentGroup' + id, htmlFor:'paymentGroup' + id}" for="paymentGroup-1456778447074usvj679hjtnjyvi" htmlfor="paymentGroup-1456778447074usvj679hjtnjyvi" class="btn">PagoEfectivo</label>
+                                </p>
+                                <!-- /ko-->
+                                <!-- ko if: showAsTab-->
+                                <p data-bind="css: {first: $parent.paymentGroupArray()[0] === $data,                                         last: $parent.paymentGroupArray()[$parent.paymentGroupArray().length - 1] === $data,                                         checked: $parent.selectedPaymentGroupId() == id}" class="radio last checked">
+                                  <input id="paymentGroup-1456778447075kv40x0nsedf8byb9" type="radio" data-bind="value: id, attr:{id:'paymentGroup' + id}, checked: $parent.selectedPaymentGroupId" name="paymentGroup" value="-1456778447075kv40x0nsedf8byb9">
+                                  <label data-bind="text: localizedLabel, attr:{'for':'paymentGroup' + id, htmlFor:'paymentGroup' + id}" for="paymentGroup-1456778447075kv40x0nsedf8byb9" htmlfor="paymentGroup-1456778447075kv40x0nsedf8byb9" class="btn">Tarjeta de crédito</label>
+                                </p>
+                                <!-- /ko-->
+                              </div>
+                              <!-- /para ser usado COM radio button-->
+                              <!-- para ser usado SEM radio button-->
+                              <div data-bind="foreach: paymentGroupArray" class="required payment-group-list-btn">
+                                <!-- ko if: showAsTab--><a id="payment-group-PagoEfectivoPaymentGroup" href="javascript:void(0);" data-bind="click: $parent.selectPaymentGroup, attr:{ 'id':'payment-group-' + groupName(), 'class': className + ' payment-group-item' }, css: { active: $parent.selectedPaymentGroupId() == id }" class="payment-group-item"><span data-bind="text: localizedLabel" class="payment-group-item-text">PagoEfectivo</span></a>
+                                <!-- /ko-->
+                                <!-- ko if: showAsTab--><a id="payment-group-creditCardPaymentGroup" href="javascript:void(0);" data-bind="click: $parent.selectPaymentGroup, attr:{ 'id':'payment-group-' + groupName(), 'class': className + ' payment-group-item' }, css: { active: $parent.selectedPaymentGroupId() == id }" class="payment-group-item active"><span data-bind="text: localizedLabel" class="payment-group-item-text">Tarjeta de crédito</span></a>
+                                <!-- /ko-->
+                              </div>
+                              <!-- /para ser usado SEM radio button-->
+                            </fieldset>
+                            <div data-bind="visible: showPaymentOptions" class="steps-view">
+                              <!-- ko foreach: paymentGroupArray-->
+                              <!-- ko if: showAsTab-->
+                              <div data-bind="template: { name: template() }">
+                                <fieldset data-bind="fadeVisible: $parent.selectedPaymentGroupId() == id, css: groupName()" style="display: none;" class="box-payment-group2 box-payment-option PagoEfectivoPaymentGroup">
+                                  <h3 data-bind="text: localizedLabel">PagoEfectivo</h3>
+                                  <p data-bind="text: localizedDescription" class="payment-description">PagoEfectivo</p>
+                                  <!-- ko if: installments()-->
+                                  <div class="installments">
+                                    <!-- ko if: installments().length > 1-->
+                                    <!-- /ko-->
+                                    <!-- ko if: installments().length == 1-->
+                                    <p data-bind="with: installments()[0]" class="sight"><span data-bind="text: text">Total - S/. 118.00</span></p>
+                                    <!-- /ko-->
+                                  </div>
+                                  <!-- /ko-->
+                                </fieldset>
+                              </div>
+                              <!-- /ko-->
+                              <!-- ko if: showAsTab-->
+                              <div data-bind="template: { name: template() }">
+                                <fieldset data-bind="fadeVisible: $parent.selectedPaymentGroupId() == id, attr: {'class': className + ' box-payment-option'}, css: { 'one-card': cards().length == 1, 'two-cards': cards().length == 2, 'is-custom': isCustom() }" style="display: block;" class="box-payment-option one-card">
+                                  <h3 data-bind="attr: { 'data-i18n': pgTitle }" data-i18n="paymentData.paymentGroup.creditCard.creditCard">Tarjeta de crédito</h3><span class="security payment-security"><i class="icon-lock"></i><span data-i18n="paymentData.secureEnvironment" class="payment-security-text">Ambiente Seguro</span></span>
+                                  <!-- ko foreach: {data: cards, afterRender: afterRenderGroup}-->
+                                  <div id="creditCardpayment-card-1456778447077" data-bind="attr: { id: $parent.identifier() + 'payment-card' + id }, css: 'payment-card payment-card-position-' + $index()" class="payment-card payment-card-position-0">
+                                    <!-- ko if: $index() == 0-->
+                                    <h5 data-bind="fadeVisible: $parent.isUsingMoreThanOneCard" data-i18n="paymentData.paymentGroup.creditCard.firstCard" style="display: none;">Primera tarjeta</h5>
+                                    <!-- /ko-->
+                                    <!-- ko ifnot: $index() == 0-->
+                                    <!-- /ko-->
+                                    <!-- CARTOES SALVOS-->
+                                    <div data-bind="if: unusedAvailableAccounts().length, css: { active: unusedAvailableAccounts().length &gt; 0 &amp;&amp; isSavedCreditCardsVisible() == true }" class="saved-cards"></div>
+                                    <!-- FIM CARTOES SALVOS-->
+                                    <div data-bind="if: isUsingNewCard, css: { 'active': isUsingNewCard }" class="clearfix card-data active">
+                                      <div class="clearfix">
+                                        <p data-bind="visible: unusedAvailableAccounts().length &gt; 0" style="display: none;" class="link link-box-new"><a href="javascript:void(0);" data-bind="click: $data.toggleSavedCardsVisibility, text: i18n.t('paymentData.backCreditCardList')">Volver para las opciones de tarjetas</a></p>
+                                        <!-- is waiting for card scanner-->
+                                        <div data-bind="template: { name: 'cardScanner-template', 'if': isWaitingForCardScanner, afterRender: vtex.i18n.translateHtml }" class="card-scanner-waiting"></div>
+                                        <!-- is not waiting for card scanner-->
+                                        <div data-bind="template: { name: 'cardFields-template', 'if': !isWaitingForCardScanner(), afterRender: vtex.i18n.translateHtml }" class="card-ready-for-typing">
+                                          <p class="card-scanner-scan"><a href="javascript:void(0);" data-bind="visible: canUseCardScanner() &amp;&amp; !labelCardFields(), click: toggleCardForm" data-i18n="paymentData.paymentGroup.creditCard.scanner.scanCard" style="display: none;" class="card-scanner-scan-link">Escanear tarjeta</a></p>
+                                          <div data-bind="if: !labelCardFields()" class="card-scanner-label-all-fields">
+                                            <p class="payment-card-number input text required clearLeft">
+                                              <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Number', htmlFor: $parent.identifier()+'payment-card' + id + 'Number'}" for="creditCardpayment-card-1456778447077Number" htmlfor="creditCardpayment-card-1456778447077Number"><span data-i18n="paymentData.paymentGroup.creditCard.number">Número </span></label>
+                                              <!-- ko if: checkout.isTotem-->
+                                              <!-- /ko-->
+                                              <!-- ko ifnot: checkout.isTotem-->
+                                              <input id="creditCardpayment-card-1456778447077Number" type="tel" name="cardNumber" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Number'},                    value: cardNumber, valueUpdate: 'afterkeydown', validate: validateCreditCard, required: true,                    disable: checkout.disableInputs()" class="input-medium autofocus dont-track-input error">
+                                              <!-- /ko--><span class="help hide"><span href="javascript:void(0);" data-i18n="global.help" class="helpTitle">Ayuda</span><span data-i18n="paymentData.paymentGroup.creditCard.helpHiperCard" class="helpMessage hide">Si su tarjeta Hipercard tiene una secuencia de 6 números, arriba de la secuencia principal de 13 números, es necesario escribir todos los números, comenzando desde los 6 pequeños, sumando un total de 19 números.</span></span><span class="help error">Este campo es obligatorio.</span>
+                                            </p>
+                                            <div data-bind="css: {'hide': isCreditCardCustom}" class="card-flags-container clearfix form-inline">
+                                              <p data-bind="css: { 'active': selectedCardFlag() }" class="card-flags active">
+                                                <!-- ko foreach: parent.availableFlags-->
+                                                <label data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}" for="creditCardselectedCard0cc-1456778447077" htmlfor="creditCardselectedCard0cc-1456778447077" class="radio card-flag-label">
+                                                  <input id="creditCardselectedCard0cc-1456778447077" type="radio" tabindex="-1" data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()" name="creditCardselectedCardFlag-1456778447077" value="1" class="card-flag-radio"><span data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}" class="card-flag American Express">American Express</span>
+                                                </label>
+                                                <label data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}" for="creditCardselectedCard1cc-1456778447077" htmlfor="creditCardselectedCard1cc-1456778447077" class="radio card-flag-label">
+                                                  <input id="creditCardselectedCard1cc-1456778447077" type="radio" tabindex="-1" data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()" name="creditCardselectedCardFlag-1456778447077" value="4" class="card-flag-radio"><span data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}" class="card-flag Mastercard">Mastercard</span>
+                                                </label>
+                                                <label data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}" for="creditCardselectedCard2cc-1456778447077" htmlfor="creditCardselectedCard2cc-1456778447077" class="radio card-flag-label">
+                                                  <input id="creditCardselectedCard2cc-1456778447077" type="radio" tabindex="-1" data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()" name="creditCardselectedCardFlag-1456778447077" value="2" class="card-flag-radio"><span data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}" class="card-flag Visa card-selected">Visa</span>
+                                                </label>
+                                                <label data-bind="attr:{'for': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, 'htmlFor': $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id, title: name}" for="creditCardselectedCard3cc-1456778447077" htmlfor="creditCardselectedCard3cc-1456778447077" class="radio card-flag-label">
+                                                  <input id="creditCardselectedCard3cc-1456778447077" type="radio" tabindex="-1" data-bind="attr: {name: $parents[1].identifier()+'selectedCardFlag' + $parent.id, id: $parents[1].identifier()+'selectedCard' + $index() + 'cc' +  $parent.id},                    value: id().toString(), checked: $parent.selectedCardFlagId, disable: checkout.disableInputs()" name="creditCardselectedCardFlag-1456778447077" value="3" class="card-flag-radio"><span data-bind="text: name,                    attr: {'class': 'card-flag ' + name()},                    css: {'card-selected': $parent.selectedCardFlagId() == id()}" class="card-flag Diners">Diners</span>
+                                                </label>
+                                                <!-- /ko-->
+                                              </p>
+                                            </div>
+                                            <div data-bind="fadeVisible: noInstallmentsAvailable" style="display: none;" class="alert payment-installment-alert-error">
+                                              <p data-i18n="paymentData.cardNotAccepted">El emisor bancaria de esta tarjeta no es aceptada.</p>
+                                            </div>
+                                            <div data-bind="if: showInstallmentOptions" class="box-installments box-default">
+                                              <p class="select required">
+                                                <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Brand', htmlFor: $parent.identifier()+'payment-card' + id + 'Brand'}" for="creditCardpayment-card-1456778447077Brand" htmlfor="creditCardpayment-card-1456778447077Brand">Parcelamento</label>
+                                                <select id="creditCardpayment-card-1456778447077Brand" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Brand'},                    options: installments, value: selectedInstallmentNumber, required: true,                    optionsText: 'text', optionsValue: 'number', optionsCaption: installmentsCaption, optionsAfterRender: setOptionDisable" class="input-xlarge success">
+                                                  <option value="" disabled="">En cuantas cuotas deseas pagar?</option>
+                                                  <option value="1">Total - S/. 118.00</option>
+                                                </select>
+                                              </p>
+                                            </div>
+                                            <p data-bind="css: {'required': cardOwnerNameRequired, 'hide': !cardOwnerNameRequired()}" class="payment-card-name input text required">
+                                              <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Name', htmlFor: $parent.identifier()+'payment-card' + id + 'Name'}" for="creditCardpayment-card-1456778447077Name" htmlfor="creditCardpayment-card-1456778447077Name"><span data-i18n="paymentData.paymentGroup.creditCard.holderName">Nombre como figura en la tarjeta </span></label>
+                                              <input id="creditCardpayment-card-1456778447077Name" type="text" name="ccName" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Name'},                   value: cardOwnerName, valueUpdate:'afterkeydown',                   validate: 'alpha', required: cardOwnerNameRequired, disable: checkout.disableInputs()" class="input-medium">
+                                            </p>
+                                            <div data-bind="css: {'hide': !cardExpirationDateRequired()}" class="payment-card-due">
+                                              <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Month'}" for="creditCardpayment-card-1456778447077Month" class="label-text pull-left"><span data-i18n="paymentData.paymentGroup.creditCard.dueDate">Fecha de Vencimiento</span></label>
+                                              <p data-bind="css: {'required': cardExpirationDateRequired}" class="payment-card-due-month input text required">
+                                                <select id="creditCardpayment-card-1456778447077Month" name="cardExpirationMonth" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Month'},             options: months, optionsCaption: localizedMonth(), value: cardDueMonth, validate: validateDueMonth, required: cardExpirationDateRequired, disable: checkout.disableInputs()" class="input-mini">
+                                                  <option value="">MM</option>
+                                                  <option value="01">01</option>
+                                                  <option value="02">02</option>
+                                                  <option value="03">03</option>
+                                                  <option value="04">04</option>
+                                                  <option value="05">05</option>
+                                                  <option value="06">06</option>
+                                                  <option value="07">07</option>
+                                                  <option value="08">08</option>
+                                                  <option value="09">09</option>
+                                                  <option value="10">10</option>
+                                                  <option value="11">11</option>
+                                                  <option value="12">12</option>
+                                                </select>
+                                              </p>
+                                              <p class="payment-card-lash">/</p>
+                                              <p data-bind="css: {'required': cardExpirationDateRequired}" class="payment-card-due-year input text required">
+                                                <select id="creditCardpayment-card-1456778447077Year" name="cardExpirationYear" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Year'}, options: years,  optionsCaption: localizedYear(), value: cardDueYear, validate: validateDueYear, required: cardExpirationDateRequired, disable: checkout.disableInputs()" class="input-mini">
+                                                  <option value="">AA</option>
+                                                  <option value="16">16</option>
+                                                  <option value="17">17</option>
+                                                  <option value="18">18</option>
+                                                  <option value="19">19</option>
+                                                  <option value="20">20</option>
+                                                  <option value="21">21</option>
+                                                  <option value="22">22</option>
+                                                  <option value="23">23</option>
+                                                  <option value="24">24</option>
+                                                  <option value="25">25</option>
+                                                  <option value="26">26</option>
+                                                </select>
+                                              </p>
+                                            </div>
+                                          </div>
+                                          <!-- !labelCardFields-->
+                                          <div data-bind="if: labelCardFields" class="card-scanner-resume"></div>
+                                          <!-- labelCardFields-->
+                                          <p data-bind="css: {'required': cardSafetyCodeRequired, 'hide': !cardSafetyCodeRequired()}" class="payment-card-cvv input text required">
+                                            <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Code', htmlFor: $parent.identifier()+'payment-card' + id + 'Code'}" for="creditCardpayment-card-1456778447077Code" htmlfor="creditCardpayment-card-1456778447077Code"><span data-i18n="paymentData.paymentGroup.creditCard.ccv">Código de Seguridad</span></label>
+                                            <!-- ko if: checkout.isTotem-->
+                                            <!-- /ko-->
+                                            <!-- ko ifnot: checkout.isTotem-->
+                                            <input id="creditCardpayment-card-1456778447077Code" type="tel" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Code',                              'maxlength': cardCodeMask().length},                        css: { 'cvv-wide': cardCodeMask().length &gt; 3 },                        value: cardSafetyCode,                        valueUpdate:'afterkeydown',                        validate: validateCardCode,                        required: cardSafetyCodeRequired,                        maskOnBlur: cardCodeMask,                        hasfocus: cardSafetyCodeHasFocus,                        disable: checkout.disableInputs()" maxlength="3" class="card-cvv input-mini dont-track-input">
+                                            <!-- /ko--><span data-bind="css: { 'cvv-four-digits': cardCodeMask().length &gt; 3 }, fadeVisible: cardSafetyCodeHasFocus() &amp;&amp; !cardSafetyCode.lastValidationResult()" style="display: none;" class="cvv-help not-saved-cvv-help field-help"><span class="cvv-help-arrow help-arrow left-arrow"></span><span data-i18n="paymentData.paymentGroup.creditCard.help" data-bind="visible: cardCodeMask().length == 3" style="" class="cvv-help-message cvv-help-message-3-numbers help-message">Los 3 números de la parte de atrás de su tarjeta.</span><span data-i18n="paymentData.paymentGroup.creditCard.helpAmex" data-bind="visible: cardCodeMask().length &gt; 3" style="display: none;" class="cvv-help-message cvv-help-message-4-numbers help-message">Los 4 números de la parte de frente de su tarjeta.</span></span>
+                                          </p>
+                                          <p data-bind="fadeVisible: !showInstallmentOptions()" style="display: none;" class="payment-value"><span data-i18n="paymentData.paymentGroup.creditCard.value" class="payment-value-label">Monto </span><span data-bind="text: paidValueLabel" class="payment-value-value">S/. 118.00</span></p>
+                                          <p data-bind="css: {'holder-document-required':holderDocumentRequired, 'hide': !holderDocumentRequired()}" class="holder-document input text required mask hide">
+                                            <label for="holder-document" data-bind="text: documentOwner">Documento de Identidad del la personal</label>
+                                            <input id="holder-document" type="text" data-bind="value: document, valueUpdate:'afterkeydown',                validate: validateDocument, required: holderDocumentRequired,                maskOnBlur: checkout.documentMask(), attr: documentAttributeBindings, disable: checkout.disableInputs()" class="input-small success">
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <!-- isUsingNewCard-->
+                                      <div data-bind="if: cardFormVisible()">
+                                        <p data-bind="fadeVisible: $parent.isUsingMoreThanOneCard" style="display: none;" class="payment-card-value input text required">
+                                          <label data-bind="attr: {'for': $parent.identifier()+'payment-card' + id + 'Value', htmlFor: $parent.identifier()+'payment-card' + id + 'Value'}, visible: !isPaidValueNull()" for="creditCardpayment-card-1456778447077Value" htmlfor="creditCardpayment-card-1456778447077Value"><span data-i18n="paymentData.paymentGroup.creditCard.value">Monto </span></label><span class="input-prepend"><span data-bind="text: vtex.i18n.getCurrency()" class="add-on">S/. </span>
+                                            <input id="creditCardpayment-card-1456778447077Value" type="text" data-bind="attr: {id: $parent.identifier()+'payment-card' + id + 'Value'},                                            value: paidValue, valueUpdate:'afterkeydown',                                            validate: validatePaidValue, disable: checkout.disableInputs() || checkout.backgroundLoading()" class="input-mini card-value"></span>
+                                        </p>
+                                        <!-- ko if: billingAddressRequired() && $data.isUsingNewCard()-->
+                                        <p data-bind="visible: !checkout.isUsingGiftRegistryAddress()" class="same-address checkbox">
+                                          <input id="same-address0" type="checkbox" data-bind="checked: sameBillingAddress,                        attr:{'id':'same-address'+$index()}, disable: checkout.disableInputs()">
+                                          <label data-i18n="paymentData.sameBillingAddress" data-bind="attr:{'for':'same-address'+$index(), 'htmlFor':'same-address'+$index()}" for="same-address0" htmlfor="same-address0">Mi dirección de facturación es la misma de la entrega</label>
+                                        </p>
+                                        <!-- ko if: !sameBillingAddress()-->
+                                        <!-- /ko-->
+                                        <!-- /ko-->
+                                      </div>
+                                    </div>
+                                    <!-- isUsingNewCard-->
+                                  </div>
+                                  <!-- end foreach cards-->
+                                  <!-- /ko-->
+                                  <div data-bind="visible: showUseMoreCards">
+                                    <p data-bind="visible: maxNumberOfCards() &gt; 1" class="link link-two-cards clearfix"><a id="use-one-more-card" href="javascript:void(0);" data-bind="click: useOneMoreCard, visible: !isUsingMoreThanOneCard()" data-i18n="paymentData.paymentGroup.creditCard.payWithTwo">Pagar con 2 tarjetas</a><a id="use-one-less-card" href="javascript:void(0);" data-bind="click: useOneLessCard, visible: isUsingMoreThanOneCard()" data-i18n="paymentData.paymentGroup.creditCard.payWithOne" style="display: none;">Pagar con 1 tarjeta</a></p>
+                                  </div>
+                                </fieldset>
+                              </div>
+                              <!-- /ko-->
+                              <!-- /ko-->
+                              <p class="button submit payment-submit-hide">
+                                <button type="submit" data-bind="click: submit, disable: checkout.disablePaymentButton" class="submit btn btn-success btn-large"><i class="icon-lock"></i><span data-i18n="paymentData.confirm">Comprar ahora</span></button>
+                              </p>
+                            </div>
+                          </form>
+                          <form id="sendPayments" data-event="sendPayments" method="post" name="sendPayments" action="">
+                            <input id="paymentsArray" name="paymentsArray" type="hidden">
+                            <input id="callbackURL" name="callbackUrl" type="hidden" data-bind="value: gatewayCallbackURL" value="https://www.estilomio.com/checkout/gatewayCallback/{0}/{1}/{2}">
+                          </form>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <p class="link back hide"><a href="#/shipping"><span data-i18n="global.backTo">Volver para </span><span data-i18n="shippingData.shippingAddressTitle">Dirección de envío</span></a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cart-template mini-cart span4">
+            <div style="height: 423px;" class="cart-fixed cart-fixed-transition affix-top">
+              <h2 data-i18n="totalizers.summary">Resumen de la compra</h2>
+              <!-- TODO remove window.router-->
+              <div data-bind="fadeVisible: window.router.inOrderForm, template: { name: 'orderForm-summary-cart-template', afterRender: vtex.i18n.translateHtml }" style="display: block; height: auto;" class="summary-cart-template-holder">
+                <div class="cart">
+                  <ul class="cart-items unstyled clearfix">
+                    <li data-bind="attr: {'data-sku': id}" data-sku="650453" class="hproduct item muted"><a href="http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p" data-bind="attr: {'href': ('http://' + location.host + detailUrl())}" class="url"><img id="hproduct-item-650453" height="45" width="45" data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'hproduct-item-' + id()}" src="//estilomio.vteximg.com.br/arquivos/ids/177618-100-100/globe_650453_17.jpg" alt="Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú" class="photo"></a><span data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl())}" href="http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p" class="fn product-name">Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú</span><span data-bind="text: quantity" class="quantity badge">2</span>
+                      <div class="description"><span data-bind="text: estimateLabel, css: { 'empty': estimateLabel() == 'a calcular' }" class="shipping-date pull-left empty">a calcular</span><strong data-bind="text: priceLabel" class="item-price pull-right hide">S/. 249.00</strong><strong data-bind="text: sellingPriceLabel" class="price pull-right">S/. 249.00</strong></div>
+                    </li>
+                    <li data-bind="attr: {'data-sku': id}" data-sku="650453" class="hproduct item muted"><a href="http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p" data-bind="attr: {'href': ('http://' + location.host + detailUrl())}" class="url"><img id="hproduct-item-650453" height="45" width="45" data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'hproduct-item-' + id()}" src="//estilomio.vteximg.com.br/arquivos/ids/177618-100-100/globe_650453_17.jpg" alt="Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú" class="photo"></a><span data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl())}" href="http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p" class="fn product-name">Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú</span><span data-bind="text: quantity" class="quantity badge">2</span>
+                      <div class="description"><span data-bind="text: estimateLabel, css: { 'empty': estimateLabel() == 'a calcular' }" class="shipping-date pull-left empty">a calcular</span><strong data-bind="text: priceLabel" class="item-price pull-right hide">S/. 249.00</strong><strong data-bind="text: sellingPriceLabel" class="price pull-right">S/. 249.00</strong></div>
+                    </li>
+                    <li data-bind="attr: {'data-sku': id}" data-sku="650453" class="hproduct item muted"><a href="http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p" data-bind="attr: {'href': ('http://' + location.host + detailUrl())}" class="url"><img id="hproduct-item-650453" height="45" width="45" data-bind="attr: {'src': imageUrl, 'alt': name, 'id': 'hproduct-item-' + id()}" src="//estilomio.vteximg.com.br/arquivos/ids/177618-100-100/globe_650453_17.jpg" alt="Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú" class="photo"></a><span data-bind="text: name, attr: {'href': ('http://' + location.host + detailUrl())}" href="http://www.estilomio.com/globe-zapatillas-hombres-the-delta-azul/p" class="fn product-name">Globe Zapatillas Hombre The Delta Azul - Talla 9 USA l 42 Perú</span><span data-bind="text: quantity" class="quantity badge">2</span>
+                      <div class="description"><span data-bind="text: estimateLabel, css: { 'empty': estimateLabel() == 'a calcular' }" class="shipping-date pull-left empty">a calcular</span><strong data-bind="text: priceLabel" class="item-price pull-right hide">S/. 249.00</strong><strong data-bind="text: sellingPriceLabel" class="price pull-right">S/. 249.00</strong></div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <p class="link link-cart pull-right"><small><a id="orderform-minicart-to-cart" href="#/cart" target="_self" data-event="orderformToCart" data-i18n="global.backToCart">Volver a carrito</a></small></p>
+              <div data-bind="template: 'summary-template'" class="summary-template-holder">
+                <div data-bind="fadeVisible: window.cart.hasItems() &amp;&amp; !loading()" style="display: block;" class="row-fluid summary">
+                  <div data-bind="css: { 'span7 pull-left': !window.checkout.hasSelectableGifts(), 'span4 pull-right': window.checkout.hasSelectableGifts() }" class="forms coupon-column summary-coupon-wrap span7 pull-left">
+                    <div data-bind="with: coupon, visible: hasTotal" class="coupon summary-coupon pull-right">
+                      <form action="" data-bind="submit: addCoupon" class="coupon-form">
+                        <fieldset class="coupon-fieldset">
+                          <div data-bind="fadeVisible: isUsingCoupon()" style="display: none;">
+                            <p class="coupon-label">
+                              <label for="cart-coupon" data-i18n="totalizers.couponCapitalize">Cupón de descuento</label>
+                            </p>
+                            <p class="coupon-fields"><span data-bind="visible: !isCouponTyped()">
+                                <input id="cart-coupon" type="text" data-bind="value: couponCode, valueUpdate:'afterkeydown', disable: loadingCoupon()" placeholder="Código" data-i18n="[placeholder]totalizers.couponCode;" class="coupon-value input-small"><span data-bind="fadeInlineVisible: loadingCoupon" style="display: none; opacity: 0;" class="loading-inline loading-coupon"><span data-i18n="cart.wait">Cargando datos...</span></span>
+                                <button id="cart-coupon-add" type="submit" data-bind="disable: loadingCoupon" data-i18n="global.add" class="btn">Sumar</button></span><span data-bind="visible: isCouponTyped" style="display: none;" class="info"><span data-bind="text: value"></span><small class="delete"><a id="cart-coupon-remove" href="javascript:void(0);" data-bind="click: removeCoupon" data-i18n="global.delete">Borrar</a></small></span></p>
+                          </div>
+                          <p data-bind="fadeVisible: !isUsingCoupon()" class="coupon-data pull-right"><a id="cart-link-coupon-add" href="javascript:void(0);" data-bind="click: isUsingCoupon" class="link-coupon-add"><span data-i18n="global.add">Sumar</span><span data-i18n="totalizers.coupon">cupón de descuento</span></a></p>
+                        </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="span5 totalizers summary-totalizers cart-totalizers pull-right">
+                    <div data-bind="fadeVisible: window.cart.hasItems() &amp;&amp; !loading()" style="display: block;" class="accordion-group">
+                      <div class="accordion-heading"><span data-i18n="totalizers.summary" class="accordion-toggle collapsed">Resumen de la compra</span></div>
+                      <div class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                          <div data-bind="visible: discounts().length" style="display: none;" class="summary-discount-descriptions">
+                            <h3 data-i18n="totalizers.Discounts" class="summary-discount-title">Descuentos</h3>
+                            <ul data-bind="foreach: discounts()" class="all-discount-descriptions unstyled"></ul>
+                          </div>
+                          <table class="table">
+                            <tbody data-bind="foreach: { data: totalizers }" class="totalizers-list">
+                              <tr data-bind="visible: visible, attr: { 'class': id }" class="Items">
+                                <!-- ko if: id() == 'Shipping'-->
+                                <!-- /ko-->
+                                <!-- ko ifnot: id() == 'Shipping'-->
+                                <td data-bind="attr: {'data-i18n': 'totalizers.' + id()}" data-i18n="totalizers.Items" class="info">Subtotal</td>
+                                <td class="space"></td>
+                                <td data-bind="text: valueLabel" class="monetary">S/. 498.00</td>
+                                <td class="empty"></td>
+                                <!-- /ko-->
+                              </tr>
+                            </tbody>
+                            <tbody data-bind="visible: isShippingKnown()                                                    &amp;&amp; !window.checkout.isNotUsingPostalCode()                                                    &amp;&amp; window.cart.items().length == window.cart.unavailableItems().length" style="display: none;" class="shipping-reset">
+                              <tr>
+                                <td class="info"><span class="postal-code-for-sla"><span data-bind="attr: {'data-i18n': 'totalizers.Shipping'}" data-i18n="totalizers.Shipping" class="shipping-name">Costo del envío</span><span data-i18n="global.to" class="shipping-name-to">para</span><span data-bind="html: window.summary.maskedPostalCode" class="postal-code-value"></span><a id="cart-reset-postal-code" href="javascript:void(0);" data-bind="visible : window.checkout.canEditData, click: summary.resetShipping" data-i18n="[title]global.edit" title="Cambiar" class="cart-reset-postal-code"><i class="icon-remove-sign"></i></a><br><a id="cart-reset-postal-code" href="javascript:void(0);" data-bind="visible : window.checkout.canEditData, click: window.summary.resetShipping" data-i18n="cart.resetShipping" class="cart-reset-postal-code">Elegir otro código postal</a></span></td>
+                                <td class="space"></td>
+                                <td data-i18n="global.unavailable" class="monetary shipping-unavailable">No disponible</td>
+                              </tr>
+                            </tbody>
+                            <tbody data-bind="visible: !isShippingKnown() &amp;&amp; !window.checkout.isNotUsingPostalCode()" style="display: none;" class="shipping-calculate">
+                              <tr>
+                                <td class="info"><span data-i18n="cart.calculateShipping">Envío</span></td>
+                                <td data-bind="visible: !isUsingPostalCode()" class="space"></td>
+                                <td data-bind="visible: !isUsingPostalCode()" class="monetary"><a id="shipping-calculate-link" href="javascript:void(0)" data-bind="click: usingPostalCode" data-i18n="cart.calculate" class="shipping-calculate-link">Calcular</a></td>
+                                <td data-bind="visible: isUsingPostalCode() &amp;&amp; !isShippingKnown()" colspan="3" style="display: none;" class="monetary form-postal-code forms">
+                                  <div class="shipping summary-shipping">
+                                    <form action="" data-bind="submit: calculateShipping" class="shipping-form-inline">
+                                      <fieldset class="shipping-fieldset">
+                                        <div class="shipping-fields">
+                                          <input id="summary-postal-code" type="tel" data-bind="value: postalCode, valueUpdate:'afterkeydown',                                                               validate: 'postalCode', disable: loadingPostalCode,                                                               maskOnBlur: window.checkout.postalCodeMask,                                                               attr: {'placeholder': postalCodeLabel, 'maxlength': window.checkout.postalCodeMask() ? window.checkout.postalCodeMask().length : 9},                                                               css: {'loading-postal-code': loadingPostalCode}" placeholder="CPPER" maxlength="4" class="postal-code input-mini"><i data-bind="fadeInlineVisible: loadingPostalCode" style="display: none; opacity: 0;" class="loading-inline icon-spinner icon-spin"><span data-i18n="cart.wait">Cargando datos...</span></i>
+                                          <button id="cart-shipping-calculate" type="submit" data-bind="disable: loadingPostalCode" data-i18n="cart.calculate" class="btn">Calcular</button>
+                                        </div><small class="postal-code-service summary-postal-code-service"><a id="cart-dont-know-postal-code" data-bind="attr: { 'href': window.checkout.postalCodeForgottenURL }" target="_blank" data-i18n="totalizers.dontKnowPostalCode" href="#">No conozco mi Código Postal (CP)</a></small>
+                                      </fieldset>
+                                    </form>
+                                  </div>
+                                </td>
+                                <td data-bind="visible: !isUsingPostalCode()" class="empty"></td>
+                              </tr>
+                            </tbody>
+                            <tfoot>
+                              <tr data-bind="css: {'muted': !hasTotal()}">
+                                <td data-i18n="global.total" class="info">Total</td>
+                                <td class="space"></td>
+                                <td data-bind="text: totalLabel" class="monetary">S/. 498.00</td>
+                                <td class="empty"></td>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="payment-confirmation-wrap">
+                <div data-bind="template: 'note-template', css: { hide: !window.cart.allowManualPrice() }" class="note summary-note hide">
+                  <p data-bind="fadeVisible: !isUsingNote()" class="note-data"><a id="cart-link-note-add" href="javascript:void(0);" data-bind="click: setUsingNote" class="link-note-add"><span data-i18n="global.addNote">Sumar observacíon</span></a></p>
+                  <div data-bind="fadeVisible: isUsingNote()" style="display: none;">
+                    <p class="note-label">
+                      <label for="cart-note" data-i18n="global.note">Observacíon</label>
+                    </p>
+                    <textarea id="cart-note" row="3" data-bind="value: note, valueUpdate:'blur'" maxlength="1000" class="note-textarea"></textarea>
+                  </div>
+                </div>
+                <p class="payment-submit-wrap">
+                  <button id="payment-data-submit" data-bind="click: submit, disable: window.checkout.disablePaymentButton" tabindex="200" class="submit btn btn-success btn-large btn-block"><i data-bind="visible: !window.checkout.disablePaymentButton()" class="icon-lock"></i><i data-bind="visible: window.checkout.disablePaymentButton()" style="display: none;" class="icon-spinner icon-spin"></i><span data-i18n="paymentData.confirm">Comprar ahora</span></button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /END ORDERFORM-->
+      </div>
+    </div>
+    <!-- end footer-->
+    <div class="footer">
+      <div class="bg">
+        <div class="container">
+          <div class="left"><img src="http://estilomio.vteximg.com.br/arquivos/pago.png" border="0">
+            <div id="DigiCert"><img src="http://estilomio.vteximg.com.br/arquivos/seal.digicert.png"></div>
+            <p>Esta tienda esta autorizada para realizar transacciones electrónicas.</p>
+          </div>
+          <div class="right">
+            <div class="ico_Send"></div>
+            <p>ENVIOS A TODO EL PERU</p>
+            <div class="logo"></div>
+          </div>
+        </div>
+      </div>
+      <div class="Foo"><a id="milPuntos" href=""></a>
+        <p>©2016 EstiloMio.com. Todos los derechos reservados</p>
+      </div>
+    </div>
+    <script src="/demos/estilomio/dist/arquivos/libs/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="/demos/estilomio/dist/arquivos/app_checkout.js" type="text/javascript"> </script>
+  </body>
+</html>

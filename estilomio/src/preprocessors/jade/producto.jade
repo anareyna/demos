@@ -1,0 +1,236 @@
+extends _layout/layout.jade
+
+block content
+	.container.box_product 
+	
+		.mobile_title
+			.fn.productName.HAVAIANAS-TOP-4000029-2090 HAVAIANAS TOP 4000029-2090
+			.product_reference Cod. 
+				.productReference 58546846
+			.brand_name
+				span Marca
+				.brandName.Havaianas
+					a.brand.havaianas(href='javascript:;') Havaianas
+		.box_product_top 
+			.slider_product 
+				.apresentacao
+					#setaThumbs
+					#show
+						#include
+							#image(productindex='0')
+								a.image-zoom(href='http://estilomio.vteximg.com.br/arquivos/ids/177727-1000-1000/7.jpg')
+									img#image-main.sku-rich-image-main(productindex='0', src='http://estilomio.vteximg.com.br/arquivos/ids/177727-400-400/7.jpg', alt='7', title='7')
+						ul.thumbs
+							- for  (i = 0; i<10; i++)
+								li
+									a#botaoZoom(title="title descri", href='javascript:void(0);')
+										img(title="text", src='http://estilomio.vteximg.com.br/arquivos/ids/177727-100-100/7.jpg')
+
+
+			.product_details
+				.fn.productName.HAVAIANAS-TOP-4000029-2090 HAVAIANAS TOP 4000029-2090
+				input#___rc-p-id(type='hidden', value='13778')
+				input#___rc-p-dv-id(type='hidden', value='19,9')
+				input#___rc-p-sku-ids(type='hidden', value='654601,654614,654630')
+				input#___rc-p-kit-ids(type='hidden', value='')
+				.product_reference Cod. 
+					.productReference 58546846
+				.brand_name
+					span Marca 
+					.brandName.Havaianas
+						a.brand.havaianas(href='javascript:;') Havaianas
+				.productDescription Nike está cambiando el estilo de la línea de botas de Cristiano Ronaldo, el mejor jugador del mundo tras conseguir el Balón de Oro, un nuevo modelo y una edición exclusiva en color azul con detalles en verde, muy elegantes, llamativas y divertidas, basadas en las Nike Mercurial Vapor CR7 Gala 2014 – 2015 que cuentan con su logo CR7 y que también mezclan elementos Safari, los puntitos de color negro que salpican toda la bota. también mezclan elementos Safari, los puntitos de color negro que salpican toda la bota.
+				.product_options
+					.color 
+						h2 ProductosRelacionados
+						ul
+							-for (i=0; i<3; i++)
+								li(class='marcas-exclusivas-en-moda')
+									a.color_box(href='javascript:;')
+										img(title="dfdfg", src='http://estilomio.vteximg.com.br/arquivos/ids/159410-210-200/07_1.jpg', width='210', height='200')
+
+								li#helperComplement_2570.helperComplement(style='display:none')
+
+					.size
+						.sku-selector-container.sku-selector-container-0
+							ul.topic.Talla.productid-14486.numopt-2
+								li.specification Talla
+								li.select.skuList.item-dimension-Talla
+									select#espec_0_opcao_0.sku-selector(name='espec_0', size='1', specification='Talla', currentproductid='14486', data-dimension='Talla')
+										option(value='', selected='selected')
+										option.skuopcao_0(value='40') 40
+										option.skuopcao_1(value='42') 42
+					.quantity
+						label CANTIDAD 
+						input.buy-in-page-quantity(size="20", type="text",  value="1", productindex="0", style="display:block")
+						a(class="buy-in-page-button", productindex="0", style="display:block") Comprar
+
+				.price
+					span.text PRECIO 
+					.plugin-preco
+						p.descricao-preco
+							em.valor-de.price-list-price(style='display: block;')
+								| De: 
+								strong.skuListPrice S/. 02000,00
+							em.valor-por.price-best-price(style='display: inline;')
+								| Por: 
+								strong.skuBestPrice S/. 100,00
+							em.valor-dividido.price-installments(style='display: none;')
+								span
+									span
+										| ou 
+										label.skuBestInstallmentNumber
+											| 1
+											span.x x
+										|  de
+									strong
+										label.skuBestInstallmentValue S/. 100,00
+						p.preco-a-vista.price-cash(style='display: none;')
+							| Preço a vista:
+							strong.skuPrice S/. 10.600,00
+						em.economia-de
+							| Economia de  
+							span.economia S/. 1.000,00
+
+					a.buy-button.buy-button-ref(target='_top', href="javascript:alert('Seleccione el modelo deseado.')", style='display:block') Comprar
+					p.unavailable-button(style='display:none') Produto Agotado
+					input.buy-button-amount(type='hidden', value='1')
+					.portal-notify-me-ref.hide
+						.notifyme.sku-notifyme(style='display: block;')
+							.notifyme-title-div(style='display: block;')
+								h3.notifymetitle.notifyme-title Avise-Me
+							form(action='/no-cache/AviseMe.aspx', style='display: block;')
+								fieldset.sku-notifyme-form.notifyme-form
+									p
+										| ¿Quieres que te avisemos cuando tengamos stock? 
+										b Déjanos tu nombre y correo electrónico.
+									input#notifymeClientName.sku-notifyme-client-name.notifyme-client-name(placeholder='Escriba su nombre', size='20', type='text', name='notifymeClientName', style='display: inline-block;')
+									input#notifymeClientEmail.sku-notifyme-client-email.notifyme-client-email(placeholder='Escriba su email', size='20', type='text', name='notifymeClientEmail', style='display: inline-block;')
+									input#notifymeButtonOK.btn-ok.sku-notifyme-button-ok.notifyme-button-ok(value='NOTIFICARME', type='button', name='notifymeButtonOK', style='display: inline-block;')
+									input.sku-notifyme-skuid.notifyme-skuid(type='hidden', name='notifymeIdSku', value='650125', style='display: none;')
+							p.notifyme-loading-message(style='display: none')
+								span.sku-notifyme-loading.notifyme-loading Carregando...
+							fieldset.success(style='display:none;')
+								label
+									em
+										span.sku-notifyme-success.notifyme-success
+											| Registrado con éxito, cuando el producto esté disponible, usted recibirá un correo electrónico de notificación.
+							fieldset.error(style='display: none')
+								label
+									span.sku-notifyme-error.notifyme-error
+				.social
+					p Compartir este artículo
+					.addthis_native_toolbox
+		#boxDescription.box_collapse.box_description
+			h2.site_title 
+				span Descripción
+					i.ico_triangle 
+			.container 
+				.brand_image
+					img(src="http://placem.at/things?w=700&h=400")
+				.text 
+					.productDescription
+						p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor inventore ad aliquam esse nulla labore dolorum quaerat deserunt commodi, facilis recusandae ab, ullam odit quae dolorem ducimus quibusdam eos repudiandae.
+						p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		.box_collapse.box_specifications
+			h2.site_title 
+				span Especificaciones técnicas
+					i.ico_triangle 
+			.container 
+
+				#caracteristicas
+					h4.group.Especificaciones Especificaciones
+					table(cellspacing='0')
+						tbody
+						tr.even
+							th.name-field.Tipo Tipo
+							td.value-field.Tipo Set de dormitorio
+						tr
+							th.name-field.Medidas Medidas
+							td.value-field.Medidas 1,5 Plaza
+
+			
+				
+		.box_collapse.box_related
+			h2.site_title
+				span Productos Relacionados
+					i.ico_triangle 
+			.container 
+				.list_products
+					h2 ProductosRelacionados
+					ul
+						li(layout='2f456047-88fb-4e94-80fa-0ced2f45f1cc', class='marcas-exclusivas-en-moda')
+							a.product_box(title='Style Up Lentes Calvin Klein: Grasshopper Sunglasses', href='producto.html')
+								.img_container 
+									img(src='http://estilomio.vteximg.com.br/arquivos/ids/159410-210-200/07_1.jpg', width='210', height='200', alt='07_1', id='')
+								.text
+									p.product_description.ellipsis(style='word-wrap: break-word;') Style Up Lentes Calvin Klein: Grasshopper Sunglasses
+									span.original_price S/. 399.90
+									span.price S/. 219.90
+						li#helperComplement_2570.helperComplement(style='display:none')
+						li(layout='2f456047-88fb-4e94-80fa-0ced2f45f1cc', class='marcas-exclusivas-en-moda')
+							a.product_box(title='Hawkers Flamingo Nebula One', href='javascript:;')
+								.img_container 
+									img(src='http://estilomio.vteximg.com.br/arquivos/ids/166366-210-200/22.jpg', width='210', height='200', alt='22', id='')
+								.text
+									p.product_description.ellipsis(style='word-wrap: break-word;') Hawkers Flamingo Nebula One
+									span.original_price S/. 235.00
+									span.price S/. 135.00
+						li#helperComplement_6938.helperComplement(style='display:none')
+						li(layout='2f456047-88fb-4e94-80fa-0ced2f45f1cc', class='marcas-exclusivas-en-moda')
+							a.product_box(title='Barai Lentes de Sol Unisex Tribeca', href='javascript:;')
+								.img_container 
+									img(src='http://estilomio.vteximg.com.br/arquivos/ids/163564-210-200/6_1.jpg', width='210', height='200', alt='6_1', id='')
+								.text
+									p.product_description.ellipsis(style='word-wrap: break-word;') Barai Lentes de Sol Unisex Tribeca
+									span.original_price S/. 430.00
+									span.price S/. 345.00
+						li#helperComplement_4796.helperComplement(style='display:none')
+						li(layout='2f456047-88fb-4e94-80fa-0ced2f45f1cc', class='marcas-exclusivas-en-moda')
+							a.product_box(title='Style Up Lentes Tom Ford Sunglasses', href='javascript:;')
+								.img_container 
+									img(src='http://estilomio.vteximg.com.br/arquivos/ids/159428-210-200/16_1.jpg', width='210', height='200', alt='16_1', id='')
+								.text
+									p.product_description.ellipsis(style='word-wrap: break-word;') Style Up Lentes Tom Ford Sunglasses
+									span.original_price S/. 399.90
+									span.price S/. 269.90
+						li#helperComplement_2576.helperComplement(style='display:none')
+						li(layout='2f456047-88fb-4e94-80fa-0ced2f45f1cc', class='marcas-exclusivas-en-moda')
+							a.product_box(title='Sabre The Gator Negro Metal', href='javascript:;')
+								.img_container 
+									img(src='http://estilomio.vteximg.com.br/arquivos/ids/170813-210-200/reef.jpg', width='210', height='200', alt='reef', id='')
+								.text
+									p.product_description.ellipsis(style='word-wrap: break-word;') Sabre The Gator Negro Metal
+									span.original_price S/. 369.00
+									span.price S/. 299.00
+						li#helperComplement_1423.helperComplement(style='display:none')
+						li(layout='2f456047-88fb-4e94-80fa-0ced2f45f1cc', class='marcas-exclusivas-en-moda')
+							a.product_box(title='Hawkers Crystal Black Ruby One', href='javascript:;')
+								.img_container 
+									img(src='http://estilomio.vteximg.com.br/arquivos/ids/166351-210-200/07.jpg', width='210', height='200', alt='07', id='')
+								.text
+									p.product_description.ellipsis(style='word-wrap: break-word;') Hawkers Crystal Black Ruby One
+									span.original_price S/. 250.00
+									span.price S/. 150.00
+						li#helperComplement_6923.helperComplement(style='display:none')
+						li(layout='2f456047-88fb-4e94-80fa-0ced2f45f1cc', class='marcas-exclusivas-en-moda')
+							a.product_box(title='Barai Lentes de Sol Unisex  Avalon Beach', href='javascript:;')
+								.img_container 
+									img(src='http://estilomio.vteximg.com.br/arquivos/ids/163554-210-200/1_1.jpg', width='210', height='200', alt='1_1', id='')
+								.text
+									p.product_description.ellipsis(style='word-wrap: break-word;') Barai Lentes de Sol Unisex  Avalon Beach
+									span.original_price S/. 569.00
+									span.price S/. 455.00
+						li#helperComplement_4791.helperComplement(style='display:none')
+						li.last(layout='2f456047-88fb-4e94-80fa-0ced2f45f1cc', class='marcas-exclusivas-en-moda')
+							a.product_box(title='Sabre Lovedoll Camel Tortoise', href='javascript:;')
+								.img_container 
+									img(src='http://estilomio.vteximg.com.br/arquivos/ids/170814-210-200/reef.jpg', width='210', height='200', alt='reef', id='')
+								.text
+									p.product_description.ellipsis(style='word-wrap: break-word;') Sabre Lovedoll Camel Tortoise
+									span.original_price S/. 369.00
+									span.price S/. 299.00
+						li#helperComplement_1424.helperComplement(style='display:none')
+
+				a.see_more(href="javascript:;") Ver más ofertas >

@@ -1,0 +1,130 @@
+extends _layout/layout.jade
+//- index
+
+block content
+	.container
+		.box_home_top
+			.slider_home
+				a(href="javascript:;") 
+					img.unveil( data-src="http://placem.at/things?w=700&h=400")
+				a(href="javascript:;") 
+					img.unveil( data-src="http://placem.at/things?w=700&h=400")
+				a(href="javascript:;") 
+					img.unveil( data-src="http://placem.at/things?w=700&h=400")
+			.promos
+				a(href="javascript:;")
+					img.unveil( data-src="http://placem.at/things?w=420&h=190")
+				a(href="javascript:;")
+					img.unveil( data-src="http://placem.at/things?w=420&h=190")
+					
+		.box_home_newsletter 
+		
+			b.title ¡RECIBE NUESTRAS OFERTAS EXCLUSIVAS!
+			.box_gender
+				label(for="lblF") Mujer
+					input(type="radio", name="gender", id="lblF")
+					span.control_indicator
+				label(for="lblM") Hombre 
+					input(type="radio", name="gender", id="lblM")
+					span.control_indicator		
+			//.form_control
+			//	input.txt_email(type="text", placeholder="Ingresa tu correo electrónico")
+			//input.btn(type="submit", value="SUSCRIBIRME")
+			#NewsLetter_acffb6d9_50f6_45c8_b070_7d029fad790c.newsletter
+				h3.newsletter-title ENVIOS A TODOS EL PERU
+				fieldset
+					p Receba novidades e promoções por email:
+					input#newsletterClientName.newsletter-client-name(onfocus="newsSelect(this,'Ingrese su Nombre');", onblur="newsLeave(this,'Ingrese su Nombre');", value='Ingrese su Nombre', size='20', type='text', name='newsClientName')
+					input#newsletterClientEmail.newsletter-client-email(onfocus="newsSelect(this,'Ingrese su e-mail');", onblur="newsLeave(this,'Ingrese su e-mail');", value='Ingrese su e-mail', size='20', type='text', name='newsletterClientEmail')
+					input#newsletterButtonOK.btn-ok.newsletter-button-ok(value='ok', type='button', name='newsletterButtonOK', onclick="newsButtonClick('NewsLetter_acffb6d9_50f6_45c8_b070_7d029fad790c')")
+					input#newsletterLoading.newsletter-loading(type='hidden', value='Processando...')
+					input#newsletterSuccess.newsletter-success(type='hidden', value='Gracias por suscribirte a COMPANY!')
+					input#newsletterSuccess2.newsletter-success2(type='hidden', value='Pronto nos pondremos en contacto con usted para ofrecerle las mejores ofertas.')
+					input#newsletterError.newsletter-error(type='hidden', value='Su información no es correcta. Por favor, vuelve a intentarlo!\
+					')
+					input#newsInternalPage(type='hidden', value='_')
+					input#newsInternalPart(type='hidden', value='newsletter')
+					input#newsInternalCampaign(type='hidden', value='newsletter:opt-in')
+				span.rt
+				span.rb
+				span.lb
+				span.lt
+				
+			span.terms Al suscribirme estoy aceptando los 
+				a(href="javascript:;") términos y condiciones 
+				| y 
+				a(href="javascript:;") políticas de privacidad.
+		.box_home_offers
+			h2.site_title
+				span Ofertas Destacadas 
+			.offers_carousel
+				- for (i=0; i<7; i++)
+					a(href="javascript:;") 
+						img.unveil( data-src="http://placem.at/things?w=265&h=265")
+						p.description Zapatillas hasta 45% de DSCTO.
+		
+		- for (var a=0; a<2; a++)
+			.box_home_category
+				input.chk_category(type='checkbox')
+				p.title Moda				
+					span.ico_arrow
+				.collapsable_mobile
+					.submenu
+						ul 
+							- for (j=0; j<14; j++)
+								li 
+									a(href="javascript:;") Calvin Klein
+						select.sel_offer
+							option Revisar ofertas por marca
+							option(data-url="http://google.com") Link 1
+							option(data-url="http://bing.com") Link 2
+						a.see_all(href="javascript:;") Ver todo > 
+					.slider_category
+						- for (i=0; i<2; i++)
+							a(href="javascript:;")
+								span.slider_discount -50%
+								img.unveil( data-src="http://placem.at/things?w=380&h=550")
+					.products
+						a.item.medium(href="javascript:;")
+							img.unveil( data-src="http://placem.at/things?w=365&h=261&random=1") 
+						- for (i=0; i<4; i++)
+							a.item(href="javascript:;")
+								img.unveil( data-src="http://placem.at/things?w=190&h=200&random=1")
+								p.item_title Bolsos de diseñador
+								p.item_subtitle Colección primavera
+								span.item_discount -30%
+								
+		.box_highlighted_categories
+			.category 
+				img.unveil( data-src="http://placem.at/things?w=360&h=250")
+				a.btn(href="javascript:;") Viajes >
+			.category 
+				img.unveil( data-src="http://placem.at/things?w=360&h=250")
+				a.btn(href="javascript:;") Niños y Bebés >
+			.category 
+				img.unveil( data-src="http://placem.at/things?w=360&h=250")
+				a.btn(href="javascript:;") Deportes >
+		
+		include _partials/como_comprar_mobile.jade
+				
+		.modal_how_to_buy.remodal(data-remodal-id="como-comprar") 
+			button.remodal-close(data-remodal-action="close")
+			h3 ¿CÓMO COMPRAR EN COMPANY? 
+			.steps 
+				span.number 1
+				img.unveil( data-src="#{page.static_url}step1.jpg") 
+				p
+					b Elige el producto 
+					| Puedes buscar tu producto por categorías, colecciones, o utilizando el buscador.
+			.steps 
+				span.number 2
+				img.unveil( data-src="#{page.static_url}step2.jpg")
+				p
+					b Agrega al carrito 
+					| Agregar al carrito clickeando en el botón "Comprar" y sigue los pasos.
+			.steps 
+				span.number 3
+				img.unveil( data-src="#{page.static_url}step3.jpg")
+				p
+					b Compra
+					| Completa los datos requeridos, medio de pago y forma de envío, y ¡Listo! 

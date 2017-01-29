@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="//io.vtex.com.br/front-libs/bootstrap/2.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/front-libs/bootstrap/2.3.2/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/front-libs/font-awesome/3.2.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/checkout-ui/3.54.1/lib/front-messages-ui/vtex-message.min.css">
+    <link rel="stylesheet" href="//io.vtex.com.br/checkout-ui/3.54.1/style/style.css">
+    <link href="/demos/estilomio/dist/arquivos//layout_checkout.css" media="all" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <div class="seguro"></div><a href="/" title="Ir para a página inicial" class="logo"></a>
+      </div>
+    </div>
+    <!-- end header-->
+    <div class="main">
+      <div class="orderplaced">
+        <div style_="display: none;" data-bind="visible: !loading()" class="container">
+          <div class="page-header">
+            <!-- WIDGET SELETOR DE LOCALE-->
+            <div id="vtex-locale-selector" class="locale span2 pull-right hide"></div>
+            <!-- END-->
+            <h1 data-i18n="order.orderplaced" class="title">Pedido Confirmado</h1>
+          </div>
+          <div class="containerPage">
+            <div data-bind="visible: showOrderGroupSuccess, with: orderGroup" class="row-fluid orderplaced-alert clearfix">
+              <div class="orderplaced-alert-content alert alert-success span12">
+                <div class="orderplaced-alert-text span9">
+                  <h4 data-i18n="order.orderPlacedSuccessfully" class="orderplaced-successfully">Su pedido ha sido confirmado con éxito!</h4>
+                  <p class="orderplaced-sending-email"><span data-i18n="order.sentDetailsEmailPre" class="email-pre">Enviaremos para el email</span><strong> anareyerwmej@gmail.com </strong><span data-i18n="order.sentDetailsEmailPos" class="email-pos">los detalles de la compra.</span></p>
+                  <p data-i18n="order.orderPlacedNotice" class="orderplaced-processing">Estamos procesando el pago, en pocos minutos recibirá un email de confirmación de compra.</p>
+                </div>
+                <div class="bank-invoice-print span3">
+                  <p class="bank-invoice-print-text"><span data-i18n="order.paymentData.printBankInvoiceNotice">Para realizar el pago, imprimir el boleto en la cantidad de</span><strong>S/. 159,00</strong>:</p><a id="print-bank-invoice" href="http://pagoefectivo.pe/GenPago.aspx?Token=f2868f93-3381-40c0-8358-2f4dfd16dc04" target="_blank" class="bank-invoice-print-url btn btn-success btn-large"><span data-i18n="order.paymentData.printBankInvoice">Imprimir boleto</span></a>
+                </div>
+              </div>
+            </div>
+            <div id="orderplaced-top">
+              <style>#orderplaced-top{text-align:center;background:url(../arquivos/loading.gif) 50% 50% no-repeat;}</style>
+              <iframe width="900" height="655" src="https://pagoefectivo.pe/GenPagoIF.aspx?Token=f2868f93-3381-40c0-8358-2f4dfd16dc04-1" scrolling="no" style="width:900px;border:0;margin:auto;padding:30px 0 0 0;"></iframe>
+            </div>
+            <div data-bind="with: orderGroup" class="myorders-list">
+              <div id="616040280810" class="ordergroup row-fluid">
+                <div class="order-header page-header">
+                  <h2 class="order-title lead"><span data-i18n="order.orderHeldOn" class="title-ordergroup-order muted">Compra finalizada en</span><span class="order-date">07/03/2016</span></h2>
+                </div>
+                <div class="order-details">
+                  <div class="row-fluid top-row">
+                    <div class="span9">
+                      <h3 class="orderid section-info-title"><span data-i18n="order.order">Pedido</span>: <span id="order-id">616040280810-01</span></h3>
+                    </div>
+                  </div>
+                  <div class="items row-fluid">
+                    <table class="table cart-items order-detail-items">
+                      <thead>
+                        <tr>
+                          <th colspan="2" data-i18n="global.product">Producto</th>
+                          <th data-i18n="global.delivery">Envío</th>
+                          <th data-i18n="global.price">Precio</th>
+                          <th data-i18n="global.quantity" class="hidden-phone hidden-tablet">Cantidad</th>
+                          <th data-i18n="global.total" class="hidden-phone hidden-tablet">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr rowspan="2" class="product-item">
+                          <td class="product-image"><a href="/tbl-14387ls-01bg/p"><img id="product-image-13634" src="//estilomio.vteximg.com.br/arquivos/ids/168478-100-100/17.jpg" height="45" width="45" alt="Timberland Reloj Laconia TBL.14387LS/01BG"></a></td>
+                          <td class="product-name"><a id="product-name-13634" href="/tbl-14387ls-01bg/p">Timberland Reloj Laconia TBL.14387LS/01BG</a>
+                            <div class="brand hidden-phone hidden-tablet"><span class="brand-label"><span data-i18n="cart.seller.brand">Marca</span>:</span><span class="brand-name">Timberland</span></div>
+                          </td>
+                          <td class="shipping-date">
+                            <p class="shipping-estimate">10 <span data-i18n="shippingData.workingDays">días hábiles</span></p>
+                            <p class="sla-info hide"><span class="sla-name">Entrega a Domicilio EstiloMio 7-10 días</span> (<span class="sla-price">S/. 5,00</span>)</p>
+                          </td>
+                          <td class="product-price"><span class="new-product-list-price hide">S/. 399,00</span><span class="new-product-real-price hide">S/. 324,00</span><span class="new-product-price best-price">S/. 324,00</span></td>
+                          <td class="quantity hidden-phone hidden-tablet"><span>1</span></td>
+                          <td class="quantity-price hidden-phone hidden-tablet"><span class="total-price hide">S/. 324,00</span><span class="total-selling-price">S/. 324,00</span></td>
+                        </tr>
+                        <tr rowspan="2" class="product-item">
+                          <td class="product-image"><a href="/hankip-mochila-mujer-chic-backpack-negro/p"><img id="product-image-656899" src="//estilomio.vteximg.com.br/arquivos/ids/187825-100-100/chicbackpack-negro1.jpg" height="45" width="45" alt="Hankip Mochila Mujer Chic Backpack Negro"></a></td>
+                          <td class="product-name"><a id="product-name-656899" href="/hankip-mochila-mujer-chic-backpack-negro/p">Hankip Mochila Mujer Chic Backpack Negro</a>
+                            <div class="brand hidden-phone hidden-tablet"><span class="brand-label"><span data-i18n="cart.seller.brand">Marca</span>:</span><span class="brand-name">Hankip</span></div>
+                          </td>
+                          <td class="shipping-date">
+                            <p class="shipping-estimate">10 <span data-i18n="shippingData.workingDays">días hábiles</span></p>
+                            <p class="sla-info hide"><span class="sla-name">Entrega a Domicilio EstiloMio 7-10 días</span> (<span class="sla-price">S/. 5,00</span>)</p>
+                          </td>
+                          <td class="product-price"><span class="new-product-list-price hide">S/. 159,00</span><span class="new-product-real-price hide">S/. 159,00</span><span class="new-product-price best-price">S/. 159,00</span></td>
+                          <td class="quantity hidden-phone hidden-tablet"><span>1</span></td>
+                          <td class="quantity-price hidden-phone hidden-tablet"><span class="total-price hide">S/. 159,00</span><span class="total-selling-price">S/. 159,00</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <hr>
+                <div class="order-info">
+                  <div class="row-fluid top-row">
+                    <div class="span5 payment-info general-info">
+                      <h3 data-i18n="order.paymentInfo" class="section-info-title">Medio de Pago</h3>
+                      <div class="payments">
+                        <h3 class="payment-title"><span data-i18n="order.paymentData.paymentMethod">Medio de pago</span></h3>
+                        <div class="giftcards-list"></div>
+                        <div class="payments-list">
+                          <div class="payment">
+                            <div class="payment-method-info">
+                              <!-- TODO--><span class="payment-subtitle">PagoEfectivo</span> - <span class="payment-value"><span class="payment-total field-label hide"><span data-i18n="global.value">Valor</span>:</span><span class="payment-value-monetary">S/. 159,00</span><span class="payment-installments">(<span data-i18n="order.paymentData.paidInCash">total</span>)</span></span><a id="order-print-bank-invoice-mini" href="http://pagoefectivo.pe/GenPago.aspx?Token=f2868f93-3381-40c0-8358-2f4dfd16dc04" target="_blank" data-i18n="order.paymentData.printBankInvoice" class="bank-invoice-print-link btn btn-mini">Imprimir boleto</a>
+                            </div><a href="javascript:void(0);" class="payment-transaction-details-btn muted"><small data-i18n="order.paymentData.showTransactionDetails">Ver detalles de la transacción</small></a>
+                            <div class="payment-transaction-details hide">
+                              <div class="payment-connector muted"><span class="payment-connector-keypair"><small>Tid</small>: <small>4059986</small></span></div>
+                              <div class="payment-connector muted"><span class="payment-connector-keypair"><small>ReturnCode</small>: <small>1</small></span></div>
+                              <div class="payment-connector muted"><span class="payment-connector-keypair"><small>Message</small>: <small>Se ha Generado el CIP: 00000004059986 .</small></span></div>
+                              <div class="payment-connector muted"><span class="payment-connector-keypair"><small>CIP</small>: <small>4059986</small></span></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="visible-phone order-info-hr">
+                    </div>
+                    <div class="span2 shipping-info general-info hide">
+                      <h3 data-i18n="order.shippingInfo" class="section-info-title">Dirección de Envío</h3>
+                      <div class="shipping">
+                        <div class="shipping-address">
+                          <address>
+                            <ul>
+                              <li><span>dfg ****</span></li>
+                              <li><span>*******i </span>, <span>***</span>- <span>Lim*</span></li>
+                              <li><span>Lim*</span>/<span>LIMA</span> - <span data-i18n="global.PER"></span></li>
+                              <li><span>*5*1*1</span></li>
+                            </ul>
+                          </address>
+                        </div>
+                      </div>
+                      <hr class="visible-phone order-info-hr">
+                    </div>
+                    <div class="span2 client-profile-info general-info hide">
+                      <h3 data-i18n="order.clientProfileData" class="section-info-title">Datos Personales</h3>
+                      <div class="shipping">
+                        <div class="client-profile-data">
+                          <div class="full-name personal-info"><span class="personal-info-label hide"><span data-i18n="order.fullName">Nombre y Apellidos</span>:</span><span class="personal-info-value"><span>*** dfg*</span></span></div>
+                          <div class="email personal-info"><span class="personal-info-label hide"><span data-i18n="email">E-mail</span>:</span><span class="personal-info-value"><span>anareyerwmej@gmail.com</span></span></div>
+                          <div class="phone personal-info"><span class="personal-info-label hide"><span data-i18n="phone">Telefone</span>:</span><span class="personal-info-value"><span>*******4773</span></span></div>
+                          <div class="document personal-info"><span class="personal-info-label hide"><span data-i18n="document">Documento</span>:</span><span class="personal-info-value"><span>*3*3*3*3</span></span></div>
+                          <div data-bind="if: isCorporate" class="corporate-info-group">
+                            <div class="name corporate-info"><span class="corporate-info-label"><span data-i18n="companyName">Empresa</span>:</span><span class="corporate-info-value"><span></span></span></div>
+                            <div class="trade-name corporate-info"><span class="corporate-info-label"><span data-i18n="tradingName">Nome Fantasia</span>:</span><span class="corporate-info-value"><span></span></span></div>
+                            <div class="phone corporate-info"><span class="corporate-info-label"><span data-i18n="phone">Telefone</span>:</span><span class="corporate-info-value"><span></span></span></div>
+                            <div class="document corporate-info"><span class="corporate-info-label"><span data-i18n="document">Documento</span>:</span><span class="corporate-info-value"><span></span></span></div>
+                            <div class="state-inscription corporate-info"><span class="corporate-info-label"><span data-i18n="coRegisterNumber">Inscrição Estadual</span>:</span><span class="corporate-info-value"><span></span></span></div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="visible-phone order-info-hr">
+                    </div>
+                    <div class="span3 total-info general-info pull-right">
+                      <h3 data-i18n="order.orderTotalPrice" class="section-info-title">Total</h3>
+                      <div class="totals">
+                        <table class="table">
+                          <tbody>
+                            <tr class="Items">
+                              <td data-i18n="totalizers.Items" class="info">Subtotal</td>
+                              <td class="monetary">S/. 149,00</td>
+                            </tr>
+                            <tr class="Discounts hidden">
+                              <td data-i18n="totalizers.Discounts" class="info">Descuentos</td>
+                              <td class="monetary"><span data-i18n="global.free">Gratis</span></td>
+                            </tr>
+                            <tr class="Shipping">
+                              <td data-i18n="totalizers.Shipping" class="info">Costo del envío</td>
+                              <td class="monetary">S/. 10,00</td>
+                            </tr>
+                            <tr class="Tax hidden">
+                              <td data-i18n="totalizers.Tax" class="info">Impuestos</td>
+                              <td class="monetary"><span data-i18n="global.free">Gratis</span></td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td data-i18n="global.total" class="info">Total</td>
+                              <td class="monetary">S/. 159,00</td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="orderplaced-bottom"></div>
+            <hr class="orderplaced-hr-continue"><a id="order-continue-shopping" href="/" data-i18n="order.continueShopping" class="btn-continue-shop btn pull-right">Hacer nuevas compras</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end footer-->
+    <div class="footer">
+      <div class="bg">
+        <div class="container">
+          <div class="left"><img src="http://estilomio.vteximg.com.br/arquivos/pago.png" border="0">
+            <div id="DigiCert"><img src="http://estilomio.vteximg.com.br/arquivos/seal.digicert.png"></div>
+            <p>Esta tienda esta autorizada para realizar transacciones electrónicas.</p>
+          </div>
+          <div class="right">
+            <div class="ico_Send"></div>
+            <p>ENVIOS A TODO EL PERU</p>
+            <div class="logo"></div>
+          </div>
+        </div>
+      </div>
+      <div class="Foo"><a id="milPuntos" href=""></a>
+        <p>©2016 EstiloMio.com. Todos los derechos reservados</p>
+      </div>
+    </div>
+    <script src="/demos/estilomio/dist/arquivos/libs/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="/demos/estilomio/dist/arquivos/app_checkout.js" type="text/javascript"> </script>
+  </body>
+</html>
